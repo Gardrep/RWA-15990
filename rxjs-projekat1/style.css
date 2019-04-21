@@ -1,19 +1,16 @@
-ul {
+/*#menu {
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #333;
-    position: -webkit-sticky; /* Safari */
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
   }
   
-  li {
+  #menu li a {
     float: left;
-  }
-  
-  li a {
     display: block;
     color: white;
     text-align: center;
@@ -28,3 +25,15 @@ ul {
   .active {
     background-color: #4CAF50;
   }
+
+  table {
+    border: 1px solid #666;
+    margin: 0;
+    padding: 0;
+    background-color: #555;
+    color: white;
+  }
+  td {
+    border: 1px solid #666;
+  }
+  */
