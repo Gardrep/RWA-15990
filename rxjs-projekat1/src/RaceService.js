@@ -23,16 +23,36 @@ export class RaceService{
         });
     }
 
-    ShowRacesTable(){
-        var mainDiv =document.querySelector(".mainDiv");
-        mainDiv.innerHTML="";
+    ShowRacesTable(mainDiv, showRadio, ChooseSpell){
+          var inputdiv = document.createElement("div");
+        inputdiv.className ="form-row align-items-center";
+        mainDiv.appendChild(inputdiv);
+        if(showRadio){
+            var btndiv = document.createElement("div");
+            btndiv.className ="col-auto my-1";
+            inputdiv.appendChild(btndiv);
+
+            var commitbtn = document.createElement("button");
+            commitbtn.innerHTML = "Commit";
+            commitbtn.className ="btn btn-primary";
+            btndiv.appendChild(commitbtn);
+
+            fromEvent(commitbtn, 'click').subscribe(function() {
+                console.log("You have comitted a race");
+                console.log(document.querySelector('input[name="exampleRadios"]:checked').value);
+                ChooseSpell();
+            });
+        }
+        var serchdiv = document.createElement("div");
+        serchdiv.className ="col-sm-3 my-1";
+        inputdiv.appendChild(serchdiv);
 
         var search = document.createElement("input");
         search.type="text";
         search.id="myInput";
         search.placeholder="Search for names..";
         search.className="form-control";
-        mainDiv.appendChild(search);
+        serchdiv.appendChild(search);
 
         const input = fromEvent(search, 'input');
         input.subscribe((typed) =>{
@@ -41,7 +61,7 @@ export class RaceService{
             let list = this.AllRaces.filter(race=>{      
                     return race.name.toUpperCase().indexOf(filter)>=0
                 });
-            this.FillTable(body, list);
+            this.FillTable(body, list, showRadio);
         });
 
         var tabela = document.createElement("table");
@@ -52,15 +72,15 @@ export class RaceService{
         tabela.appendChild(header);
         header.innerHTML=`
         <tr>
-        <td scope="col">ID</td>
-        <td scope="col">Race Name</td>
-        <td scope="col">Speed</td>
-        <td scope="col">Ability Bonuses</td>
-        <td scope="col">Size</td>
-        <td scope="col">Starting Proficiencies</td>
-        <td scope="col">Languages</td>
-        <td scope="col">Traits</td>
-        <td scope="col">Subraces</td>
+        <th scope="col">ID</th>
+        <th scope="col">Race Name</th>
+        <th scope="col">Speed</th>
+        <th scope="col">Ability Bonuses</th>
+        <th scope="col">Size</th>
+        <th scope="col">Starting Proficiencies</th>
+        <th scope="col">Languages</th>
+        <th scope="col">Traits</th>
+        <th scope="col">Subraces</th>
         </tr>
         `;
 
@@ -68,24 +88,41 @@ export class RaceService{
         body.innerHTML = "";
         tabela.appendChild(body);
 
-        this.FillTable(body, this.AllRaces);
+        this.FillTable(body, this.AllRaces, showRadio);
     }
 
-    FillTable(body, list){
+    FillTable(body, list, showRadio){
         body.innerHTML = "";
         let item;
-        list.forEach(rase=>{
+        list.forEach(race=>{
             item = document.createElement("tr");
             body.appendChild(item);
-            this.FillRaceRow(item,rase);
-            item.onclick=function() {console.log(rase)};
+            this.FillRaceRow(item, race, showRadio);
+            if(showRadio)
+            item.onclick=function() {document.getElementById(`exampleRadios${race.id}`).checked = true;};
             item.scope="row";
         });
     }
 
-    FillRaceRow(row,race){
-        row.innerHTML += `
+    FillRaceRow(row, race, showRadio){
+        if(showRadio){
+            row.innerHTML += `
+            <td>    
+                <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios${race.id}" value="${race.id}" checked>
+                    <label class="form-check-label" for="exampleRadios${race.id}">
+                    ${race.id}
+                    </label>
+                </div>
+            </td>
+            `;
+        }
+        else{
+            row.innerHTML += `
             <td>${race.id}</td>
+            `;
+        }
+        row.innerHTML += `
             <td>${race.name}</td>
             <td>${race.speed}</td>
             <td>${race.ability_bonuses}</td>

@@ -6,7 +6,7 @@ export class Class{
             let subclassesList = clas.subclasses.reduce((acc,subclasses)=>{return acc +subclasses.name+", "},"");
             let proficiency_choicesList = clas.proficiency_choices.reduce(
                 (acc,proficiencies)=>{
-                    return acc +"<b>choose:"+proficiencies.choose+"</b> from: <br>"+proficiencies.from.reduce((acc, choice)=>{return acc +choice.name+", "},"")+"<br>"
+                    return acc +"\n choose:"+proficiencies.choose+" from: "+proficiencies.from.reduce((acc, choice)=>{return acc +choice.name+", "},"")
                 },"");
 
             this.id = clas.id;

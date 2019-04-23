@@ -4,50 +4,22 @@ import {SpellService} from "./SpellService.js";
 import {ClassService} from "./ClassService.js";
 import {RaceService} from "./RaceService.js";
 
-
-function getRandomNumber(callback) {
-    const number = parseInt(Math.random() * 10);
-    setTimeout(() => callback(number), 3000);
-}
-
-async function getRandomNumberAsync() {
-    return new Promise((resolve, reject) => {
-        const number = parseInt(Math.random() * 5);
-        setTimeout(() => number < 5 ?
-            resolve(number) :
-            reject("Number too high")
-            , 500);
-    });
-}
-
-// getRandomNumber((broj) => console.log(`iz async fje, broj=${broj}`));
-// setTimeout(() => console.log("evo me"), 2000);
-
-getRandomNumberAsync()
-    .then(number => {
-        if (number > 2) {
-            console.log(`Jos jedan krug..., trenutni broj je ${number}`);
-            return getRandomNumberAsync();
-        } else {
-            return number;
-        }
-    })
-    .then(broj => console.log(`broj je ${broj}`))
-    .catch(reason => console.log(reason));
-
-
 //----RunOnStart----
 ShowHome();
 let ClassMngr = new ClassService();
 let RaceMngr = new RaceService();
 let SpellMngr = new SpellService();
 
+function ChooseSpell() {mainDiv.innerHTML=""; SpellMngr.ShowSpellsTable(mainDiv, true);}
+function ChooseRace() {mainDiv.innerHTML=""; RaceMngr.ShowRacesTable(mainDiv, true, ChooseSpell);}
+function ChooseClass() {ClassMngr.ShowClassesTable(mainDiv, true, ChooseRace);}
+
 let ClassesLink = document.querySelector("#ClassesLink");
-ClassesLink.onclick = function(){ClassMngr.ShowClassesTable();}
+ClassesLink.onclick = function(){ mainDiv.innerHTML=""; ClassMngr.ShowClassesTable(mainDiv, false);}
 let RacesLink = document.querySelector("#RacesLink");
-RacesLink.onclick = function(){RaceMngr.ShowRacesTable();}
+RacesLink.onclick = function(){ mainDiv.innerHTML=""; RaceMngr.ShowRacesTable(mainDiv, false);}
 let SpellsLink = document.querySelector("#SpellsLink");
-SpellsLink.onclick = function(){SpellMngr.ShowSpellsTable();}
+SpellsLink.onclick = function(){ mainDiv.innerHTML=""; SpellMngr.ShowSpellsTable(mainDiv, false);}
 
 var mainDiv =document.querySelector(".mainDiv");
 //----Home----
@@ -74,15 +46,19 @@ let BuildLink = document.querySelector("#BuildLink");
 BuildLink.onclick = function(){ShowBuild();}
 
 function ShowBuild(){
-    let mainDiv =document.querySelector(".mainDiv");
     mainDiv.innerHTML="";
     mainDiv.innerHTML=`
     <div class="container-fluid">
         <blockquote class="blockquote">
             <p class="mb-0">Here you can choose characteristics for your character.</p>
+            <p class="mb-0">First choose your class.</p>
         </blockquote>
     </div>
     `;
+    var divTabela = document.createElement("div");
+    mainDiv.appendChild(divTabela);
+    
+    ChooseClass();
 }
 
 //----Classes----
@@ -95,7 +71,7 @@ function ShowBuild(){
 
 
 //----------------------------------------------------------
-function filterNames() {
+/*function filterNames() {
     var input, filter, item, li, a, i, txtValue;
     input = document.getElementById('myInput');
     filter = input.value.toUpperCase();
@@ -113,4 +89,5 @@ function filterNames() {
     let glava=document.querySelector("thead tr");
     glava.style.display = "";
   }
+  */
 
