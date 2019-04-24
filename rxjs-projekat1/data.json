@@ -15953,6 +15953,47 @@
         ],
         "url": "http://www.dnd5eapi.co/api/spells/319"
     }
+],
+"characters": [
+    {
+        "id":"1",
+        "name":"Gandalf",
+        "class":"12",
+        "race":"4",
+        "spells":[
+            {
+                "id":"202",
+                "name":"Message"
+            },
+            {
+                "id":"77",
+                "name":"Demiplane"
+            },
+            {
+                "id":"74",
+                "name":"Daylight"
+            }
+        ]
+    },
+    {
+        "id":"2",
+        "name":"Tyrion Lannister",
+        "class":"5",
+        "race":"1",
+        "spells":[
+        ]
+    }
+],
+"users": [
+    {
+        "id":"1",
+        "username":"Gardrep",
+        "password":"121212"
+    },
+    {
+        "id":"2",
+        "username":"Zika",
+        "password":"123123"
+    }
 ]
 }
-

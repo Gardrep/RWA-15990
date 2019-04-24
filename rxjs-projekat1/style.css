@@ -1,39 +1,81 @@
-/*#menu {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-  }
-  
-  #menu li a {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-  }
-  
-  li a:hover {
-    background-color: #111;
-  }
-  
-  .active {
-    background-color: #4CAF50;
-  }
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column; 
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
 
-  table {
-    border: 1px solid #666;
-    margin: 0;
-    padding: 0;
-    background-color: #555;
-    color: white;
-  }
-  td {
-    border: 1px solid #666;
-  }
-  */
+#formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 25px;
+  text-align: center;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+
+/* OTHERS */
+
+*:focus {
+    outline: none;
+} 
+
+#icon {
+  width:60%;
+}
+body, html {
+  height: 100%;
+}
+
+.bg { 
+  /* The image used */
+  background-image: url("D22.jpg");
+
+  /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.strokeme
+{
+    color: rgb(207, 209, 228);
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+#prepravi
+{
+  padding: 11%;
+}
+
+.gradient
+{
+  background-image: linear-gradient(rgb(154, 179, 212), white);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

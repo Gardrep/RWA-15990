@@ -1,12 +1,14 @@
+import { Global } from "./index.js";
 import { Observable, fromEvent } from 'rxjs';
 import {Spell} from "./Spell.js";
+import {CharacterService} from "./CharacterService.js";
 
 export class SpellService{
 
     constructor()
     {
-        this.AllSpells;
-        this.GetAllSpells().subscribe(list=>this.AllSpells = list);
+        this.AllSpells = this.GetAllSpells();
+        //this.GetAllSpells().subscribe(list=>this.AllSpells = list);
     }
 
     GetAllSpells(){
@@ -40,6 +42,10 @@ export class SpellService{
             fromEvent(commitbtn, 'click').subscribe(function() {
                 console.log("You have comitted spells");
                 console.log(document.querySelector('input[name="exampleRadios"]:checked').value);
+                Global.spells = document.querySelector('input[name="exampleRadios"]:checked').value;
+                let CharacterMngr = new CharacterService();
+                mainDiv.innerHTML="";
+                CharacterMngr.AddCharacter(mainDiv);
             });
         }
         var serchdiv = document.createElement("div");
@@ -165,13 +171,27 @@ export class SpellService{
         body.innerHTML = "";
         tabela.appendChild(body);
 
-        this.FillTable(body, this.AllSpells, showRadio);
+        this.FillTable(body, showRadio);
     }
 
-    FillTable(body, list, showRadio){
+    FillTable(body, showRadio, list){
+        if(list)
+        {
+            this.MakeRows(body, showRadio, list)
+        }
+        else
+        {
+            this.AllSpells.subscribe((list)=>{
+                this.MakeRows(body, showRadio, list)
+            });   
+        }
+    }
+
+    MakeRows(body, showRadio, list)
+    {
         body.innerHTML = "";
-        let item;
-        list.forEach((spel)=>{
+        let item; 
+        list.forEach(spel=>{
             item = document.createElement("tr");
             body.appendChild(item);
             this.FillSpellRow(item, spel, showRadio);
@@ -218,32 +238,33 @@ export class SpellService{
     }
 
     Filter(body, showRadio){
-        let list = this.AllSpells;
-        let filter;
+        this.AllSpells.subscribe((list)=>{
+            let filter;
+            filter  = document.getElementById("myInput").value.toUpperCase(); 
+            if(filter!="")
+            {
+                list = list.filter(spell=>{        
+                    return spell.name.toUpperCase().indexOf(filter)>=0
+                });
+            }
+    
+            if(!isNaN(document.getElementById("levelID").innerHTML)){
+                list = list.filter(spell=>{    
+                    return spell.level==document.getElementById("levelID").innerHTML;
+                });
+            }
+    
+            filter = document.getElementById("RitualID").innerHTML;
+            if(this.strcmp(filter,"Ritual"))
+            {
+    
+                list = list.filter(spell=>{ 
+                return !spell.ritual.localeCompare(filter);
+                });
+            }
+            this.FillTable(body, showRadio, list);
+        });
 
-        filter  = document.getElementById("myInput").value.toUpperCase(); 
-        if(filter!="")
-        {
-            list = list.filter(spell=>{        
-                return spell.name.toUpperCase().indexOf(filter)>=0
-            });
-        }
-
-        if(!isNaN(document.getElementById("levelID").innerHTML)){
-            list = list.filter(spell=>{    
-                return spell.level==document.getElementById("levelID").innerHTML;
-            });
-        }
-
-        filter = document.getElementById("RitualID").innerHTML;
-        if(this.strcmp(filter,"Ritual"))
-        {
-
-            list = list.filter(spell=>{ 
-            return !spell.ritual.localeCompare(filter);
-            });
-        }
-        this.FillTable(body, list, showRadio);
     }
     strcmp(a, b)
     {   

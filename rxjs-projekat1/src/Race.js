@@ -1,6 +1,19 @@
 export class Race{
     constructor(race)
     {
+        if(!race){
+            this.id = "empty";
+            this.name = "empty"
+            this.speed = "empty"
+            this.ability_bonuses = "empty"
+            this.size = "empty"
+            this.starting_proficiencies = "empty";
+            this.languages = "empty";
+            this.traits = "empty";
+            this.subraces = "empty";
+            this.url = "empty";
+        }
+        else{
             let languagesList = race.languages.reduce((acc,languages)=>{return acc +languages.name+", "},"");
             let traitsList = race.traits.reduce((acc,traits)=>{return acc +traits.name+", "},"");
             let subracesList = race.subraces.reduce((acc,subraces)=>{return acc +subraces.name+", "},"");
@@ -17,5 +30,6 @@ export class Race{
             this.traits = traitsList;
             this.subraces = subracesList;
             this.url = race.url;
+        }
     }
 }

@@ -1,12 +1,14 @@
-import { Observable, fromEvent } from 'rxjs';
-import {Class} from "./Class.js";
+import { Global } from "./index.js";
+import { Observable, fromEvent} from 'rxjs';
+import { Class } from "./Class.js";
+import {RaceService} from "./RaceService.js";
 
 export class ClassService{
 
     constructor()
     {
-        this.AllClasses;
-        this.GetAllClasses().subscribe(list=>this.AllClasses = list);
+        this.AllClasses = this.GetAllClasses();
+        //this.GetAllClasses().subscribe(list=>this.AllClasses = list);
     }
 
     GetAllClasses(){
@@ -23,7 +25,24 @@ export class ClassService{
         });
     }
 
-    ShowClassesTable(mainDiv, showRadio, ChooseRace){
+    GetClass(id){
+        if(!id){
+            return Observable.create(generator => {generator.next(new Class());})
+        }
+        else{ 
+            return Observable.create(generator => {
+                fetch(`http://178.149.70.120:3000/classes/${id}`)
+                .then(x=>x.json())
+                    .then(data=>{
+                        generator.next(
+                            new Class(data)
+                        );
+                    });
+            });
+        }
+    }
+
+    ShowClassesTable(mainDiv, showRadio){
         var inputdiv = document.createElement("div");
         inputdiv.className ="form-row align-items-center";
         mainDiv.appendChild(inputdiv);
@@ -40,7 +59,17 @@ export class ClassService{
             fromEvent(commitbtn, 'click').subscribe(function() {
                 console.log("You have comitted a class");
                 console.log(document.querySelector('input[name="exampleRadios"]:checked').value);
-                ChooseRace();
+                Global.clas = document.querySelector('input[name="exampleRadios"]:checked').value;
+                let RaceMngr = new RaceService();
+                mainDiv.innerHTML=`
+                <div class="container-fluid">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">Choose your race.</p>
+                    </blockquote>
+                </div>
+                `;
+                Global.Crtaj(mainDiv);
+                RaceMngr.ShowRacesTable(mainDiv, true);
             });
 
         }
@@ -59,10 +88,12 @@ export class ClassService{
         input$.subscribe((typed) =>{
             var filter;
             filter = typed.target.value.toUpperCase(); 
-            let list = this.AllClasses.filter(clas=>{        
+            this.AllClasses.subscribe((list)=>{
+                list = list.filter(clas=>{        
                     return clas.name.toUpperCase().indexOf(filter)>=0
                 });
-            this.FillTable(body, list, showRadio);
+            this.FillTable(body, showRadio, list);
+            })
         });
 
         var tabela = document.createElement("table");
@@ -91,10 +122,24 @@ export class ClassService{
         body.innerHTML = "";
         tabela.appendChild(body);
 
-        this.FillTable(body, this.AllClasses, showRadio);
+        this.FillTable(body, showRadio);
     }
 
-    FillTable(body, list, showRadio){
+    FillTable(body, showRadio, list){
+        if(list)
+        {
+            this.MakeRows(body, showRadio, list)
+        }
+        else
+        {
+            this.AllClasses.subscribe((list)=>{
+                this.MakeRows(body, showRadio, list)
+            });   
+        }
+    }
+
+    MakeRows(body, showRadio, list)
+    {
         body.innerHTML = "";
         let item;
         list.forEach((clas)=>{
@@ -105,7 +150,6 @@ export class ClassService{
             item.onclick=function() {document.getElementById(`exampleRadios${clas.id}`).checked = true;};
             item.scope="row";
         });
-
     }
 
     FillClassRow(row, clas, showRadio){

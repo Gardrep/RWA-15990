@@ -1,12 +1,16 @@
+import { Global } from "./index.js";
 import { Observable, fromEvent } from 'rxjs';
 import {Race} from "./Race.js";
+import {SpellService} from "./SpellService.js";
 
 export class RaceService{
 
     constructor()
     {
-        this.AllRaces;
-        this.GetAllRaces().subscribe(list=>this.AllRaces = list);
+        this.AllRaces = this.GetAllRaces();
+        //this.GetAllRaces().subscribe(list=>{this.AllRaces = list; });
+
+        //console.log(this.AllRaces);
     }
 
     GetAllRaces(){
@@ -23,8 +27,25 @@ export class RaceService{
         });
     }
 
-    ShowRacesTable(mainDiv, showRadio, ChooseSpell){
-          var inputdiv = document.createElement("div");
+    GetRace(id){
+        if(!id){
+            return Observable.create(generator => {generator.next(new Race());})
+        }
+        else{
+            return Observable.create(generator => {
+                fetch(`http://178.149.70.120:3000/races/${id}`)
+                .then(x=>x.json())
+                    .then(data=>{
+                        generator.next(
+                            new Race(data)
+                        );
+                    });
+            });
+        }
+    }
+
+    ShowRacesTable(mainDiv, showRadio){
+        var inputdiv = document.createElement("div");
         inputdiv.className ="form-row align-items-center";
         mainDiv.appendChild(inputdiv);
         if(showRadio){
@@ -39,8 +60,21 @@ export class RaceService{
 
             fromEvent(commitbtn, 'click').subscribe(function() {
                 console.log("You have comitted a race");
-                console.log(document.querySelector('input[name="exampleRadios"]:checked').value);
-                ChooseSpell();
+                const value =document.querySelector('input[name="exampleRadios"]:checked').value;
+                console.log(value);
+                Global.race = document.querySelector('input[name="exampleRadios"]:checked').value;
+                let SpellMngr = new SpellService();
+                if(showRadio){
+                mainDiv.innerHTML=`
+                <div class="container-fluid">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">Choose your spells.</p>
+                    </blockquote>
+                </div>
+                `;
+                }
+                Global.Crtaj(mainDiv);
+                SpellMngr.ShowSpellsTable(mainDiv, true);
             });
         }
         var serchdiv = document.createElement("div");
@@ -58,10 +92,12 @@ export class RaceService{
         input.subscribe((typed) =>{
             var filter;
             filter = typed.target.value.toUpperCase(); 
-            let list = this.AllRaces.filter(race=>{      
+            this.AllRaces.subscribe((list)=>{
+                list = list.filter(race=>{      
                     return race.name.toUpperCase().indexOf(filter)>=0
                 });
-            this.FillTable(body, list, showRadio);
+                this.FillTable(body, showRadio, list);
+            })
         });
 
         var tabela = document.createElement("table");
@@ -87,13 +123,26 @@ export class RaceService{
         var body = document.createElement("tbody");
         body.innerHTML = "";
         tabela.appendChild(body);
-
-        this.FillTable(body, this.AllRaces, showRadio);
+        this.FillTable(body, showRadio);
     }
 
-    FillTable(body, list, showRadio){
+    FillTable(body, showRadio, list){
+        if(list)
+        {
+            this.MakeRows(body, showRadio, list)
+        }
+        else
+        {
+            this.AllRaces.subscribe((list)=>{
+                this.MakeRows(body, showRadio, list)
+            });   
+        }
+    }
+
+    MakeRows(body, showRadio, list)
+    {
         body.innerHTML = "";
-        let item;
+        let item; 
         list.forEach(race=>{
             item = document.createElement("tr");
             body.appendChild(item);
