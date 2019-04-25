@@ -52,20 +52,16 @@ export class CharacterService {
                         })
                     })
                 })();
-            });
-            //console.log(spell);          
+            });        
             let model = {
                 name: `${Global.character.name}`,
                 class: `${Global.character.class}`,
                 race: `${Global.character.race}`,
                 spells: spell
             };
-            //console.log(model);
             setTimeout(() => { DBMngr.PostById("characters", model); }, 200);
-            //console.log("o U bazu U" );
             mainDiv.innerHTML = "";
             this.ShowCharactersTable(mainDiv);
-            //console.log("DODATo U bazu U BAZU");
         });
 
         fromEvent(discardbtn, 'click').subscribe(function () {
@@ -182,7 +178,6 @@ export class CharacterService {
         body.innerHTML = "";
         let item;
         list.forEach((character) => {
-            //console.log(character);
             item = document.createElement("tr");
             body.appendChild(item);
             this.FillClassRow(item, character);

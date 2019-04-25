@@ -27,7 +27,7 @@ export class UserService {
           <div class="col-sm-offset-2 col-sm-10">
             <div class="checkbox">
               <label>
-                <input type="checkbox"> Remember me
+                <input type="checkbox" id="rememberMe"> Remember me
               </label>
             </div>
           </div>
@@ -59,17 +59,17 @@ export class UserService {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
-
     let DBMngr = new DBService();
     DBMngr.GetAll("users").subscribe((users) => {
       users = users.map(user => { return new User(user); });
+      console.log(users);
       let user = users.filter((user) => { return user.username == username })[0];
-      if (password == user.password) {
+      if (user && password == user.password ) {
         alert("Logged in successfully");
-        //console.log("Logged in successfully");
         Global.userID = user.id;
-        localStorage.setItem('token', user.id);
         document.getElementById("LoginLink").innerHTML = "Logged in as " + user.username;
+        if(document.getElementById("rememberMe").checked == true)
+        localStorage.setItem('token', user.id);
       }
       else {
         this.attempt--;
@@ -82,4 +82,5 @@ export class UserService {
       }
     });
   }
+
 }

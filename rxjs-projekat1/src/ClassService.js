@@ -43,8 +43,6 @@ export class ClassService {
             btndiv.appendChild(commitbtn);
 
             fromEvent(commitbtn, 'click').subscribe(function () {
-                //console.log("You have comitted a class");
-                //console.log(document.querySelector('input[name="exampleRadios"]:checked').value);
                 Global.character.class = document.querySelector('input[name="exampleRadios"]:checked').value;
                 let RaceMngr = new RaceService();
                 mainDiv.innerHTML = `

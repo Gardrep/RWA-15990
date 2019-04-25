@@ -26,12 +26,10 @@ export class SpellService {
             btndiv.appendChild(commitbtn);
 
             fromEvent(commitbtn, 'click').subscribe(function () {
-                //console.log("You have comitted spells");
                 Global.character.spells = [];
                 document.querySelectorAll('input[name="exampleRadios"]:checked').forEach((spel) => {
                     Global.character.spells.push(spel.value);
                 });
-                //console.log(Global.character.spells);
                 let CharacterMngr = new CharacterService();
                 mainDiv.innerHTML = "";
                 CharacterMngr.AddCharacter(mainDiv);

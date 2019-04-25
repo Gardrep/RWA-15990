@@ -26,9 +26,7 @@ export class RaceService {
             btndiv.appendChild(commitbtn);
 
             fromEvent(commitbtn, 'click').subscribe(function () {
-                console.log("You have comitted a race");
                 const value = document.querySelector('input[name="exampleRadios"]:checked').value;
-                console.log(value);
                 Global.character.race = document.querySelector('input[name="exampleRadios"]:checked').value;
                 let SpellMngr = new SpellService();
                 if (showRadio) {

@@ -36,7 +36,6 @@ export const Global = {
         row.scope = "row";
         body.appendChild(row);
 
-        console.log("izabrani spells:" + this.character.spells);
         zip(
             DBMngr.Get("classes", this.character.class),
             DBMngr.Get("races", this.character.race),
@@ -56,7 +55,6 @@ export const Global = {
                     })
                 })
             }
-            console.log(showspells);
             row.innerHTML += `
             <td>${this.character.name}</td>
             <td>${showclass.name}</td>
@@ -116,14 +114,17 @@ LoginLink.onclick = function () {
         LoginMngr.ShowLogin(mainDiv);
     }
     else {
-        //console.log("Logged in successfully");
-        Global.userID = token;
-        let DBMngr = new DBService();
-        DBMngr.Get("users", token).subscribe((user)=>document.getElementById("LoginLink").innerHTML = "Logged in as " + user.username);
+        if(!Global.userID){
+            Global.userID = token;
+            let DBMngr = new DBService();
+            DBMngr.Get("users", token).subscribe((user)=>document.getElementById("LoginLink").innerHTML = "Logged in as " + user.username);
+        }
+        else{
+            mainDiv.innerHTML = "";
+            LoginMngr.ShowLogin(mainDiv);
+        }
     }
 }
-
-//----Home----
 
 let HomeLink = document.querySelector("#HomeLink");
 HomeLink.onclick = function () { ShowHome(); }
@@ -134,8 +135,9 @@ function ShowHome() {
     mainDiv.innerHTML = `
     <div class="bg container-fluid" id="prepravi">
         <blockquote class="blockquote">
-            <h1 class="strokeme mb-0">There is a need for a comprehensive D&D Character Builder with all the needed components on display for easy accsess and use.</font></h1>
-            <h1 class="strokeme mb-0">This system alows users to make an acount and save their characters on it.</font></h1>
+            <h1 class="strokeme mb-0">There is a need for a comprehensive D&D Character Builder with all the needed components on display for easy accsess and use.</h1>
+            <h1 class="strokeme mb-0">This system alows users to make an acount.</h1>
+            <h1 class="strokeme mb-0">And alows you to make and see others character.</h1>
         </blockquote>
     </div>
     `;
