@@ -46,13 +46,8 @@ body, html {
 }
 
 .bg { 
-  /* The image used */
   background-image: url("D22.jpg");
-
-  /* Full height */
   height: 100%; 
-
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -67,15 +62,8 @@ body, html {
     -1px 1px 0 #000,
     1px 1px 0 #000;  
 }
+
 #prepravi
 {
   padding: 11%;
-}
-
-.gradient
-{
-  background-image: linear-gradient(rgb(154, 179, 212), white);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }

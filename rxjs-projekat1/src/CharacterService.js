@@ -1,96 +1,109 @@
 import { Global } from "./index.js";
-import { Observable, fromEvent, zip} from 'rxjs';
-import {Character} from "./Character.js";
-import {ClassService} from "./ClassService.js";
-import {RaceService} from "./RaceService.js";
+import { fromEvent, zip } from 'rxjs';
+import { Character } from "./Character.js";
+import { ClassService } from "./ClassService.js";
+import { DBService } from "./DBService.js";
+import { Race } from './Race.js';
+import { Class } from "./Class.js";
 
-export class CharacterService{
+export class CharacterService {
 
-    constructor()
-    {
-        this.AllCharacters = this.GetAllCharacters();
-        //this.GetAllCharacters().subscribe(list=>this.AllCharacters = list);
+    constructor() {
+        let DBMngr = new DBService();
+        this.AllCharacters = DBMngr.GetAll("characters");
     }
 
-    GetAllCharacters(){
-        return Observable.create(generator => {
-            fetch("http://178.149.70.120:3000/characters")
-            .then(x=>x.json())
-                .then(data=>{
-                    generator.next(
-                        data.map(character=>{
-                        return new Character(character);
-                        })
-                    );
-                });
-        });
-    }
-    AddCharacter(mainDiv){
+    AddCharacter(mainDiv) {
         Global.Crtaj(mainDiv);
         var inputdiv = document.createElement("div");
-        inputdiv.className ="form-row align-items-center";
+        inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
 
         var btndiv = document.createElement("div");
-        btndiv.className ="col--sm-1 my-1";
+        btndiv.className = "col--sm-1 my-1";
         inputdiv.appendChild(btndiv);
 
         var commitbtn = document.createElement("button");
         commitbtn.innerHTML = "Commit";
-        commitbtn.className ="btn btn-primary";
+        commitbtn.className = "btn btn-primary";
         btndiv.appendChild(commitbtn);
 
         btndiv = document.createElement("div");
-        btndiv.className ="col--sm-1 my-1";
+        btndiv.className = "col--sm-1 my-1";
         inputdiv.appendChild(btndiv);
 
         var discardbtn = document.createElement("button");
         discardbtn.innerHTML = "Discard/Build new";
-        discardbtn.className ="btn btn-primary";
+        discardbtn.className = "btn btn-primary";
         btndiv.appendChild(discardbtn);
 
-        fromEvent(commitbtn, 'click').subscribe(function() {
-            //Dodaj u bazu
-            console.log("DODAJ U BAZU");
+        let DBMngr = new DBService();
+        let spell = [];
+        fromEvent(commitbtn, 'click').subscribe(() => {
+            Global.character.spells.map(async (val) => {
+                await (() => {
+                    return new Promise((res, rej) => {
+                        DBMngr.Get("spells", val).subscribe((data) => {
+                            spell.push({
+                                id: `${val}`,
+                                name: `${data.name}`
+                            });
+                            res();
+                        })
+                    })
+                })();
+            });
+            //console.log(spell);          
+            let model = {
+                name: `${Global.character.name}`,
+                class: `${Global.character.class}`,
+                race: `${Global.character.race}`,
+                spells: spell
+            };
+            //console.log(model);
+            setTimeout(() => { DBMngr.PostById("characters", model); }, 200);
+            //console.log("o U bazu U" );
+            mainDiv.innerHTML = "";
+            this.ShowCharactersTable(mainDiv);
+            //console.log("DODATo U bazu U BAZU");
         });
 
-        fromEvent(discardbtn, 'click').subscribe(function() {
+        fromEvent(discardbtn, 'click').subscribe(function () {
             Global.ShowBuild();
         });
     }
 
-    ShowAddCharacter(mainDiv){
+    ShowAddCharacter(mainDiv) {
         Global.Crtaj(mainDiv);
         var inputdiv = document.createElement("div");
-        inputdiv.className ="form-row align-items-center";
+        inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
 
         var btndiv = document.createElement("div");
-        btndiv.className ="col--sm-1 my-1";
+        btndiv.className = "col--sm-1 my-1";
         inputdiv.appendChild(btndiv);
 
         var commitbtn = document.createElement("button");
         commitbtn.innerHTML = "Commit";
-        commitbtn.className ="btn btn-primary";
+        commitbtn.className = "btn btn-primary";
         btndiv.appendChild(commitbtn);
 
         var serchdiv = document.createElement("div");
-        serchdiv.className ="col-sm-4 my-1";
+        serchdiv.className = "col-sm-4 my-1";
         inputdiv.appendChild(serchdiv);
 
         var search = document.createElement("input");
-        search.type="text";
-        search.id="myInput";
-        search.placeholder="Enter name ...";
-        search.className="form-control";
+        search.type = "text";
+        search.id = "myInput";
+        search.placeholder = "Enter name ...";
+        search.className = "form-control";
         serchdiv.appendChild(search);
 
-        fromEvent(commitbtn, 'click').subscribe(function() {
-            let name =document.getElementById('myInput').value
-            console.log(name);
-            Global.name = name;
+        fromEvent(commitbtn, 'click').subscribe(function () {
+            let name = document.getElementById('myInput').value
+            Global.character.name = name;
             let ClassMngr = new ClassService();
-            mainDiv.innerHTML=`
+            mainDiv.innerHTML = `
             <div class="container-fluid">
                 <blockquote class="blockquote">
                     <p class="mb-0">Choose your class.</p>
@@ -102,41 +115,42 @@ export class CharacterService{
         });
     }
 
-    ShowCharactersTable(mainDiv){
+    ShowCharactersTable(mainDiv) {
         var inputdiv = document.createElement("div");
-        inputdiv.className ="form-row align-items-center";
+        inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
 
         var serchdiv = document.createElement("div");
-        serchdiv.className ="col-sm-3 my-1";
+        serchdiv.className = "col-sm-3 my-1";
         inputdiv.appendChild(serchdiv);
 
         var search = document.createElement("input");
-        search.type="text";
-        search.id="myInput";
-        search.placeholder="Search for names..";
-        search.className="form-control";
+        search.type = "text";
+        search.id = "myInput";
+        search.placeholder = "Search for names..";
+        search.className = "form-control";
         serchdiv.appendChild(search);
-        
+
         const input$ = fromEvent(search, 'input');
-        input$.subscribe((typed) =>{
+        input$.subscribe((typed) => {
             var filter;
-            filter = typed.target.value.toUpperCase(); 
-             this.AllCharacters.subscribe((list)=>{
-                list = list.filter(character=>{        
-                    return character.name.toUpperCase().indexOf(filter)>=0
+            filter = typed.target.value.toUpperCase();
+            this.AllCharacters.subscribe((list) => {
+                list = list.map(character => { return new Character(character) });
+                list = list.filter(character => {
+                    return character.name.toUpperCase().indexOf(filter) >= 0
                 });
                 this.FillTable(body, list);
             })
         });
 
         var tabela = document.createElement("table");
-        tabela.className ="table table-striped table-hover";
+        tabela.className = "table table-striped table-hover";
         mainDiv.appendChild(tabela);
 
         var header = document.createElement("thead");
         tabela.appendChild(header);
-        header.innerHTML=`
+        header.innerHTML = `
         <tr>
         <th scope="col">ID</th>
         <th scope="col">Name</th>
@@ -152,39 +166,39 @@ export class CharacterService{
         this.FillTable(body);
     }
 
-    FillTable(body, list){
-        if(list)
-        {
-            this.MakeRows(body,  list)
+    FillTable(body, list) {
+        if (list) {
+            this.MakeRows(body, list)
         }
-        else
-        {
-            this.AllCharacters.subscribe((list)=>{
-                this.MakeRows(body,  list)
-            });   
+        else {
+            this.AllCharacters.subscribe((list) => {
+                list = list.map(character => { return new Character(character) });
+                this.MakeRows(body, list);
+            });
         }
     }
 
-    MakeRows(body, list)
-    {
+    MakeRows(body, list) {
         body.innerHTML = "";
         let item;
-        list.forEach((character)=>{
+        list.forEach((character) => {
+            //console.log(character);
             item = document.createElement("tr");
             body.appendChild(item);
             this.FillClassRow(item, character);
-            item.scope="row";
+            item.scope = "row";
         });
     }
 
-    FillClassRow(row, character){
-        let ClassMngr = new ClassService();
-        let RaceMngr = new RaceService();
+    FillClassRow(row, character) {
+        let DBMngr = new DBService();
 
         zip(
-            ClassMngr.GetClass(character.class),
-            RaceMngr.GetRace(character.race)
-        ).subscribe(([showclass, showrace])=>{
+            DBMngr.Get("classes", character.class),
+            DBMngr.Get("races", character.race)
+        ).subscribe(([clas, race]) => {
+            let showrace = new Race(race);
+            let showclass = new Class(clas);
             row.innerHTML += `
             <td>${character.id}</td>
             <td>${character.name}</td>

@@ -1,7 +1,6 @@
-export class Class{
-    constructor(clas)
-    {
-        if(!clas){
+export class Class {
+    constructor(clas) {
+        if (!clas) {
             this.id = "empty";
             this.name = "empty";
             this.description = "empty";
@@ -16,14 +15,14 @@ export class Class{
             this.url = "empty";
             this.url = "empty";
         }
-        else{
-            let proficienciesList = clas.proficiencies.reduce((acc,proficiencies)=>{return acc +proficiencies.name+", "},"");
-            let saving_throwsList = clas.saving_throws.reduce((acc,saving_throws)=>{return acc +saving_throws.name+", "},"");
-            let subclassesList = clas.subclasses.reduce((acc,subclasses)=>{return acc +subclasses.name+", "},"");
+        else {
+            let proficienciesList = clas.proficiencies.reduce((acc, proficiencies) => { return acc + proficiencies.name + ", " }, "");
+            let saving_throwsList = clas.saving_throws.reduce((acc, saving_throws) => { return acc + saving_throws.name + ", " }, "");
+            let subclassesList = clas.subclasses.reduce((acc, subclasses) => { return acc + subclasses.name + ", " }, "");
             let proficiency_choicesList = clas.proficiency_choices.reduce(
-                (acc,proficiencies)=>{
-                    return acc +"\n choose:"+proficiencies.choose+" from: "+proficiencies.from.reduce((acc, choice)=>{return acc +choice.name+", "},"")
-                },"");
+                (acc, proficiencies) => {
+                    return acc + "\n choose:" + proficiencies.choose + " from: " + proficiencies.from.reduce((acc, choice) => { return acc + choice.name + ", " }, "")
+                }, "");
 
             this.id = clas.id;
             this.name = clas.name;

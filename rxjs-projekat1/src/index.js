@@ -1,25 +1,27 @@
-import { zip} from 'rxjs';
-import {ClassService} from "./ClassService.js";
-import {RaceService} from "./RaceService.js";
-import {SpellService} from "./SpellService.js";
-import {CharacterService} from "./CharacterService.js";
+import { zip } from 'rxjs';
+import { ClassService } from "./ClassService.js";
+import { RaceService } from "./RaceService.js";
+import { SpellService } from "./SpellService.js";
+import { CharacterService } from "./CharacterService.js";
 import { UserService } from './UserService.js';
+import { Race } from './Race.js';
+import { Class } from "./Class.js";
+import { DBService } from "./DBService.js";
+import { Character } from './Character.js';
+
+let DBMngr = new DBService();
 
 export const Global = {
-    userID:"",
-    name:"empty",
-    clas:"",
-    race:"",
-    spells:"empty",
-    Crtaj(mainDiv)
-    {
+    character: new Character(),
+    userID: "",
+    Crtaj(mainDiv) {
         var tabela = document.createElement("table");
-        tabela.className ="table table-striped table-hover";
+        tabela.className = "table table-striped table-hover";
         mainDiv.appendChild(tabela);
 
         var header = document.createElement("thead");
         tabela.appendChild(header);
-        header.innerHTML=`
+        header.innerHTML = `
         <tr>
         <th scope="col">Your Characters Name</th>
         <th scope="col">Class</th>
@@ -31,33 +33,42 @@ export const Global = {
         tabela.appendChild(body);
 
         var row = document.createElement("tr");
-        row.scope="row";
+        row.scope = "row";
         body.appendChild(row);
 
-        let ClassMngr = new ClassService();
-        let RaceMngr = new RaceService();
-
+        console.log("izabrani spells:" + this.character.spells);
         zip(
-            ClassMngr.GetClass(this.clas),
-            RaceMngr.GetRace(this.race)
-        ).subscribe(([showclass, showrace])=>{
-            //console.log(showclass);
-            //console.log(showrace);
+            DBMngr.Get("classes", this.character.class),
+            DBMngr.Get("races", this.character.race),
+            DBMngr.GetAll("spells")
+        ).subscribe(([clas, race, spells]) => {
+            let showrace = new Race(race);
+            let showclass = new Class(clas);
+            let showspells = "";
+            let spel, i;
+
+            if (this.character.spells) {
+                spells.forEach((y) => {
+                    this.character.spells.forEach((x) => {
+                        if (x == y.id) {
+                            showspells += y.name + ", ";
+                        }
+                    })
+                })
+            }
+            console.log(showspells);
             row.innerHTML += `
-            <td>${this.name}</td>
+            <td>${this.character.name}</td>
             <td>${showclass.name}</td>
             <td>${showrace.name}</td>
-            <td>${this.spells}</td>
-            `}
-        );
+            <td>${showspells}</td>
+            `
+        });
     },
 
-    ShowBuild(){
-        Global.name="empty";
-        Global.clas="";
-        Global.race="";
-        Global.spells="empty";
-        mainDiv.innerHTML=`
+    ShowBuild() {
+        Global.character = new Character();
+        mainDiv.innerHTML = `
         <div class="container-fluid">
             <blockquote class="blockquote">
                 <p class="mb-0">Here you can choose characteristics for your character.</p>
@@ -67,10 +78,12 @@ export const Global = {
         `;
         var divTabela = document.createElement("div");
         mainDiv.appendChild(divTabela);
-        
+
         CharacterMngr.ShowAddCharacter(mainDiv);
     }
 }
+
+var mainDiv = document.querySelector(".mainDiv");
 
 //----RunOnStart----
 ShowHome();
@@ -79,34 +92,46 @@ let RaceMngr = new RaceService();
 let SpellMngr = new SpellService();
 let CharacterMngr = new CharacterService();
 let LoginMngr = new UserService();
-/*
-function CharacterList() {mainDiv.innerHTML=""; CharacterMngr.ShowCharactersTable(mainDiv);}
-function ChooseSpell() {mainDiv.innerHTML=""; SpellMngr.ShowSpellsTable(mainDiv, true, CharacterList);}
-function ChooseRace() {mainDiv.innerHTML=""; RaceMngr.ShowRacesTable(mainDiv, true, ChooseSpell);}
-function ChooseClass() {ClassMngr.ShowClassesTable(mainDiv, true, ChooseRace);}
-*/
 
 let ClassesLink = document.querySelector("#ClassesLink");
-ClassesLink.onclick = function(){ mainDiv.innerHTML=""; ClassMngr.ShowClassesTable(mainDiv, false);}
-let RacesLink = document.querySelector("#RacesLink");
-RacesLink.onclick = function(){ mainDiv.innerHTML=""; RaceMngr.ShowRacesTable(mainDiv, false);}
-let SpellsLink = document.querySelector("#SpellsLink");
-SpellsLink.onclick = function(){ mainDiv.innerHTML=""; SpellMngr.ShowSpellsTable(mainDiv, false);}
-let CharacterListLink = document.querySelector("#CharacterListLink");
-CharacterListLink.onclick = function(){ mainDiv.innerHTML=""; CharacterMngr.ShowCharactersTable(mainDiv);}
-let LoginLink = document.querySelector("#LoginLink");
-LoginLink.onclick = function(){ mainDiv.innerHTML=""; LoginMngr.ShowLogin(mainDiv);}
+ClassesLink.onclick = function () { mainDiv.innerHTML = ""; ClassMngr.ShowClassesTable(mainDiv, false); }
 
-var mainDiv =document.querySelector(".mainDiv");
+let RacesLink = document.querySelector("#RacesLink");
+RacesLink.onclick = function () { mainDiv.innerHTML = ""; RaceMngr.ShowRacesTable(mainDiv, false); }
+
+let SpellsLink = document.querySelector("#SpellsLink");
+SpellsLink.onclick = function () { mainDiv.innerHTML = ""; SpellMngr.ShowSpellsTable(mainDiv, false); }
+
+let CharacterListLink = document.querySelector("#CharacterListLink");
+CharacterListLink.onclick = function () { mainDiv.innerHTML = ""; CharacterMngr.ShowCharactersTable(mainDiv); }
+
+let BuildLink = document.querySelector("#BuildLink");
+BuildLink.onclick = function () { Global.ShowBuild(); }
+
+let LoginLink = document.querySelector("#LoginLink");
+LoginLink.onclick = function () {
+    let token = localStorage.getItem('token');
+    if (!token) {
+        mainDiv.innerHTML = "";
+        LoginMngr.ShowLogin(mainDiv);
+    }
+    else {
+        //console.log("Logged in successfully");
+        Global.userID = token;
+        let DBMngr = new DBService();
+        DBMngr.Get("users", token).subscribe((user)=>document.getElementById("LoginLink").innerHTML = "Logged in as " + user.username);
+    }
+}
+
 //----Home----
 
 let HomeLink = document.querySelector("#HomeLink");
-HomeLink.onclick = function(){ShowHome();}
+HomeLink.onclick = function () { ShowHome(); }
 
-function ShowHome(){
-    let mainDiv =document.querySelector(".mainDiv");
-    mainDiv.innerHTML="";
-    mainDiv.innerHTML=`
+function ShowHome() {
+    let mainDiv = document.querySelector(".mainDiv");
+    mainDiv.innerHTML = "";
+    mainDiv.innerHTML = `
     <div class="bg container-fluid" id="prepravi">
         <blockquote class="blockquote">
             <h1 class="strokeme mb-0">There is a need for a comprehensive D&D Character Builder with all the needed components on display for easy accsess and use.</font></h1>
@@ -115,8 +140,3 @@ function ShowHome(){
     </div>
     `;
 }
-
-//----Build----
-
-let BuildLink = document.querySelector("#BuildLink");
-BuildLink.onclick = function(){Global.ShowBuild();}

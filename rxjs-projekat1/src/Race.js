@@ -1,7 +1,6 @@
-export class Race{
-    constructor(race)
-    {
-        if(!race){
+export class Race {
+    constructor(race) {
+        if (!race) {
             this.id = "empty";
             this.name = "empty"
             this.speed = "empty"
@@ -13,12 +12,12 @@ export class Race{
             this.subraces = "empty";
             this.url = "empty";
         }
-        else{
-            let languagesList = race.languages.reduce((acc,languages)=>{return acc +languages.name+", "},"");
-            let traitsList = race.traits.reduce((acc,traits)=>{return acc +traits.name+", "},"");
-            let subracesList = race.subraces.reduce((acc,subraces)=>{return acc +subraces.name+", "},"");
-            let starting_proficienciesList = race.starting_proficiencies.reduce((acc,starting_proficiencies)=>{return acc +starting_proficiencies.name+", "},"");
-            let ability_bonusesList = race.ability_bonuses.reduce((acc,ability_bonuses)=>{return acc +ability_bonuses.name+":"+ability_bonuses.bonus+", "},"");
+        else {
+            let languagesList = race.languages.reduce((acc, languages) => { return acc + languages.name + ", " }, "");
+            let traitsList = race.traits.reduce((acc, traits) => { return acc + traits.name + ", " }, "");
+            let subracesList = race.subraces.reduce((acc, subraces) => { return acc + subraces.name + ", " }, "");
+            let starting_proficienciesList = race.starting_proficiencies.reduce((acc, starting_proficiencies) => { return acc + starting_proficiencies.name + ", " }, "");
+            let ability_bonusesList = race.ability_bonuses.reduce((acc, ability_bonuses) => { return acc + ability_bonuses.name + ":" + ability_bonuses.bonus + ", " }, "");
 
             this.id = race.id;
             this.name = race.name;

@@ -1,71 +1,38 @@
 import { Global } from "./index.js";
-import { Observable, fromEvent } from 'rxjs';
-import {Race} from "./Race.js";
-import {SpellService} from "./SpellService.js";
+import { fromEvent } from 'rxjs';
+import { Race } from "./Race.js";
+import { SpellService } from "./SpellService.js";
+import { DBService } from "./DBService.js";
 
-export class RaceService{
+export class RaceService {
 
-    constructor()
-    {
-        this.AllRaces = this.GetAllRaces();
-        //this.GetAllRaces().subscribe(list=>{this.AllRaces = list; });
-
-        //console.log(this.AllRaces);
+    constructor() {
+        let DBMngr = new DBService();
+        this.AllRaces = DBMngr.GetAll("races");
     }
 
-    GetAllRaces(){
-        return Observable.create(generator => {
-            fetch("http://178.149.70.120:3000/races")
-            .then(x=>x.json())
-                .then(data=>{
-                    generator.next(
-                        data.map(race=>{
-                        return new Race(race);
-                        })
-                    );
-                });
-        });
-    }
-
-    GetRace(id){
-        if(!id){
-            return Observable.create(generator => {generator.next(new Race());})
-        }
-        else{
-            return Observable.create(generator => {
-                fetch(`http://178.149.70.120:3000/races/${id}`)
-                .then(x=>x.json())
-                    .then(data=>{
-                        generator.next(
-                            new Race(data)
-                        );
-                    });
-            });
-        }
-    }
-
-    ShowRacesTable(mainDiv, showRadio){
+    ShowRacesTable(mainDiv, showRadio) {
         var inputdiv = document.createElement("div");
-        inputdiv.className ="form-row align-items-center";
+        inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
-        if(showRadio){
+        if (showRadio) {
             var btndiv = document.createElement("div");
-            btndiv.className ="col-auto my-1";
+            btndiv.className = "col-auto my-1";
             inputdiv.appendChild(btndiv);
 
             var commitbtn = document.createElement("button");
             commitbtn.innerHTML = "Commit";
-            commitbtn.className ="btn btn-primary";
+            commitbtn.className = "btn btn-primary";
             btndiv.appendChild(commitbtn);
 
-            fromEvent(commitbtn, 'click').subscribe(function() {
+            fromEvent(commitbtn, 'click').subscribe(function () {
                 console.log("You have comitted a race");
-                const value =document.querySelector('input[name="exampleRadios"]:checked').value;
+                const value = document.querySelector('input[name="exampleRadios"]:checked').value;
                 console.log(value);
-                Global.race = document.querySelector('input[name="exampleRadios"]:checked').value;
+                Global.character.race = document.querySelector('input[name="exampleRadios"]:checked').value;
                 let SpellMngr = new SpellService();
-                if(showRadio){
-                mainDiv.innerHTML=`
+                if (showRadio) {
+                    mainDiv.innerHTML = `
                 <div class="container-fluid">
                     <blockquote class="blockquote">
                         <p class="mb-0">Choose your spells.</p>
@@ -78,35 +45,36 @@ export class RaceService{
             });
         }
         var serchdiv = document.createElement("div");
-        serchdiv.className ="col-sm-3 my-1";
+        serchdiv.className = "col-sm-3 my-1";
         inputdiv.appendChild(serchdiv);
 
         var search = document.createElement("input");
-        search.type="text";
-        search.id="myInput";
-        search.placeholder="Search for names..";
-        search.className="form-control";
+        search.type = "text";
+        search.id = "myInput";
+        search.placeholder = "Search for names..";
+        search.className = "form-control";
         serchdiv.appendChild(search);
 
         const input = fromEvent(search, 'input');
-        input.subscribe((typed) =>{
+        input.subscribe((typed) => {
             var filter;
-            filter = typed.target.value.toUpperCase(); 
-            this.AllRaces.subscribe((list)=>{
-                list = list.filter(race=>{      
-                    return race.name.toUpperCase().indexOf(filter)>=0
+            filter = typed.target.value.toUpperCase();
+            this.AllRaces.subscribe((list) => {
+                list = list.map(race => { return new Race(race); });
+                list = list.filter(race => {
+                    return race.name.toUpperCase().indexOf(filter) >= 0
                 });
                 this.FillTable(body, showRadio, list);
             })
         });
 
         var tabela = document.createElement("table");
-        tabela.className ="table table-striped table-hover";
+        tabela.className = "table table-striped table-hover";
         mainDiv.appendChild(tabela);
 
         var header = document.createElement("thead");
         tabela.appendChild(header);
-        header.innerHTML=`
+        header.innerHTML = `
         <tr>
         <th scope="col">ID</th>
         <th scope="col">Race Name</th>
@@ -126,35 +94,33 @@ export class RaceService{
         this.FillTable(body, showRadio);
     }
 
-    FillTable(body, showRadio, list){
-        if(list)
-        {
+    FillTable(body, showRadio, list) {
+        if (list) {
             this.MakeRows(body, showRadio, list)
         }
-        else
-        {
-            this.AllRaces.subscribe((list)=>{
+        else {
+            this.AllRaces.subscribe((list) => {
+                list = list.map(race => { return new Race(race); });
                 this.MakeRows(body, showRadio, list)
-            });   
+            });
         }
     }
 
-    MakeRows(body, showRadio, list)
-    {
+    MakeRows(body, showRadio, list) {
         body.innerHTML = "";
-        let item; 
-        list.forEach(race=>{
+        let item;
+        list.forEach(race => {
             item = document.createElement("tr");
             body.appendChild(item);
             this.FillRaceRow(item, race, showRadio);
-            if(showRadio)
-            item.onclick=function() {document.getElementById(`exampleRadios${race.id}`).checked = true;};
-            item.scope="row";
+            if (showRadio)
+                item.onclick = function () { document.getElementById(`exampleRadios${race.id}`).checked = true; };
+            item.scope = "row";
         });
     }
 
-    FillRaceRow(row, race, showRadio){
-        if(showRadio){
+    FillRaceRow(row, race, showRadio) {
+        if (showRadio) {
             row.innerHTML += `
             <td>    
                 <div class="form-check">
@@ -166,7 +132,7 @@ export class RaceService{
             </td>
             `;
         }
-        else{
+        else {
             row.innerHTML += `
             <td>${race.id}</td>
             `;
