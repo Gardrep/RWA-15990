@@ -2,6 +2,9 @@ import {
   GET_POKEMONS_FAIL,
   SET_POKEMONS,
   FILTER_POKEMONS,
+  FILTER_POKEMONS_BYHEALTH,
+  FILTER_POKEMONS_BYATTACK,
+  FILTER_POKEMONS_BYDEFENCE,
   CLEAR_POKEMONS,
 
   GET_USERS_FAIL,
@@ -48,6 +51,48 @@ export default function(state = initialState, action: { type: any; payload: any;
         displayedPokemons: pokemoni
       }
     }
+
+    case FILTER_POKEMONS_BYHEALTH:
+    {
+      let pokemoni=state.pokemons.filter((pokemon) => {
+        if( parseInt(pokemon.base.HP) === parseInt(action.payload))
+        {
+          return true;
+        }
+        return false;
+      });
+      return {...state,
+        displayedPokemons: pokemoni
+      }
+    }
+
+    case FILTER_POKEMONS_BYATTACK:
+      {
+        let pokemoni=state.pokemons.filter((pokemon) => {
+          if(parseInt(pokemon.base.Attack) === parseInt(action.payload))
+          {
+            return true;
+          }
+          return false;
+        });
+        return {...state,
+          displayedPokemons: pokemoni
+        }
+      }
+
+      case FILTER_POKEMONS_BYDEFENCE:
+        {
+          let pokemoni=state.pokemons.filter((pokemon) => {
+            if(parseInt(pokemon.base.Defense) === parseInt(action.payload))
+            {
+              return true;
+            }
+            return false;
+          });
+          return {...state,
+            displayedPokemons: pokemoni
+          }
+        }
 
     case CLEAR_POKEMONS:
         return {...state,

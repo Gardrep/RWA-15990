@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import Pokemon from './pokemon'
 import Search from './search'
+import SearchByHealth from './searchByHealth'
+import SearchByAttack from './searchByAttack';
+import SearchByDefence from './searchByDefence';
 import { connect } from 'react-redux'
 import { LinkContainer} from 'react-router-bootstrap';
 import * as pageActions from '../redux/actions/page'
@@ -17,6 +20,15 @@ class Page extends Component<any,any> {
 
   handleSearch(event) {
     this.props.filterPokemons(event.currentTarget.value)
+  }
+  handleSearchByHealth(event) {
+    this.props.filterPokemonsByHealth(event.currentTarget.value)
+  }
+  handleSearchByAttack(event) {
+    this.props.filterPokemonsByAttack(event.currentTarget.value)
+  }
+  handleSearchByDefence(event) {
+    this.props.filterPokemonsByDefence(event.currentTarget.value)
   }
 
   renderPokemon()
@@ -44,6 +56,9 @@ class Page extends Component<any,any> {
         {error && <div className="page__error">{error}</div>}
         <div className="page__search">
           <Search onChange={this.handleSearch.bind(this)} />
+          <SearchByHealth onChange={this.handleSearchByHealth.bind(this)} />
+          <SearchByAttack onChange={this.handleSearchByAttack.bind(this)} />
+          <SearchByDefence onChange={this.handleSearchByDefence.bind(this)} />
         </div>
         { <ul className="pokemons">{this.renderPokemon()}</ul>}
       </div>
@@ -67,7 +82,10 @@ function mapDispatchToProps(dispatch) {
   return {
   getCurrentUser:(state) => dispatch(userActions.getCurrentUser(state)),
   getPokemons:() => dispatch(pageActions.getPokemons()),
-  filterPokemons:(searchString)=> dispatch(pageActions.filterPokemons(searchString))
+  filterPokemons:(searchString)=> dispatch(pageActions.filterPokemons(searchString)),
+  filterPokemonsByHealth:(searchString)=> dispatch(pageActions.filterPokemonsByHealth(searchString)),
+  filterPokemonsByAttack:(searchString)=> dispatch(pageActions.filterPokemonsByAttack(searchString)),
+  filterPokemonsByDefence:(searchString)=> dispatch(pageActions.filterPokemonsByDefence(searchString))
   }
 }
 

@@ -1,13 +1,13 @@
 import React from 'react'
 
-const Search = ({onChange}) => (
+const SearchByDefence = ({onChange}) => (
   <input
     className="span_user"
     type="text"
     onChange={onChange}
-    placeholder="Enter pokemon name..."
+    placeholder="Enter pokemon defence..."
     autoFocus
   />
 )
 
-export default Search
+export default SearchByDefence
