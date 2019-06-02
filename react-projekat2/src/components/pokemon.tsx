@@ -1,6 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as userActions from '../redux/actions/user'
+import { withStyles} from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
+
+const HtmlTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: '#f5f5f9',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+    '& b': {
+      fontWeight: theme.typography.fontWeightMedium,
+    },
+    costom:{
+      zIndex: 200
+    }
+  },
+}))(Tooltip);
+
 class Pokemon extends Component<any,any> {
 
   printaj()
@@ -18,6 +38,7 @@ class Pokemon extends Component<any,any> {
 
   render() {
     const { pokemon } = this.props;
+    console.log(pokemon.base);
     let pictureID = "";
     if(pokemon.id<10)
     {
@@ -31,20 +52,37 @@ class Pokemon extends Component<any,any> {
       else
       {
         pictureID = pokemon.id;
-      }}
-
+      }
+    }
+      
 
     return (
-      <div className="pokemon">     
-        <button
-          id={pokemon.id}
-          onClick={(e) => this.printaj()}
-          type="button"
-          className="pokemon__sprite"
-          style={{
-           backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})`
-          }}
-        />
+      <div className="pokemon">
+        <HtmlTooltip
+        title={
+          <React.Fragment>
+            <Typography color="inherit">{pokemon.name.english}</Typography>
+            {"HP"}:{' '} <u>{pokemon.base.HP}</u><br/>
+            {"ATK"}:{' '} <u>{pokemon.base.Attack}</u><br/>
+            {"DEF"}:{' '} <u>{pokemon.base.Defense}</u><br/>
+            
+            {"Sp. Atk"}:{' '} <u>{pokemon.base.SpAttack}</u><br/>
+            {"Sp. Def"}:{' '} <u>{pokemon.base.SpDefense}</u><br/>
+            {"Speed"}:{' '} <u>{pokemon.base.Speed}</u><br/>
+            {"Type"}:{' '} <u>{ pokemon.type.map((type)=> type+ " ")}</u>
+          </React.Fragment>
+        }
+         >   
+          <button
+            id={pokemon.id}
+            onClick={(e) => this.printaj()}
+            //type="button"
+            className="pokemon__sprite"
+            style={{
+            backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})`
+            }}
+          />
+        </HtmlTooltip>  
         
         <div>
           <p className="pokemon__id">ID: {pokemon.id}</p>
