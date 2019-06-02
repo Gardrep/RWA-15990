@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Pokemon from './pokemon'
 import Search from './search'
 import { connect } from 'react-redux'
+import { LinkContainer} from 'react-router-bootstrap';
 import * as pageActions from '../redux/actions/page'
 import * as userActions from '../redux/actions/user'
 
@@ -21,13 +22,13 @@ class Page extends Component<any,any> {
   renderPokemon()
   {
       let { displayedPokemons, currentUser, IdStari } = this.props;
-      //console.log("ID Stari");
-      //console.log(IdStari);
       if(displayedPokemons){
         return displayedPokemons.map(pokemon => {
           return (
             <li className="pokemons__item" key={pokemon.id}>
-              <Pokemon pokemon={pokemon} currentUser = {currentUser} IdStari={IdStari} />
+              <LinkContainer  to="/home">
+                <Pokemon pokemon={pokemon} currentUser = {currentUser} IdStari={IdStari} />
+              </LinkContainer>
             </li>
             )
         })
@@ -38,7 +39,6 @@ class Page extends Component<any,any> {
 
   render() {
     let { error } = this.props
-    //debugger
     return (
       <div className="page">
         {error && <div className="page__error">{error}</div>}
@@ -54,8 +54,6 @@ class Page extends Component<any,any> {
 
 function mapStateToProps(state: any) {
   const { displayedPokemons, error, currentUser, IdStari } = state.page;
-  console.log("ID Stari");
-  console.log(IdStari);
 
   return {
     displayedPokemons,

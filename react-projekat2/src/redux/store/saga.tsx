@@ -1,6 +1,6 @@
 import { put, takeEvery, all} from 'redux-saga/effects'
-import {setPokemons, filterPokemons, redirectToPage} from '../actions/page'
-import {setUsers, setCurrentUser, redirectToHome, setIdStari} from '../actions/user'
+import {setPokemons, filterPokemons} from '../actions/page'
+import {setUsers, setCurrentUser,  setIdStari, redirectToHome} from '../actions/user'
 import {getPokemons, getUsers, getUser, setTeam} from '../../services/DBService'
 import { 
     GET_POKEMONS_REQUEST, 
@@ -35,10 +35,7 @@ export function* fetchTeam(actions) {
 }
 
 export function* postTeam(actions) {
-    //console.log("akcija");
-    //console.log(actions);
     yield setTeam(actions.user.id, actions.payload);
-    //yield put(getPokemonTeam(actions.user));
     yield redirectToHome();
 }
 
@@ -48,13 +45,10 @@ export function* fetchUsers() {
 }
 
 export function* setIdStariRequest(actions) {
-    yield put(setIdStari(actions.payload))
-    debugger
-    yield redirectToPage();
+    yield put(setIdStari(actions.payload));
 }
 
 export function* fetchCurrentUser(actions) {
-    //debugger
     yield put({type: CLEAR_CURRENT_USER})
     const allUsers = yield getUsers();
     const user = allUsers.find((user)=> user.username === actions.payload.username  && user.password === actions.payload.password)

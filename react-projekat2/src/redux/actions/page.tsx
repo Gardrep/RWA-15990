@@ -5,9 +5,6 @@ import {
   CLEAR_POKEMONS
 } from '../constants/page'
 
-export function redirectToPage() {
-  window.location.href = `/page`;
-}
 
 export function setPokemons(data) {
   return {

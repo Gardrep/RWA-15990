@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-//import AppBar from 'material-ui/AppBar';
 import AppBar from '@material-ui/core/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import { LinkContainer} from 'react-router-bootstrap';
 import { connect } from 'react-redux'
 import * as userActions from '../redux/actions/user'
 
@@ -18,14 +18,14 @@ constructor(props)
     password:""
   }
 }
-/*
-componentDidMount = () =>{
-  this.props.getUsers();
-}
-*/
-handleClick() {
+
+handleClickLogin() {
+  this.props.clearCurrentUser();
   this.props.getCurrentUser(this.state);
-  userActions.redirectToHome();
+}
+
+handleClickLogout() {
+  this.props.clearCurrentUser();
 }
 
 render() {
@@ -49,7 +49,13 @@ render() {
                onChange = {(event,newValue) => this.setState({password:newValue})}
                />
              <br/>
-             <RaisedButton label="Submit" primary={true}  onClick={(event) => this.handleClick()}/>
+             <LinkContainer onClick={(event) => this.handleClickLogin()} to="/home">
+             <RaisedButton label="Submit"  primary={true}  />
+            </LinkContainer>
+             
+            <LinkContainer onClick={(event) => this.handleClickLogout()} to="/home">
+            <RaisedButton label="Logout" className="span_user" primary={true}  />
+            </LinkContainer>
          </div>
          </MuiThemeProvider>
       </div>
@@ -60,8 +66,6 @@ render() {
 
 function mapStateToProps(state: any) {
   const { currentUser } = state.page;
-  //console.log(state);
-
   return {
     currentUser
   }
@@ -69,8 +73,8 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch) {
   return {
-  //getUsers:() => dispatch(userActions.getUsers()),
-  getCurrentUser:(state) => dispatch(userActions.getCurrentUser(state))
+  getCurrentUser:(state) => dispatch(userActions.getCurrentUser(state)),
+  clearCurrentUser:() => dispatch(userActions.clearCurrentUser())
   }
 }
 

@@ -3,6 +3,7 @@ import {
     SET_USERS,
     GET_CURRENT_USER_REQUEST,
     SET_CURRENT_USER,
+    CLEAR_CURRENT_USER,
     GET_TEAM_REQUEST,
     SET_TEAM_REQUEST,
     SET_IDOLD_REQUEST,
@@ -40,6 +41,14 @@ export function setCurrentUser(data) {
   }
 }
 
+export function clearCurrentUser() {
+  console.log("Obrisan iz local storeage");
+  localStorage.removeItem('token');
+  return {
+    type: CLEAR_CURRENT_USER,
+  }
+}
+
 export function redirectToHome() {
     window.location.href = `/home`;
 }
@@ -68,15 +77,9 @@ export function setIdStari(IdStari) {
   
 
 export function replacePokemonTeam(user, IdStari, IdNovi) {
-  console.log("--------------------------");
-  console.log(user);
-  console.log(IdStari);
-  console.log(IdNovi);
     let team = [];
     user.team.map((val)=>{
-     console.log(val.id +" VS "+ IdStari);
       if(parseInt(val.id) === parseInt(IdStari)){
-        console.log("upisan");
         return team.push({id: IdNovi});
       }
       else{
@@ -90,8 +93,7 @@ export function replacePokemonTeam(user, IdStari, IdNovi) {
       password: `${user.password}`,
       team: team
     }
-    console.log(model);
-    console.log("--------------------------");
+
   return {
     type: SET_TEAM_REQUEST,
     user: user,

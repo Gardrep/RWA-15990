@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import pokeball from './pokeball.png';
 import './App.css';
 import Page from './components/page'
-import { Navbar, Nav, NavDropdown} from 'react-bootstrap';
+import { Navbar, Nav} from 'react-bootstrap';
 import { LinkContainer} from 'react-router-bootstrap';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Login from './components/login';
@@ -18,10 +18,14 @@ class App extends Component<any,any>{
     const { currentUser } = this.props;
     if(currentUser){
       return(
-        <div>{currentUser.username}</div>
+        <div>Logged in as: {currentUser.username}</div>
       )
     }
-    return null;
+    else{
+      return(
+        <div>Login</div>
+      )
+    }
   }
 
   render(){
@@ -38,6 +42,7 @@ class App extends Component<any,any>{
                 <LinkContainer to="/page">
                 <Nav.Link >All pokemons</Nav.Link>
                 </LinkContainer>
+                {/*
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                   <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -45,8 +50,12 @@ class App extends Component<any,any>{
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                 </NavDropdown>
-                <LinkContainer to="/login">
-                <Nav.Link >{this.loadUser()}</Nav.Link>
+                */}
+
+              </Nav>
+              <Nav className="ml-auto">
+              <LinkContainer to="/login">
+                <Nav.Link className="ml-auto">{this.loadUser()}</Nav.Link>
                 </LinkContainer>
               </Nav>
             </Navbar.Collapse>

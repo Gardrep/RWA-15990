@@ -6,24 +6,18 @@ class Pokemon extends Component<any,any> {
   printaj()
  {
     const { currentUser, IdStari } = this.props;
-    console.log("ovo mi treba");
-    console.log(IdStari);
-    console.log(currentUser);
 
     if(currentUser && IdStari){
-      //debugger
       this.props.replacePokemonTeam(currentUser, IdStari, this.props.pokemon.id);
     }
     else{
-      console.log("CUrren user je NULL");
+      console.log("Currentuser je NULL");
     }
 
  }
 
   render() {
     const { pokemon } = this.props;
-    //console.log( this.props.IdStari);
-    //console.log("ndioashofrhsa");
     let pictureID = "";
     if(pokemon.id<10)
     {
@@ -48,7 +42,6 @@ class Pokemon extends Component<any,any> {
           type="button"
           className="pokemon__sprite"
           style={{
-           //backgroundImage: `url(${`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.props.id}.png`})`
            backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})`
           }}
         />
@@ -68,7 +61,6 @@ class Pokemon extends Component<any,any> {
 
 function mapStateToProps(state: any) {
   const { currentUser, IdStari } = state.page;
-
   return {
     currentUser,
     IdStari

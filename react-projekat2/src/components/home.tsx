@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Pokemon from './pokemon'
-//import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux'
+import { LinkContainer} from 'react-router-bootstrap';
 import * as userActions from '../redux/actions/user'
 import * as pageActions from '../redux/actions/page'
 
@@ -34,14 +34,7 @@ class Home extends Component<any,any> {
   }
 
   handleClick(IdStari) {
-    //const { currentUser } = this.props;
-    //neki nacin da dobijem ovu dvanesticu
-    //this.props.replacePokemonTeam(currentUser, IdStari, 63);
-
-    console.log("ovde ce nesto da se izdesava");
-    console.log(IdStari);
     this.props.setIdStariRequest(IdStari);
-    this.props.redirectToPage();
   }
 
   loadUserPokemons()
@@ -53,7 +46,9 @@ class Home extends Component<any,any> {
           <li className="pokemons__item" id={pokemon.id} key={pokemon.id}>
           <div>
             <Pokemon pokemon={pokemon} />
-            <button className="pokemon__change" onClick={() => this.handleClick(pokemon.id)} >Change</button>
+            <LinkContainer onClick={() => this.handleClick(pokemon.id)} to="/page">
+                <button className="pokemon__change btn"  >Change</button>
+            </LinkContainer>
           </div>
           </li>
         )
@@ -91,9 +86,8 @@ function mapDispatchToProps(dispatch) {
     getCurrentUser:(state) => dispatch(userActions.getCurrentUser(state)),
     getPokemonTeam:(data) => dispatch(userActions.getPokemonTeam(data)),
     clearPokemons:() => dispatch(pageActions.clearPokemons()),
-    replacePokemonTeam:(user, IdStari, IdNovi) => dispatch(userActions.replacePokemonTeam(user, IdStari, IdNovi)),
-    setIdStariRequest:(IdStari) => dispatch(userActions.setIdStariRequest(IdStari)),
-    redirectToPage:() => dispatch(pageActions.redirectToPage())
+    //replacePokemonTeam:(user, IdStari, IdNovi) => dispatch(userActions.replacePokemonTeam(user, IdStari, IdNovi)),
+    setIdStariRequest:(IdStari) => dispatch(userActions.setIdStariRequest(IdStari))
   }
 }
 
