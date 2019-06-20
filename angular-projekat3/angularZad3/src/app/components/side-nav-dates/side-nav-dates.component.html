@@ -1,0 +1,19 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="mysidenav myeventlist">
+    <mat-action-list class="myeventlist">
+      <button mat-list-item (click)="lastOpendDate.push(e)" *ngFor="let e of events">{{e}} </button>
+
+    </mat-action-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="myeventlist">
+    <button mat-button (click)="sidenav.toggle()">
+      <mat-icon aria-hidden="false">swap_horiz</mat-icon>
+    </button>
+        <p>Events:</p>
+      <div class="example-events">
+        <div *ngFor="let e of lastOpendDate">{{e}}</div>
+      </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
