@@ -1,7 +1,8 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="mysidenav myeventlist">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')"
+    class="mysidenav myeventlist">
     <mat-action-list class="myeventlist">
-      <button mat-list-item (click)="lastOpendDate.push(e)" *ngFor="let e of events">{{e}} </button>
+      <button mat-list-item (click)="lastOpendDataPoint.push(dp.myname())" *ngFor="let dp of dataPointList">{{dp.myname()}} </button>
 
     </mat-action-list>
   </mat-sidenav>
@@ -10,10 +11,12 @@
     <button mat-button (click)="sidenav.toggle()">
       <mat-icon aria-hidden="false">swap_horiz</mat-icon>
     </button>
-        <p>Events:</p>
-      <div class="example-events">
-        <div *ngFor="let e of lastOpendDate">{{e}}</div>
-      </div>
-
+    <button mat-button (click)="nekaFunkcija()">Create Data Point</button>
+    <div class="example-events">
+      <div *ngFor="let dp of lastOpendDataPoint">{{dp}}</div>
+    </div>
+    <div>
+      <app-data-point></app-data-point>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
