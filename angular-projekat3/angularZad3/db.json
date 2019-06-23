@@ -1,0 +1,34 @@
+{
+    "dataPoints":[
+    {
+      "ID": 0,
+      "name": "Ime nekog dana",
+      "date": "2019-06-23T19:40:57.034Z",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "ID": 1,
+      "name": "Nestolepo se desilo",
+      "date": "2019-06-23T19:40:57.034Z",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "ID": 7,
+      "name": "Prelep dan",
+      "date": "2019-06-23T19:40:57.034Z",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    }
+]
+}

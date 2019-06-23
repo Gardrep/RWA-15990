@@ -15,3 +15,4 @@ export const deleteDataPoint = createAction('[DataPoint/API] Delete DataPoint', 
 //export const deleteUsers = createAction('[DataPoint/API] Delete DataPoints', props<{ ids: string[] }>());
 //export const deleteUsersByPredicate = createAction('[DataPoint/API] Delete DataPoints By Predicate', props<{ predicate: Predicate<IDataPoint> }>());
 export const clearDataPoints = createAction('[DataPoint/API] Clear DataPoints');
+export const fetchDataPoints = createAction('[DataPoint/API] Fetch DataPoints');

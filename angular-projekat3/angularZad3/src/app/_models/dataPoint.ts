@@ -13,12 +13,13 @@ export class DataPoint implements IDataPoint{
     exercises?: Exercise[];
     activities?: Activities[];
 
-    constructor(ID:number, date: Date, name: string) {
+   // constructor(data?:DataPoint);
+    constructor(ID:number, name:string, date:Date, happy:number, dairy:string) {
         this.ID = !ID? 0:ID;
-        this.name = !name? "unnamed" : name;
-        this.date = !date?null:date;
-        this.happy = 0;
-        this.dairy = "empty";
+        this.name = !name? "unnamed":name;
+        this.date = !date? null:date;
+        this.happy = !happy?0:happy;
+        this.dairy = !dairy?"empty":dairy;
 
         this.consumables =[];
         this.exercises =[];

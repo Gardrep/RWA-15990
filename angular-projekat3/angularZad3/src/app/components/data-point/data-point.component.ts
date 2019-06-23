@@ -21,19 +21,21 @@ export class DataPointComponent implements OnInit {
   constructor(private store: Store<State>) { }
 
   ngOnInit() {
-    this.store.dispatch(dataPointActions.loadDataPoints({ dataPoints: [new DataPoint(10, new Date(), "tvoja mama")] }));
+    //this.store.dispatch(dataPointActions.loadDataPoints({ dataPoints: [new DataPoint(10, new Date(), "tvoja mama")] }));
     this.dataPoints$ = this.store.select(allReducers.selectAllDataPoints);
     this.dataIDS$ = this.store.select(allReducers.selectDataPointIds);
     this.dataPointss$ = Array();
     this.dataPoints$.subscribe((dps) => {
+      this.dataPointss$ = Array();
       dps.map((dp) => {
         this.dataPointss$.push(dp);
+        console.log(dp);
       })
     })
   }
 
   nekafunkcija() {
-    this.store.dispatch(dataPointActions.loadDataPoints({ dataPoints: [new DataPoint(0, new Date(), "tvoja mama3"), new DataPoint(1, new Date(), "tvoja mama4"), new DataPoint(2, new Date(), "tvoja mama5")] }))
+    //this.store.dispatch(dataPointActions.loadDataPoints({ dataPoints: [new DataPoint(50, new Date(), "Bas Lep Dan"), new DataPoint(41, new Date(), "Odlicno se provodim"), new DataPoint(22, new Date(), "Onaj jedan dan")] }))
     console.log(this.dataPoints$);
   }
 }
