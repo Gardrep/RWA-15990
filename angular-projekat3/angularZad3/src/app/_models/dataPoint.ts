@@ -28,6 +28,6 @@ export class DataPoint implements IDataPoint{
 
     myname?() {
         let datePipe = new DatePipe("en-US");
-        return this.ID+" " + datePipe.transform(this.date, "dd.MM.yyyy") + " " + this.happy;
+        return this.ID+" " + datePipe.transform(this.date, "dd.MM.yyyy") + " " + this.happy+ " " + this.name;
     }
 }

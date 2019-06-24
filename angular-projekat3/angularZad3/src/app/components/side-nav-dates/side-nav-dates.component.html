@@ -2,7 +2,7 @@
   <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')"
     class="mysidenav myeventlist">
     <mat-action-list class="myeventlist">
-      <button mat-list-item (click)="lastOpendDataPoint.push(dp.myname())" *ngFor="let dp of dataPointList">{{dp.myname()}} </button>
+      <button mat-list-item (click)="selectedDP = dp" *ngFor="let dp of dataPointList">{{dp.myname()}} </button>
 
     </mat-action-list>
   </mat-sidenav>
@@ -16,7 +16,7 @@
       <div *ngFor="let dp of lastOpendDataPoint">{{dp}}</div>
     </div>
     <div>
-      <app-data-point></app-data-point>
+      <app-data-point [dpThis$] = "selectedDP"></app-data-point>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

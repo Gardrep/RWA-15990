@@ -1,3 +1,5 @@
-<button (click)="nekafunkcija()">Neka funkcija</button>
-<!--<div>Current Count: {{ count$ }}</div>-->
-<div *ngFor="let dp of dataPointss$">{{dp.myname()}}</div>
+<button mat-button (click)="nekafunkcija()">Neka funkcija</button>
+<button mat-button (click)="AddSaveDP()">Add/Save this DataPoint</button>
+<!--<div>Current Count: {{ count$ }}</div>
+<div *ngFor="let dp of dataPointss$">{{dp.myname()}}</div>-->
+<div>{{dpThis$.myname()}}</div>
