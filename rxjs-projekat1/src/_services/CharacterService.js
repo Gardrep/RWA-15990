@@ -1,10 +1,12 @@
-import { Global } from "./index.js";
+import { Global } from "../index.js";
 import { fromEvent, zip } from 'rxjs';
-import { Character } from "./Character.js";
+import { Character } from "../_models/Character.js";
 import { ClassService } from "./ClassService.js";
 import { DBService } from "./DBService.js";
-import { Race } from './Race.js';
-import { Class } from "./Class.js";
+import { Race } from '../_models/Race.js';
+import { Class } from "../_models/Class.js";
+import { switchMap } from 'rxjs/operators';
+import { async } from "rxjs/internal/scheduler/async";
 
 export class CharacterService {
 
@@ -39,30 +41,30 @@ export class CharacterService {
 
         let DBMngr = new DBService();
         let spell = [];
-        fromEvent(commitbtn, 'click').subscribe(() => {
-            Global.character.spells.map(async (val) => {
-                await (() => {
-                    return new Promise((res, rej) => {
-                        DBMngr.Get("spells", val).subscribe((data) => {
-                            spell.push({
-                                id: `${val}`,
-                                name: `${data.name}`
-                            });
-                            res();
-                        })
-                    })
-                })();
-            });        
+
+        fromEvent(commitbtn, 'click').subscribe(async () => {
+            for(const val of Global.character.spells){
+                let data = await DBMngr.Get("spells", val).toPromise();
+                spell.push({
+                    id: `${val}`,
+                    name: `${data.name}`
+                });
+            }
+
             let model = {
                 name: `${Global.character.name}`,
                 class: `${Global.character.class}`,
                 race: `${Global.character.race}`,
                 spells: spell
             };
-            setTimeout(() => { DBMngr.PostById("characters", model); }, 200);
-            mainDiv.innerHTML = "";
-            this.ShowCharactersTable(mainDiv);
+
+            DBMngr.PostById("characters", model).then(() => {
+                mainDiv.innerHTML = "";
+                this.ShowCharactersTable(mainDiv);
+            });
         });
+
+
 
         fromEvent(discardbtn, 'click').subscribe(function () {
             Global.ShowBuild();

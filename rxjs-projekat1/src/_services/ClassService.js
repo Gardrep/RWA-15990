@@ -1,6 +1,6 @@
-import { Global } from "./index.js";
+import { Global } from "../index.js";
 import { Observable, fromEvent } from 'rxjs';
-import { Class } from "./Class.js";
+import { Class } from "../_models/Class.js";
 import { RaceService } from "./RaceService.js";
 import { DBService } from "./DBService.js";
 

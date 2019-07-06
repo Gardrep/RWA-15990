@@ -1,6 +1,6 @@
-import { User } from "./User.js";
+import { User } from "../_models/User.js";
 import { fromEvent } from 'rxjs';
-import { Global } from "./index.js";
+import { Global } from "../index.js";
 import { DBService } from "./DBService.js";
 
 export class UserService {

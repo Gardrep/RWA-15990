@@ -1,13 +1,13 @@
 import { zip } from 'rxjs';
-import { ClassService } from "./ClassService.js";
-import { RaceService } from "./RaceService.js";
-import { SpellService } from "./SpellService.js";
-import { CharacterService } from "./CharacterService.js";
-import { UserService } from './UserService.js';
-import { Race } from './Race.js';
-import { Class } from "./Class.js";
-import { DBService } from "./DBService.js";
-import { Character } from './Character.js';
+import { ClassService } from "./_services/ClassService.js";
+import { RaceService } from "./_services/RaceService.js";
+import { SpellService } from "./_services/SpellService.js";
+import { CharacterService } from "./_services/CharacterService.js";
+import { UserService } from './_services/UserService.js';
+import { Race } from './_models/Race.js';
+import { Class } from "./_models/Class.js";
+import { DBService } from "./_services/DBService.js";
+import { Character } from './_models/Character.js';
 
 let DBMngr = new DBService();
 

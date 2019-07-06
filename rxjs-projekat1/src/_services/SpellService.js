@@ -1,8 +1,9 @@
-import { Global } from "./index.js";
-import { fromEvent } from 'rxjs';
-import { Spell } from "./Spell.js";
+import { Global } from "../index.js";
+import { fromEvent, range, from } from 'rxjs';
+import { Spell } from "../_models/Spell.js";
 import { CharacterService } from "./CharacterService.js";
 import { DBService } from "./DBService.js";
+import { filter, toArray, map } from 'rxjs/operators';
 
 export class SpellService {
 
@@ -35,6 +36,8 @@ export class SpellService {
                 CharacterMngr.AddCharacter(mainDiv);
             });
         }
+
+        //----------------------------------------------------------NAME
         var serchdiv = document.createElement("div");
         serchdiv.className = "col-sm-2 my-1";
         inputdiv.appendChild(serchdiv);
@@ -50,8 +53,9 @@ export class SpellService {
             this.Filter(body, showRadio);
         });
 
+        //----------------------------------------------------------LEVEL
         var leveldiv = document.createElement("div");
-        leveldiv.className = "col-sm-2 my-1";
+        leveldiv.className = "my-1 mx-2";
         inputdiv.appendChild(leveldiv);
 
         var levelbtndiv = document.createElement("div");
@@ -72,11 +76,12 @@ export class SpellService {
         levelmenudiv.className = "dropdown-menu";
         levelbtndiv.appendChild(levelmenudiv);
 
-        let i, levellink;
-        for (i = 0; i < 10; i++) {
+        let levellink;
+        const numbers = range(0, 10);
+        numbers.subscribe(x => {
             levellink = document.createElement("a");
             levellink.className = "dropdown-item";
-            levellink.innerHTML = `${i}`;
+            levellink.innerHTML = `${x}`;
             levelmenudiv.appendChild(levellink);
 
             const level$ = fromEvent(levellink, 'click');
@@ -84,10 +89,50 @@ export class SpellService {
                 levelbtn.innerHTML = chosenlevel.path[0].innerHTML;
                 this.Filter(body, showRadio);
             });
-        }
+        });
 
+        //----------------------------------------------------------RANGE
+        var rangediv = document.createElement("div");
+        rangediv.className = "my-1 mx-2";
+        inputdiv.appendChild(rangediv);
+
+        var rangebtndiv = document.createElement("div");
+        rangebtndiv.className = "btn-group";
+        rangediv.appendChild(rangebtndiv);
+
+        var rangebtn = document.createElement("button");
+        rangebtn.innerHTML = "Range";
+        rangebtn.className = "btn btn-secondary btn-sm dropdown-toggle";
+        rangebtn.id = "rangeID";
+        rangebtn.type = "button";
+        rangebtn.setAttribute("data-toggle", "dropdown");
+        rangebtn.setAttribute("aria-haspopup", "true");
+        rangebtn.setAttribute("aria-expanded", "false");
+        rangebtndiv.appendChild(rangebtn);
+
+        var rangemenudiv = document.createElement("div");
+        rangemenudiv.className = "dropdown-menu";
+        rangebtndiv.appendChild(rangemenudiv);
+
+        let rangelink;
+        let RangeList = ["10 feet", "30 feet", "60 feet", "90 feet", "120 feet", "Touch", "Self"];
+        const rangeOptions = from(RangeList);
+        rangeOptions.subscribe(x => {
+            rangelink = document.createElement("a");
+            rangelink.className = "dropdown-item";
+            rangelink.innerHTML = `${x}`;
+            rangemenudiv.appendChild(rangelink);
+
+            const range$ = fromEvent(rangelink, 'click');
+            range$.subscribe((chosenRange) => {
+                rangebtn.innerHTML = chosenRange.path[0].innerHTML;
+                this.Filter(body, showRadio);
+            });
+        });
+
+        //----------------------------------------------------------RITUAL
         var ritualldiv = document.createElement("div");
-        ritualldiv.className = "col-sm-1 my-1";
+        ritualldiv.className = "my-1 mx-2";
         inputdiv.appendChild(ritualldiv);
 
         var ritualbtndiv = document.createElement("div");
@@ -97,7 +142,7 @@ export class SpellService {
         var ritualbtn = document.createElement("button");
         ritualbtn.innerHTML = "Ritual";
         ritualbtn.className = "btn btn-secondary btn-sm dropdown-toggle";
-        ritualbtn.id = "RitualID";
+        ritualbtn.id = "ritualID";
         ritualbtn.type = "button";
         ritualbtn.setAttribute("data-toggle", "dropdown");
         ritualbtn.setAttribute("aria-haspopup", "true");
@@ -109,28 +154,21 @@ export class SpellService {
         ritualbtndiv.appendChild(ritualmenudiv);
 
         let rituallink;
-        rituallink = document.createElement("a");
-        rituallink.className = "dropdown-item";
-        rituallink.innerHTML = "yes";
-        ritualmenudiv.appendChild(rituallink);
+        var ritual$;
+        let ritualList = ["yes", "no"];
+        const ritualOptions = from(ritualList);
+        ritualOptions.subscribe(x => {
+            rituallink = document.createElement("a");
+            rituallink.className = "dropdown-item";
+            rituallink.innerHTML = `${x}`;
+            ritualmenudiv.appendChild(rituallink);
 
-        var ritual$ = fromEvent(rituallink, 'click');
-        ritual$.subscribe((chosenritual) => {
-            ritualbtn.innerHTML = chosenritual.path[0].innerHTML;
-            this.Filter(body, showRadio);
+            ritual$ = fromEvent(rituallink, 'click');
+            ritual$.subscribe((chosenritual) => {
+                ritualbtn.innerHTML = chosenritual.path[0].innerHTML;
+                this.Filter(body, showRadio);
+            });
         });
-
-        rituallink = document.createElement("a");
-        rituallink.className = "dropdown-item";
-        rituallink.innerHTML = "no";
-        ritualmenudiv.appendChild(rituallink);
-
-        ritual$ = fromEvent(rituallink, 'click');
-        ritual$.subscribe((chosenritual) => {
-            ritualbtn.innerHTML = chosenritual.path[0].innerHTML;
-            this.Filter(body, showRadio);
-        });
-
 
         var tabela = document.createElement("table");
         tabela.className = "table table-striped table-hover";
@@ -153,6 +191,10 @@ export class SpellService {
         <th scope="col">Description</th>
         </tr>
         `;
+
+        var headerFilter = document.createElement("thead");
+        tabela.appendChild(headerFilter);
+
         var body = document.createElement("tbody");
         body.innerHTML = "";
         tabela.appendChild(body);
@@ -222,32 +264,32 @@ export class SpellService {
     }
 
     Filter(body, showRadio) {
+
         this.AllSpells.subscribe((list) => {
             list = list.map(spell => { return new Spell(spell); });
-            let filter;
-            filter = document.getElementById("myInput").value.toUpperCase();
-            if (filter != "") {
-                list = list.filter(spell => {
-                    return spell.name.toUpperCase().indexOf(filter) >= 0
-                });
-            }
+            let source = from(list);
 
-            if (!isNaN(document.getElementById("levelID").innerHTML)) {
-                list = list.filter(spell => {
-                    return spell.level == document.getElementById("levelID").innerHTML;
-                });
-            }
+            let filterName = document.getElementById("myInput").value.toUpperCase();
+            let filterLevel = document.getElementById("levelID").innerHTML;
+            let filterRange = document.getElementById("rangeID").innerHTML;
+            let filterRitual = document.getElementById("ritualID").innerHTML;
 
-            filter = document.getElementById("RitualID").innerHTML;
-            if (this.strcmp(filter, "Ritual")) {
-
-                list = list.filter(spell => {
-                    return !spell.ritual.localeCompare(filter);
-                });
-            }
-            this.FillTable(body, showRadio, list);
+            source.pipe(
+                filter(spell => {
+                    return filterName == "" || spell.name.toUpperCase().includes(filterName)
+                }),
+                filter(spell => {
+                    return isNaN(filterLevel) || spell.level == filterLevel;
+                }),
+                filter(spell => {
+                    return filterRange == "Range" || !spell.range.localeCompare(filterRange);
+                }),
+                filter(spell => {
+                    return filterRitual == "Ritual" || !spell.ritual.localeCompare(filterRitual);
+                }),
+                toArray()
+            ).subscribe(val => this.FillTable(body, showRadio, val));
         });
-
     }
     strcmp(a, b) {
         return (a < b ? -1 : (a > b ? 1 : 0));

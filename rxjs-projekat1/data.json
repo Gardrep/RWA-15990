@@ -16082,60 +16082,36 @@
       "id": 8
     },
     {
-      "name": "nesto",
-      "class": "8",
+      "name": "hey",
+      "class": "5",
       "race": "5",
       "spells": [
         {
-          "id": "5",
-          "name": "Alter Self"
-        }
-      ],
-      "id": 9
-    },
-    {
-      "name": "gdsgds",
-      "class": "2",
-      "race": "2",
-      "spells": [
+          "id": "2",
+          "name": "Acid Splash"
+        },
         {
           "id": "3",
           "name": "Aid"
         }
       ],
-      "id": 10
+      "id": 32
     },
     {
-      "name": "hfdsh",
-      "class": "1",
-      "race": "9",
+      "name": "hdsfds",
+      "class": "5",
+      "race": "5",
       "spells": [
         {
           "id": "3",
           "name": "Aid"
-        }
-      ],
-      "id": 11
-    },
-    {
-      "name": "gds",
-      "class": "4",
-      "race": "4",
-      "spells": [
-        {
-          "id": "133",
-          "name": "Gate"
         },
         {
-          "id": "19",
-          "name": "Astral Projection"
-        },
-        {
-          "id": "129",
-          "name": "Foresight"
+          "id": "4",
+          "name": "Alarm"
         }
       ],
-      "id": 12
+      "id": 33
     }
   ],
   "users": [

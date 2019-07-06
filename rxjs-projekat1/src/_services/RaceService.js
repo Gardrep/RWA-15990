@@ -1,6 +1,6 @@
-import { Global } from "./index.js";
+import { Global } from "../index.js";
 import { fromEvent } from 'rxjs';
-import { Race } from "./Race.js";
+import { Race } from "../_models/Race.js";
 import { SpellService } from "./SpellService.js";
 import { DBService } from "./DBService.js";
 
@@ -105,6 +105,7 @@ export class RaceService {
     }
 
     MakeRows(body, showRadio, list) {
+        body.innerHTML = "";
         body.innerHTML = "";
         let item;
         list.forEach(race => {

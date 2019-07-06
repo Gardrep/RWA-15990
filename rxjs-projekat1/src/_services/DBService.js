@@ -5,18 +5,19 @@ export class DBService {
   constructor() {
     this.baseUrl = "http://localhost:3000/";
   }
-
-  Set(where, data) {
-    let options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
+  /*
+    Set(where, data) {
+      let options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }
+      return fetch(`${this.baseUrl}${where}`, options)
+        .then((response) => response.json)
     }
-    return fetch(`${this.baseUrl}${where}`, options)
-      .then((response) => response.json)
-  }
+    */
 
   PostById(where, model) {
     let options = {
@@ -36,26 +37,30 @@ export class DBService {
         .then(x => x.json())
         .then(data => {
           generator.next(data);
+          generator.complete();
         });
     });
   }
 
   Get(table, id) {
     if (!id) {
-      return Observable.create(generator => { generator.next(""); })
+      return Observable.create(generator => { generator.next(""); generator.complete(); })
     }
     else {
       return Observable.create(generator => {
         fetch(`${this.baseUrl}${table}/${id}`)
           .then(x => x.json())
-          .then(data => { generator.next(data); });
+          .then(data => {
+            generator.next(data);
+            generator.complete();
+          });
       });
     }
   }
 
   GetSome(table, some) {
     if (!some) {
-      return Observable.create(generator => { generator.next(); })
+      return Observable.create(generator => { generator.next(); generator.complete(); })
     }
     else {
       return Observable.create(generator => {
@@ -66,6 +71,7 @@ export class DBService {
             .then(data => { list.push(data) });
         });
         generator.next(list);
+        generator.complete();
       });
     }
   }
