@@ -43,7 +43,7 @@ export class CharacterService {
         let spell = [];
 
         fromEvent(commitbtn, 'click').subscribe(async () => {
-            for(const val of Global.character.spells){
+            for (const val of Global.character.spells) {
                 let data = await DBMngr.Get("spells", val).toPromise();
                 spell.push({
                     id: `${val}`,

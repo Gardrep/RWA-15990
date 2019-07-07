@@ -11,7 +11,7 @@ export class Character{
             this.spells ;
         }
         else{
-        let spellsList = character.spells.reduce((acc,character)=>{return acc + character.name+", "},"");
+        let spellsList = character.spells.reduce((acc,character)=>{return acc + character.name+", "},"").slice(0, -2);
         this.id = character.id;
         this.name = character.name;
         this.class = character.class;

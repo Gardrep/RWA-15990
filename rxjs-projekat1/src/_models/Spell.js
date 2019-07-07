@@ -1,8 +1,8 @@
 export class Spell {
 
   constructor(spell) {
-    let classesList = spell.classes.reduce((acc, classes) => { return acc + classes.name + ", " }, "");
-    let subclassesList = spell.subclasses.reduce((acc, subclasses) => { return acc + subclasses.name + ", " }, "");
+    let classesList = spell.classes.reduce((acc, classes) => { return acc + classes.name + ", " }, "").slice(0, -2);
+    let subclassesList = spell.subclasses.reduce((acc, subclasses) => { return acc + subclasses.name + ", " }, "").slice(0, -2);
     this.id = spell.id;
     this.name = spell.name;
     this.desc = spell.desc;

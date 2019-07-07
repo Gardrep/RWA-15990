@@ -59,7 +59,7 @@ export const Global = {
             <td>${this.character.name}</td>
             <td>${showclass.name}</td>
             <td>${showrace.name}</td>
-            <td>${showspells}</td>
+            <td>${showspells.slice(0, -2)}</td>
             `
         });
     },
@@ -84,6 +84,7 @@ export const Global = {
 var mainDiv = document.querySelector(".mainDiv");
 
 //----RunOnStart----
+ShowLogin();
 ShowHome();
 let ClassMngr = new ClassService();
 let RaceMngr = new RaceService();
@@ -107,7 +108,9 @@ let BuildLink = document.querySelector("#BuildLink");
 BuildLink.onclick = function () { Global.ShowBuild(); }
 
 let LoginLink = document.querySelector("#LoginLink");
-LoginLink.onclick = function () {
+LoginLink.onclick = function () {  mainDiv.innerHTML = ""; LoginMngr.ShowLogin(mainDiv);}
+
+function ShowLogin(){
     let token = localStorage.getItem('token');
     if (!token) {
         mainDiv.innerHTML = "";
@@ -118,10 +121,6 @@ LoginLink.onclick = function () {
             Global.userID = token;
             let DBMngr = new DBService();
             DBMngr.Get("users", token).subscribe((user)=>document.getElementById("LoginLink").innerHTML = "Logged in as " + user.username);
-        }
-        else{
-            mainDiv.innerHTML = "";
-            LoginMngr.ShowLogin(mainDiv);
         }
     }
 }

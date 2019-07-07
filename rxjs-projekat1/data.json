@@ -16112,6 +16112,30 @@
         }
       ],
       "id": 33
+    },
+    {
+      "name": "marko",
+      "class": "5",
+      "race": "5",
+      "spells": [
+        {
+          "id": "291",
+          "name": "Thaumaturgy"
+        }
+      ],
+      "id": 34
+    },
+    {
+      "name": "NekoIme",
+      "class": "11",
+      "race": "3",
+      "spells": [
+        {
+          "id": "237",
+          "name": "Purify Food and Drink"
+        }
+      ],
+      "id": 35
     }
   ],
   "users": [

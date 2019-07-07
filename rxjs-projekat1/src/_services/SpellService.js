@@ -78,10 +78,10 @@ export class SpellService {
 
         let levellink;
         const numbers = range(0, 10);
-        numbers.subscribe(x => {
+        let AddLevel = (lvl)=>{
             levellink = document.createElement("a");
             levellink.className = "dropdown-item";
-            levellink.innerHTML = `${x}`;
+            levellink.innerHTML = `${lvl}`;
             levelmenudiv.appendChild(levellink);
 
             const level$ = fromEvent(levellink, 'click');
@@ -89,7 +89,10 @@ export class SpellService {
                 levelbtn.innerHTML = chosenlevel.path[0].innerHTML;
                 this.Filter(body, showRadio);
             });
-        });
+        };
+        AddLevel("Level");
+        numbers.subscribe(x => { AddLevel(x);});
+
 
         //----------------------------------------------------------RANGE
         var rangediv = document.createElement("div");
@@ -115,7 +118,7 @@ export class SpellService {
         rangebtndiv.appendChild(rangemenudiv);
 
         let rangelink;
-        let RangeList = ["10 feet", "30 feet", "60 feet", "90 feet", "120 feet", "Touch", "Self"];
+        let RangeList = ["Range", "10 feet", "30 feet", "60 feet", "90 feet", "120 feet", "Touch", "Self"];
         const rangeOptions = from(RangeList);
         rangeOptions.subscribe(x => {
             rangelink = document.createElement("a");
@@ -155,7 +158,7 @@ export class SpellService {
 
         let rituallink;
         var ritual$;
-        let ritualList = ["yes", "no"];
+        let ritualList = ["Ritual","yes", "no"];
         const ritualOptions = from(ritualList);
         ritualOptions.subscribe(x => {
             rituallink = document.createElement("a");
@@ -169,6 +172,65 @@ export class SpellService {
                 this.Filter(body, showRadio);
             });
         });
+
+        //----------------------------------------------------------CLASSES
+        var classdiv = document.createElement("div");
+        classdiv.className = "my-1 mx-2";
+        inputdiv.appendChild(classdiv);
+
+        var classbtndiv = document.createElement("div");
+        classbtndiv.className = "btn-group";
+        classdiv.appendChild(classbtndiv);
+
+        var classbtn = document.createElement("button");
+        classbtn.innerHTML = "Class";
+        classbtn.className = "btn btn-secondary btn-sm dropdown-toggle";
+        classbtn.id = "classID";
+        classbtn.type = "button";
+        classbtn.setAttribute("data-toggle", "dropdown");
+        classbtn.setAttribute("aria-haspopup", "true");
+        classbtn.setAttribute("aria-expanded", "false");
+        classbtndiv.appendChild(classbtn);
+
+        var classmenudiv = document.createElement("div");
+        classmenudiv.className = "dropdown-menu";
+        classbtndiv.appendChild(classmenudiv);
+
+        let classinput, classLabel, pomDiv;
+        let ClassList = ["Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"];
+        const classOptions = from(ClassList);
+        classOptions.subscribe(x => {
+            pomDiv = document.createElement("div");
+            pomDiv.classList.add("d-flex", "dropdown-item", "align-items-center")
+            classmenudiv.appendChild(pomDiv);
+
+
+            classinput = document.createElement("input");
+            classinput.type = "checkbox";
+            classinput.className = "mr-2";
+            classinput.id = `${x}`;
+            classinput.name = "cbx";
+            classinput.value = `${x}`;
+            //classinput.innerHTML = `${x}`;
+            pomDiv.appendChild(classinput);
+
+            classLabel = document.createElement("span");
+            classLabel.innerHTML = `${x}`;
+            classLabel.htmlFor = `${x}`;
+            pomDiv.appendChild(classLabel);
+            classLabel.onclick = ()=>{
+                
+                document.getElementById(`${x}`).checked = !document.getElementById(`${x}`).checked;
+            }
+            //<label for="subscribeNews">Subscribe to newsletter?</label>
+
+            const class$ = fromEvent(classinput, 'click');
+            class$.subscribe((chosenClass) => {
+                this.Filter(body, showRadio);
+            });
+        });
+
+        //------------------------------------------------------------------TABELA
 
         var tabela = document.createElement("table");
         tabela.className = "table table-striped table-hover";
@@ -273,6 +335,12 @@ export class SpellService {
             let filterLevel = document.getElementById("levelID").innerHTML;
             let filterRange = document.getElementById("rangeID").innerHTML;
             let filterRitual = document.getElementById("ritualID").innerHTML;
+            let filterClasses = [];
+            for(let pom of document.querySelectorAll(`input[name="cbx"]:checked`))
+            {
+                filterClasses.push(pom.value);
+            }
+            
 
             source.pipe(
                 filter(spell => {
@@ -287,11 +355,13 @@ export class SpellService {
                 filter(spell => {
                     return filterRitual == "Ritual" || !spell.ritual.localeCompare(filterRitual);
                 }),
+                filter(spell => {
+                    return filterClasses.length == 0 || filterClasses.reduce((acc, x) => {
+                        return acc || spell.classes.includes(x);
+                    }, false)
+                }),
                 toArray()
             ).subscribe(val => this.FillTable(body, showRadio, val));
         });
-    }
-    strcmp(a, b) {
-        return (a < b ? -1 : (a > b ? 1 : 0));
     }
 }

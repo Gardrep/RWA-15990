@@ -52,6 +52,7 @@ export class UserService {
       Global.userID = "";
       document.getElementById("LoginLink").innerHTML = "Login";
       alert("Logged out successfully");
+      localStorage.removeItem('token');
     });
   }
 
