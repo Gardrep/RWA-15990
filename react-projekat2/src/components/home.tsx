@@ -22,11 +22,9 @@ class Home extends Component<any,any> {
       else{this.props.getPokemonTeam(currentUser)}
       return(
         <div>
-          <p >
           <span className="span_user">ID:{currentUser.id}</span>
           <span className="span_user">Username:{currentUser.username}</span>
           <span className="span_user">Password:{currentUser.password}</span>
-          </p>
         </div>
       )
     }
@@ -72,7 +70,6 @@ render() {
 
 function mapStateToProps(state: any) {
   const { currentUser, pokemons, error } = state.page;
-  //console.log(state.page)
   return {
     currentUser,
     pokemons,
@@ -86,7 +83,6 @@ function mapDispatchToProps(dispatch) {
     getCurrentUser:(state) => dispatch(userActions.getCurrentUser(state)),
     getPokemonTeam:(data) => dispatch(userActions.getPokemonTeam(data)),
     clearPokemons:() => dispatch(pageActions.clearPokemons()),
-    //replacePokemonTeam:(user, IdStari, IdNovi) => dispatch(userActions.replacePokemonTeam(user, IdStari, IdNovi)),
     setIdStariRequest:(IdStari) => dispatch(userActions.setIdStariRequest(IdStari))
   }
 }

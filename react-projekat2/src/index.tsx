@@ -1,5 +1,4 @@
 import React from 'react';
-//import ReactDOM from 'react-dom';
 import { render } from 'react-dom';
 
 import './index.css';
@@ -16,6 +15,3 @@ render(
   </div>,
   document.getElementById('root')
 )
-
-//import * as serviceWorker from './serviceWorker';
-//serviceWorker.unregister();

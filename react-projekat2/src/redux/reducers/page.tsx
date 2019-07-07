@@ -5,6 +5,7 @@ import {
   FILTER_POKEMONS_BYHEALTH,
   FILTER_POKEMONS_BYATTACK,
   FILTER_POKEMONS_BYDEFENCE,
+  FILTER_POKEMONS_ALL,
   CLEAR_POKEMONS,
 
   GET_USERS_FAIL,
@@ -19,121 +20,130 @@ import {
 
 
 
-const initialState  = {
+const initialState = {
   error: null,
   pokemons: [],
   displayedPokemons: [],
-  users:[],
+  users: [],
   currentUser: null,
   IdStari: null
 }
 
-export default function(state = initialState, action: { type: any; payload: any; }) {
+export default function (state = initialState, action: { type: any; payload: any; }) {
   switch (action.type) {
 
     case GET_POKEMONS_FAIL:
-      return {...state,
+      return {
+        ...state,
         error: action.payload
       }
 
     case SET_POKEMONS:
 
-      return {...state,
+      return {
+        ...state,
         pokemons: action.payload
       }
 
     case FILTER_POKEMONS:
-    {
-      let pokemoni=state.pokemons.filter((pokemon) => {
-        return pokemon.name.english.includes(action.payload);
-      });
-      return {...state,
-        displayedPokemons: pokemoni
-      }
-    }
-
-    case FILTER_POKEMONS_BYHEALTH:
-    {
-      let pokemoni=state.pokemons.filter((pokemon) => {
-        if( parseInt(pokemon.base.HP) === parseInt(action.payload))
-        {
-          return true;
-        }
-        return false;
-      });
-      return {...state,
-        displayedPokemons: pokemoni
-      }
-    }
-
-    case FILTER_POKEMONS_BYATTACK:
       {
-        let pokemoni=state.pokemons.filter((pokemon) => {
-          if(parseInt(pokemon.base.Attack) === parseInt(action.payload))
-          {
-            return true;
-          }
-          return false;
-        });
-        return {...state,
+        let pokemoni = state.pokemons.filter((pokemon) => { return pokemon.name.english.includes(action.payload) });
+        return {
+          ...state,
           displayedPokemons: pokemoni
         }
       }
 
-      case FILTER_POKEMONS_BYDEFENCE:
-        {
-          let pokemoni=state.pokemons.filter((pokemon) => {
-            if(parseInt(pokemon.base.Defense) === parseInt(action.payload))
-            {
-              return true;
-            }
-            return false;
-          });
-          return {...state,
-            displayedPokemons: pokemoni
-          }
+    case FILTER_POKEMONS_BYHEALTH:
+      {
+        let pokemoni = state.pokemons.filter((pokemon) => { return parseInt(pokemon.base.HP) === parseInt(action.payload) });
+        return {
+          ...state,
+          displayedPokemons: pokemoni
         }
+      }
+
+    case FILTER_POKEMONS_BYATTACK:
+      {
+        let pokemoni = state.pokemons.filter((pokemon) => { return parseInt(pokemon.base.Attack) === parseInt(action.payload) });
+        return {
+          ...state,
+          displayedPokemons: pokemoni
+        }
+      }
+
+    case FILTER_POKEMONS_BYDEFENCE:
+      {
+        let pokemoni = state.pokemons.filter((pokemon) => { return parseInt(pokemon.base.Defense) === parseInt(action.payload) });
+        return {
+          ...state,
+          displayedPokemons: pokemoni
+        }
+      }
+
+    case FILTER_POKEMONS_ALL:
+      {
+        let pokemoni = state.pokemons
+          .filter((pokemon) => { return !action.payload.searchString || pokemon.name.english.includes(action.payload.searchString) })
+          .filter((pokemon) => { return isNaN(action.payload.searchHP) || parseInt(pokemon.base.HP) === parseInt(action.payload.searchHP) })
+          .filter((pokemon) => { return isNaN(action.payload.searchATK) || parseInt(pokemon.base.Attack) === parseInt(action.payload.searchATK) })
+          .filter((pokemon) => { return isNaN(action.payload.searchDEF) || parseInt(pokemon.base.Defense) === parseInt(action.payload.searchDEF) })
+          .filter((pokemon) => { 
+            return action.payload.searchTypes.length === 0 || action.payload.searchTypes.reduce((acc, x) => {
+            return acc && pokemon.type.includes(x);
+        }, true) });
+          
+        return {
+          ...state,
+          displayedPokemons: pokemoni
+        }
+      }
 
     case CLEAR_POKEMONS:
-        return {...state,
-          pokemons: null
-        }
+      return {
+        ...state,
+        pokemons: null
+      }
 
     case SET_USERS:
-      return {...state,
+      return {
+        ...state,
         users: action.payload
       }
 
     case GET_USERS_FAIL:
-        return {...state,
-          error: action.payload
-        }
-  
+      return {
+        ...state,
+        error: action.payload
+      }
+
     case SET_CURRENT_USER:
-      return {...state,
+      return {
+        ...state,
         currentUser: action.payload
       }
 
     case GET_CURRENT_USER_FAIL:
-        return {...state,
-          error: action.payload
-        }
+      return {
+        ...state,
+        error: action.payload
+      }
 
     case CLEAR_CURRENT_USER:
-        return {...state,
-          currentUser: null
-        }
+      return {
+        ...state,
+        currentUser: null
+      }
 
-    case SET_IDOLD:{
-      console.log("deff ulazi idStari u store");
-      console.log(action.payload);
-      //debugger
-      return {...state,
+    case SET_IDOLD: {
+      return {
+        ...state,
         IdStari: action.payload
       }
     }
     case CLEAR_IDOLD:
-      return {...state,
+      return {
+        ...state,
         IdStari: null
       }
 

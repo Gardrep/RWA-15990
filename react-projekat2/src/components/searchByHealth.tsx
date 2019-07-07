@@ -1,13 +1,14 @@
 import React from 'react'
 
-const searchByHealth = ({onChange}) => (
+const SearchByHealth = ({ onChange }) => (
   <input
-    className="span_user"
-    type="text"
+    className="mr-2"
+    type="number"
+    id="searchHP"
     onChange={onChange}
     placeholder="Enter pokemon health..."
     autoFocus
   />
 )
 
-export default searchByHealth
+export default SearchByHealth

@@ -1,21 +1,19 @@
 import {
-    GET_USERS_REQUEST,
-    SET_USERS,
-    GET_CURRENT_USER_REQUEST,
-    SET_CURRENT_USER,
-    CLEAR_CURRENT_USER,
-    GET_TEAM_REQUEST,
-    SET_TEAM_REQUEST,
-    SET_IDOLD_REQUEST,
-    SET_IDOLD
-  } from '../constants/page'
-  
+  GET_USERS_REQUEST,
+  SET_USERS,
+  GET_CURRENT_USER_REQUEST,
+  SET_CURRENT_USER,
+  CLEAR_CURRENT_USER,
+  GET_TEAM_REQUEST,
+  SET_TEAM_REQUEST,
+  SET_IDOLD_REQUEST,
+  SET_IDOLD
+} from '../constants/page'
 
-    
 export function getUsers() {
   return {
-      type: GET_USERS_REQUEST
-    }
+    type: GET_USERS_REQUEST
+  }
 }
 
 export function setUsers(data) {
@@ -26,14 +24,14 @@ export function setUsers(data) {
 }
 
 export function getCurrentUser(data) {
-return {
+  return {
     type: GET_CURRENT_USER_REQUEST,
     payload: data
   }
 }
 
 export function setCurrentUser(data) {
-  console.log("stvarno se upisao u local storage as token");
+  console.log("Stvarno se upisao u local storage");
   localStorage.setItem('token', JSON.stringify(data));
   return {
     type: SET_CURRENT_USER,
@@ -50,19 +48,18 @@ export function clearCurrentUser() {
 }
 
 export function redirectToHome() {
-    window.location.href = `/home`;
+  window.location.href = `/home`;
 }
-
 
 export function getPokemonTeam(data) {
   return {
-      type: GET_TEAM_REQUEST,
-      payload: data.team
-    }
+    type: GET_TEAM_REQUEST,
+    payload: data.team
+  }
 }
 
 export function setIdStariRequest(IdStari) {
-return {
+  return {
     type: SET_IDOLD_REQUEST,
     payload: IdStari
   }
@@ -70,29 +67,28 @@ return {
 
 export function setIdStari(IdStari) {
   return {
-      type: SET_IDOLD,
-      payload: IdStari
-    }
+    type: SET_IDOLD,
+    payload: IdStari
   }
-  
+}
 
 export function replacePokemonTeam(user, IdStari, IdNovi) {
-    let team = [];
-    user.team.map((val)=>{
-      if(parseInt(val.id) === parseInt(IdStari)){
-        return team.push({id: IdNovi});
-      }
-      else{
-        return team.push({id: parseInt(val.id)});
-      }
-    })
-
-    let model = {
-      id: `${user.id}`,
-      username: `${user.username}`,
-      password: `${user.password}`,
-      team: team
+  let team = [];
+  user.team.map((val) => {
+    if (parseInt(val.id) === parseInt(IdStari)) {
+      return team.push({ id: IdNovi });
     }
+    else {
+      return team.push({ id: parseInt(val.id) });
+    }
+  })
+
+  let model = {
+    id: `${user.id}`,
+    username: `${user.username}`,
+    password: `${user.password}`,
+    team: team
+  }
 
   return {
     type: SET_TEAM_REQUEST,
@@ -102,14 +98,9 @@ export function replacePokemonTeam(user, IdStari, IdNovi) {
 }
 
 export function setPokemonTeam(user, model) {
-return {
+  return {
     type: SET_TEAM_REQUEST,
     user: user,
     payload: model
   }
 }
-
-
-
-
-  

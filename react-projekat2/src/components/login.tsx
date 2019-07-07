@@ -3,66 +3,63 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import { LinkContainer} from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux'
 import * as userActions from '../redux/actions/user'
 
+class Login extends Component<any, any> {
 
-class Login extends Component<any,any> {
-
-constructor(props)
-{
-  super(props);
-  this.state={
-    username:"",
-    password:""
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: ""
+    }
   }
-}
 
-handleClickLogin() {
-  this.props.clearCurrentUser();
-  this.props.getCurrentUser(this.state);
-}
+  handleClickLogin() {
+    this.props.clearCurrentUser();
+    this.props.getCurrentUser(this.state);
+  }
 
-handleClickLogout() {
-  this.props.clearCurrentUser();
-}
+  handleClickLogout() {
+    this.props.clearCurrentUser();
+  }
 
-render() {
+  render() {
     return (
       <div className="form-popup">
         <MuiThemeProvider>
           <div>
-          <AppBar
-             title="Login"
-           />
-           <TextField
-             hintText="Enter your Username"
-             floatingLabelText="Username"
-             onChange = {(event,newValue) => this.setState({username:newValue})}
-             />
-           <br/>
-             <TextField
-               type="password"
-               hintText="Enter your Password"
-               floatingLabelText="Password"
-               onChange = {(event,newValue) => this.setState({password:newValue})}
-               />
-             <br/>
-             <LinkContainer onClick={(event) => this.handleClickLogin()} to="/home">
-             <RaisedButton label="Submit"  primary={true}  />
+            <AppBar
+              title="Login"
+            />
+            <TextField
+              hintText="Enter your Username"
+              floatingLabelText="Username"
+              onChange={(event, newValue) => this.setState({ username: newValue })}
+            />
+            <br />
+            <TextField
+              type="password"
+              hintText="Enter your Password"
+              floatingLabelText="Password"
+              onChange={(event, newValue) => this.setState({ password: newValue })}
+            />
+            <br />
+            <LinkContainer onClick={(event) => this.handleClickLogin()} to="/home">
+              <RaisedButton label="Submit" primary={true} />
             </LinkContainer>
-             
+
             <LinkContainer onClick={(event) => this.handleClickLogout()} to="/home">
-            <RaisedButton label="Logout" className="span_user" primary={true}  />
+              <RaisedButton label="Logout" className="span_user" primary={true} />
             </LinkContainer>
-         </div>
-         </MuiThemeProvider>
+          </div>
+        </MuiThemeProvider>
       </div>
     );
   }
 }
-
 
 function mapStateToProps(state: any) {
   const { currentUser } = state.page;
@@ -73,9 +70,9 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch) {
   return {
-  getCurrentUser:(state) => dispatch(userActions.getCurrentUser(state)),
-  clearCurrentUser:() => dispatch(userActions.clearCurrentUser())
+    getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state)),
+    clearCurrentUser: () => dispatch(userActions.clearCurrentUser())
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

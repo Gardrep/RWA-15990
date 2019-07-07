@@ -1,9 +1,10 @@
 import React from 'react'
 
-const Search = ({onChange}) => (
+const Search = ({ onChange }) => (
   <input
-    className="span_user"
+    className="mr-2"
     type="text"
+    id="searchName"
     onChange={onChange}
     placeholder="Enter pokemon name..."
     autoFocus

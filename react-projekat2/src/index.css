@@ -53,15 +53,12 @@ body {
   overflow: hidden;
   background-color: #eee;
   cursor: pointer;
+  border-radius: 3px;
 }
 
 .pokemon__change {
   position: relative;
-  /*z-index: 20000;*/
-  /*overflow: hidden;*/
   background-color: rgba(0, 0, 0, 0.5);
-  /*cursor: pointer;*/
-  width: 160px;
 }
 
 .pokemon__sprite {
@@ -70,7 +67,6 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  /*z-index: 2;*/
   border: none;
   background-color: transparent;
   background-position: center center;
@@ -101,14 +97,11 @@ body {
 
 .pokemon__hp {
   position: absolute;
-  right: 0;
+  right: 5px;
   bottom: 1;
-  /*left: 0;*/
   z-index: 2;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.5);
   color: #009900;
-  /*text-align: center;*/
   font-weight: bold;
   font-size: 14px;
   pointer-events: none;
@@ -116,14 +109,11 @@ body {
 
 .pokemon__atk {
   position: absolute;
-  /*right: 0;*/
   bottom: 0;
-  left: 0;
+  left: 5px;
   z-index: 2;
   margin-bottom: 21px;
-  background-color: rgba(0, 0, 0, 0.5);
   color: #ae3618;
-  /*text-align: center;*/
   font-weight: bold;
   font-size: 14px;
   pointer-events: none;
@@ -131,14 +121,11 @@ body {
 
 .pokemon__def {
   position: absolute;
-  right: 0;
+  right: 5px;
   bottom: 0;
-  /*left: 0;*/
   z-index: 2;
   margin-bottom: 21px;
-  background-color: rgba(0, 0, 0, 0.5);
   color: #2787ab;
-  /*text-align: center;*/
   font-weight: bold;
   font-size: 14px;
   pointer-events: none;
@@ -146,14 +133,11 @@ body {
 
 .pokemon__id {
   position: absolute;
-  /*right: 0;*/
   bottom: 1;
-  left: 0;
+  left: 5px;
   z-index: 2;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  /*text-align: center;*/
+  color: #000;
   font-weight: bold;
   font-size: 14px;
   pointer-events: none;
