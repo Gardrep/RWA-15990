@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 export class DBService {
 
   constructor() {
-    this.baseUrl = "http://localhost:3000/";
+    this.baseUrl = "http://localhost:3002/";
   }
   /*
     Set(where, data) {

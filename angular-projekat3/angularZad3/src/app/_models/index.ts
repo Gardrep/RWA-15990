@@ -4,3 +4,5 @@ export * from './exercise';
 export * from './eExercise';
 export * from './activities';
 export * from './eActivities';
+
+export * from './dataPoint';

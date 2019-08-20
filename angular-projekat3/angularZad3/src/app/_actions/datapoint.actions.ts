@@ -3,7 +3,8 @@ import { Update, EntityMap, Predicate } from '@ngrx/entity';
  
 import { IDataPoint } from '../_models/IDataPoint';
  
-export const loadDataPoints = createAction('[DataPoint/API] Load DataPoints', props<{ dataPoints: IDataPoint[] }>());
+export const loadDataPoints = createAction('[DataPoint/API] Load DataPoints');
+export const loadDataPointsSuccsess = createAction('[DataPoint/API] Load DataPoints Succsess', props<{ dataPoints: IDataPoint[] }>());
 export const addDataPoint = createAction('[DataPoint/API] Add DataPoint', props<{ dataPoint: IDataPoint }>());
 //export const upsertDataPoint = createAction('[DataPoint/API] Upsert DataPoint', props<{ dataPoint: IDataPoint }>());
 //export const addUsers = createAction('[DataPoint/API] Add DataPoints', props<{ dataPoints: IDataPoint[] }>());

@@ -1,20 +1,41 @@
 {
-    "dataPoints":[
+  "dataPoints": [
     {
       "ID": 0,
       "name": "Ime nekog dana",
       "date": "2019-06-23T19:40:57.034Z",
-      "happy": 0,
+      "happy": 7,
       "dairy": "empty",
       "consumables": [],
-      "exercises": [],
+      "exercises": [
+        {
+          "name": "Gym1",
+          "effectiveness": "85",
+          "startsOn": "2019-06-23T19:40:57.034Z",
+          "endsOn": "2019-06-23T20:40:57.034Z",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": ""
+        },
+        {
+          "name": "Running1",
+          "effectiveness": "65",
+          "startsOn": "2019-06-23T12:40:57.034Z",
+          "endsOn": "2019-06-23T13:20:57.034Z",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": ""
+        }
+      ],
       "activities": []
     },
     {
       "ID": 1,
       "name": "Nestolepo se desilo",
       "date": "2019-06-23T19:40:57.034Z",
-      "happy": 0,
+      "happy": 10,
       "dairy": "empty",
       "consumables": [],
       "exercises": [],
@@ -24,11 +45,11 @@
       "ID": 7,
       "name": "Prelep dan",
       "date": "2019-06-23T19:40:57.034Z",
-      "happy": 0,
+      "happy": 3,
       "dairy": "empty",
       "consumables": [],
       "exercises": [],
       "activities": []
     }
-]
+  ]
 }

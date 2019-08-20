@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "./node_modules/.bin/webpack-dev-server --host 0.0.0.0",
-    "server": "json-server data.json --host localhost"
+    "server": "json-server data.json --host localhost --port 3002"
   },
   "author": "",
   "license": "ISC",

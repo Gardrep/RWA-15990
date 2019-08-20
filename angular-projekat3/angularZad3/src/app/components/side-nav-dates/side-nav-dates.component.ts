@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DataPoint } from 'src/app/_models/dataPoint';
-import * as DBMngr from '../../_services/DBService';
+//import { DataPointService } from '../../_services/data-point.service';
 import { State } from 'src/app/_reducers';
 import { Store } from '@ngrx/store';
 import * as dataPointActions from '../../_actions/datapoint.actions';
 import { IDataPoint } from 'src/app/_models/IDatapoint';
 import { Observable } from 'rxjs';
 import * as allReducers from '../../_reducers';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-side-nav-dates',
@@ -22,18 +23,22 @@ export class SideNavDatesComponent implements OnInit {
 
   dataPoints$: Observable<IDataPoint[]>;
   dataPointList: DataPoint[] = [];
+  selectedDP: DataPoint;
 
 
   constructor(private store: Store<State>) { }
 
   ngOnInit() {
-    DBMngr.getDataPoints().then((datalist) => {
+    /*let DBMngr : DataPointService;
       let list: DataPoint[];
-      list = datalist.map((data) => {
-        return new DataPoint(data.ID, data.name, data.date, data.happy, data.dairy);
-      })
-      this.store.dispatch(dataPointActions.loadDataPoints({ dataPoints: list }));
-    });
+      DBMngr.getDataPoints().subscribe((datalist)=>{
+        list = datalist.map((data) => {
+          return new DataPoint(data.ID, data.name, data.date, data.happy, data.dairy);
+        })
+        this.store.dispatch(dataPointActions.loadDataPointsSuccsess({ dataPoints: list }));
+      });
+      */
+      this.store.dispatch(dataPointActions.loadDataPoints());
 
     this.dataPoints$ = this.store.select(allReducers.selectAllDataPoints);
     this.dataPointList = Array();
@@ -53,5 +58,15 @@ export class SideNavDatesComponent implements OnInit {
 
   getRandomArbitrary(min, max) {
     return parseInt(Math.random() * (max - min) + min);
+  }
+
+  showDP(dp:DataPoint){
+    let datePipe = new DatePipe("en-US");
+    return "ID:" +dp.ID+"   " + datePipe.transform(dp.date, "dd.MM.yyyy") + "\nHappy: " + dp.happy+ "\n" + dp.name;
+  }
+
+  selectDP(dp: DataPoint){
+    console.log(dp);
+    this.selectedDP = dp;
   }
 }

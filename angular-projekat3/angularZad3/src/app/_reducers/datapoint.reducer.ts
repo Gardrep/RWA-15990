@@ -60,7 +60,7 @@ export const initialState: State = adapter.getInitialState({
     on(DataPointActions.deleteUsersByPredicate, (state, { predicate }) => {
       return adapter.removeMany(predicate, state);
     }),*/
-    on(DataPointActions.loadDataPoints, (state, { dataPoints }) => {
+    on(DataPointActions.loadDataPointsSuccsess, (state, { dataPoints }) => {
       return adapter.addAll(dataPoints, state);
     }),
     on(DataPointActions.clearDataPoints, state => {

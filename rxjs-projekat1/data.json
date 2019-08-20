@@ -16136,6 +16136,18 @@
         }
       ],
       "id": 35
+    },
+    {
+      "name": "Deneretor",
+      "class": "7",
+      "race": "4",
+      "spells": [
+        {
+          "id": "29",
+          "name": "Bless"
+        }
+      ],
+      "id": 36
     }
   ],
   "users": [

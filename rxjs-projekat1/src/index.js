@@ -84,13 +84,13 @@ export const Global = {
 var mainDiv = document.querySelector(".mainDiv");
 
 //----RunOnStart----
-ShowLogin();
-ShowHome();
 let ClassMngr = new ClassService();
 let RaceMngr = new RaceService();
 let SpellMngr = new SpellService();
 let CharacterMngr = new CharacterService();
 let LoginMngr = new UserService();
+ShowLogin();
+ShowHome();
 
 let ClassesLink = document.querySelector("#ClassesLink");
 ClassesLink.onclick = function () { mainDiv.innerHTML = ""; ClassMngr.ShowClassesTable(mainDiv, false); }

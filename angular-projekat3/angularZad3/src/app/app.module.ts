@@ -10,18 +10,27 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatIconModule,
-  MatListModule
+  MatListModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatFormFieldModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MenuNavComponent } from './components/menu-nav/menu-nav.component';
 import { SideNavDatesComponent } from './components/side-nav-dates/side-nav-dates.component';
 import { DataPointComponent } from './components/data-point/data-point.component';
+import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { ChartsModule } from 'ng2-charts';
 
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './_reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment'; // Angular CLI environemnt
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects'; // Angular CLI environemnt
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -29,7 +38,8 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     AppComponent,
     MenuNavComponent,
     SideNavDatesComponent,
-    DataPointComponent
+    DataPointComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule,
@@ -41,13 +51,25 @@ import { environment } from '../environments/environment'; // Angular CLI enviro
     }),
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     MatMenuModule,
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatDatepickerModule, 
+    MatNativeDateModule,
+    MatFormFieldModule,
+    ChartsModule,
+    HttpClientModule,
+    EffectsModule.forRoot([AppEffects])
+  ],
+  exports:[    
+    MatDatepickerModule, 
+    MatNativeDateModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent, MenuNavComponent, SideNavDatesComponent]

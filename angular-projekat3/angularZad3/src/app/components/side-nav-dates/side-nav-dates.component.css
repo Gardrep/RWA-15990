@@ -15,11 +15,15 @@
   }
 */
   .mysidenav{
-    width: 200px;
+    width: auto;
   }
 
   .myeventlist{
     float:left;
     height:900px;
+  }
+
+  .inner {
+    position: absolute;
   }
  
