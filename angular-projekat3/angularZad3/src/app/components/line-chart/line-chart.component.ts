@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 //import { DataPoint } from 'src/app/_models/dataPoint';
-//import * as pluginAnnotations from 'chartjs-plugin-annotation';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-line-chart',
@@ -40,7 +40,7 @@ export class LineChartComponent implements OnInit {
       ]
     },
     annotation: {
-      annotations: [
+      /*annotations: [
         {
           type: 'line',
           mode: 'vertical',
@@ -54,7 +54,7 @@ export class LineChartComponent implements OnInit {
             content: 'LineAnno'
           }
         },
-      ],
+      ],*/
     },
   };
   public lineChartColors: Color[] = [
@@ -66,6 +66,22 @@ export class LineChartComponent implements OnInit {
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     },
+    { // blue
+      backgroundColor: 'rgb(204, 204, 255)',
+      borderColor: 'blue',
+      pointBackgroundColor: 'rgb(53, 53, 255)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgb(53, 53, 255)'
+    },
+    { // red
+      backgroundColor: 'rgb(242, 212, 212)',
+      borderColor: 'rgb(205, 92, 92)',
+      pointBackgroundColor: 'rgb(194, 68, 68)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgb(194, 68, 68)'
+    },
     { // dark grey
       backgroundColor: 'rgba(77,83,96,0.2)',
       borderColor: 'rgba(77,83,96,1)',
@@ -74,35 +90,34 @@ export class LineChartComponent implements OnInit {
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(77,83,96,1)'
     },
-    { // red
-      backgroundColor: 'rgb(233, 233, 255)',
-      borderColor: 'blue',
-      pointBackgroundColor: 'rgb(53, 53, 255)',
+    { // green
+      backgroundColor: 'rgb(160, 214, 180)',
+      borderColor: 'green',
+      pointBackgroundColor: 'rgb(127, 199, 156)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgb(53, 53, 255)'
-    }
+      pointHoverBorderColor: 'rgb(127, 199, 156)'
+    },
   ];
   public lineChartLegend = true;
   public lineChartType = 'line';
-  //public lineChartPlugins = [pluginAnnotations];
+  public lineChartPlugins = [pluginAnnotations];
 
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-  private _MyDataSet: ChartDataSets[];
+  //private _MyDataSet: ChartDataSets[];
 
   @Input()
-  set MyDataSet(ds: ChartDataSets[]) {
-    this._MyDataSet = ds;
-    this.lineChartData = this._MyDataSet;
+  set  MyDataSet(ds: ChartDataSets[]) {
+    console.log(ds);
+    this.lineChartData = ds;
     this.chart.update();
   }
 
   constructor() { }
 
   ngOnInit() {
-    this.lineChartData = this._MyDataSet;
   }
 
   public randomize(): void {
@@ -111,7 +126,7 @@ export class LineChartComponent implements OnInit {
         this.lineChartData[i].data[j] = this.generateNumber(i);
       }
     }
-    //this.chart.update();
+    this.chart.update();
   }
 
   private generateNumber(i: number) {
@@ -142,8 +157,8 @@ export class LineChartComponent implements OnInit {
   }
 
   public changeColor() {
-    this.lineChartColors[2].borderColor = 'green';
-    this.lineChartColors[2].backgroundColor = `rgba(0, 255, 0, 0.3)`;
+    this.lineChartColors[3].borderColor = 'green';
+    this.lineChartColors[3].backgroundColor = `rgba(0, 255, 0, 0.3)`;
   }
 
   public changeLabel() {

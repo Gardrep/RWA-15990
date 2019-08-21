@@ -7,6 +7,7 @@ import { State } from 'src/app/_reducers';
 import { Exercise } from 'src/app/_models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ChartDataSets } from 'chart.js';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-data-point',
@@ -19,14 +20,43 @@ export class DataPointComponent implements OnInit {
   dataIDS$: Observable<string[] | number[]>;
   MyDataSet$: ChartDataSets[] =[];
   dpThis$: DataPoint;
+  IsEdit: boolean = false;
 
   @Input()
   set dpThis(dp: DataPoint) {
     this.dpThis$ = dp;
     if (typeof(dp) != "undefined")
     if (typeof(this.dpThis$.exercises) != "undefined") {
+      this.MyDataSet$=[];
       this.dpThis$.exercises.map((ex) => {
-        let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+        let datePipe = new DatePipe("en-US");
+        //let star = ex.startsOn.getHours();
+        //let ends = ex.endsOn.getHours();
+        let star = parseInt(datePipe.transform(ex.startsOn, "H"),10)-2;
+        if(star<0)star=star+24;
+        let ends = parseInt(datePipe.transform(ex.endsOn, "H"),10)-2;
+        console.log(ends);
+        if(ends<0)ends=ends+24;
+        /*
+        console.log(ex.endsOn);
+        console.log(datePipe.transform(ex.endsOn, "H"));
+        console.log(parseInt(datePipe.transform(ex.endsOn, "H"),10)-2);*/
+        console.log(ends);
+
+        let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        for(let i=0; i <25 ; i++)
+        {
+          /*console.log(i);
+          if(i<10){
+            console.log(datePipe.transform("2019-06-23T0"+i+":40:57.034Z", "H"));
+          }else{
+            console.log(datePipe.transform("2019-06-23T"+i+":40:57.034Z", "H"));
+          }*/
+          if(i >= star && i <= ends){
+            dataLine[i]=ex.effectiveness;
+          }
+        }
         this.MyDataSet$.push({ data: dataLine, label: ex.type });
       })
     }
@@ -38,7 +68,7 @@ export class DataPointComponent implements OnInit {
   ngOnInit() {
     this.dpThis$ = new DataPoint(-10, "Prazan", new Date(), -1, "empty");
     this.dpThis$.exercises.map((ex) => {
-      let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.MyDataSet$.push({ data: dataLine, label: ex.type });
     })
 
@@ -58,6 +88,10 @@ export class DataPointComponent implements OnInit {
       ]
     }))
   }*/
+
+  Edit(){
+    this.IsEdit = !this.IsEdit;
+  }
 
 
   AddSaveDP() {

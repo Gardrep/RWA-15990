@@ -1,6 +1,8 @@
 <mat-toolbar>
 <button mat-button><h3>Data Analysis & Presentation</h3></button>
 
+<button mat-button (click)="TodaysDP()">Today's DataPoint</button>
+
 <button mat-button [matMenuTriggerFor]="afterMenu">After</button>
 <mat-menu #afterMenu="matMenu" xPosition="after">
   <button mat-menu-item>Item 1</button>
