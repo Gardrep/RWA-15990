@@ -2,6 +2,8 @@
 <button mat-button (click)="AddSaveDP()">Add/Save this DataPoint</button>
 <!--<div>Current Count: {{ count$ }}</div>
 <div *ngFor="let dp of dataPointss$">{{dp.myname()}}</div>-->
+<div class="data-point-container">
+  <div>
 <mat-list dense *ngIf="IsEdit==false">
     <mat-list-item> ID: {{dpThis$.ID}} </mat-list-item>
     <mat-list-item> Name: {{dpThis$.name}} </mat-list-item>
@@ -31,5 +33,10 @@
   <mat-error *ngIf="hasError('address', 'maxlength')">You have more than 100 characters</mat-error>
 </mat-form-field>
 -->
-<app-line-chart [MyDataSet] = "MyDataSet$" *ngIf="IsEdit==false"></app-line-chart>
+<app-line-chart [MyDataSet] = "MyDataSetL$" *ngIf="IsEdit==false"></app-line-chart>
+</div>
+<div>
+<app-scatter-chart [MyDataSet] = "MyDataSetS$" *ngIf="IsEdit==false"></app-scatter-chart>
 <mat-list-item *ngIf="IsEdit==false"> Daiary: {{dpThis$.dairy}} </mat-list-item>
+</div>
+</div>

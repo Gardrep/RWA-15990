@@ -1,6 +1,9 @@
 import { Consumable, Exercise, Activities } from "./";
 import { IDataPoint } from '../_models/IDatapoint';
 import { eExercise } from '../_models/eExercise';
+import { eActivities } from '../_models/eActivities';
+import { eConsumables } from '../_models/eConsumables';
+
 
 export class DataPoint implements IDataPoint {
     ID?: number;
@@ -21,7 +24,11 @@ export class DataPoint implements IDataPoint {
         this.happy = !happy ? 0 : happy;
         this.dairy = !dairy ? "empty" : dairy;
 
-        this.consumables = [];
+        this.consumables = [{
+            name: "Cufte",
+            timeConsumed: new Date("2019-06-23T15:40:57.034Z"),
+            type: eConsumables.MomsFood
+        }];
         this.exercises = [{
             name: "Gym1",
             effectiveness: 85,
@@ -32,6 +39,12 @@ export class DataPoint implements IDataPoint {
             injury: "",
             description: ""
         }];
-        this.activities = [];
+        this.activities = [{
+            name: "aktivnost",
+            effectiveness: 100,
+            startsOn: new Date("2019-06-23T01:20:57.034Z"),
+            endsOn: new Date("2019-06-23T03:20:57.034Z"),
+            type: eActivities.Gaming
+        }];
     }
 }

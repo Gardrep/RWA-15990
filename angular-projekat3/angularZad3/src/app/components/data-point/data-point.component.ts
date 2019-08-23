@@ -18,59 +18,78 @@ export class DataPointComponent implements OnInit {
   public ownerForm: FormGroup;
 
   dataIDS$: Observable<string[] | number[]>;
-  MyDataSet$: ChartDataSets[] =[];
+  MyDataSetL$: ChartDataSets[] = [];
+  MyDataSetS$: ChartDataSets[] = [];
   dpThis$: DataPoint;
   IsEdit: boolean = false;
 
   @Input()
   set dpThis(dp: DataPoint) {
     this.dpThis$ = dp;
-    if (typeof(dp) != "undefined")
-    if (typeof(this.dpThis$.exercises) != "undefined") {
-      this.MyDataSet$=[];
-      this.dpThis$.exercises.map((ex) => {
-
-        let datePipe = new DatePipe("en-US");
-        //let star = ex.startsOn.getHours();
-        //let ends = ex.endsOn.getHours();
-        let star = parseInt(datePipe.transform(ex.startsOn, "H"),10)-2;
-        if(star<0)star=star+24;
-        let ends = parseInt(datePipe.transform(ex.endsOn, "H"),10)-2;
-        console.log(ends);
-        if(ends<0)ends=ends+24;
-        /*
-        console.log(ex.endsOn);
-        console.log(datePipe.transform(ex.endsOn, "H"));
-        console.log(parseInt(datePipe.transform(ex.endsOn, "H"),10)-2);*/
-        console.log(ends);
-
-        let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-        for(let i=0; i <25 ; i++)
-        {
-          /*console.log(i);
-          if(i<10){
-            console.log(datePipe.transform("2019-06-23T0"+i+":40:57.034Z", "H"));
-          }else{
-            console.log(datePipe.transform("2019-06-23T"+i+":40:57.034Z", "H"));
-          }*/
-          if(i >= star && i <= ends){
-            dataLine[i]=ex.effectiveness;
-          }
-        }
-        this.MyDataSet$.push({ data: dataLine, label: ex.type });
-      })
-    }
+    this.DPtoDS();
   }
-
 
   constructor(private store: Store<State>) { }
 
+  DPtoDS() {
+    if (typeof (this.dpThis$) != "undefined")
+      if (typeof (this.dpThis$.exercises) != "undefined") {
+        this.MyDataSetL$ = [];
+        this.MyDataSetS$ = [];
+        
+        console.log(this.MyDataSetL$);
+        console.log(this.MyDataSetS$);
+        this.dpThis$.exercises.map((ex) => {
+          this.DSpush(ex);
+        })
+        this.dpThis$.activities.map((ac) => {
+          this.DSpush(ac);
+        })
+        console.log(this.MyDataSetS$);
+        this.dpThis$.consumables.map((co) => {
+          console.log(this.MyDataSetS$);
+          this.DSpushC(co);
+        })
+        console.log(this.MyDataSetL$);
+        console.log(this.MyDataSetS$);
+      }
+  }
+
+  DSpush(obj) {
+    let datePipe = new DatePipe("en-US");
+    let star = parseInt(datePipe.transform(obj.startsOn, "H"), 10) - 2;
+    if (star < 0) star = star + 24;
+    let ends = parseInt(datePipe.transform(obj.endsOn, "H"), 10) - 2;
+    if (ends < 0) ends = ends + 24;
+
+    let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (let i = 0; i < 25; i++) {
+      if (i >= star && i <= ends) {
+        dataLine[i] = obj.effectiveness;
+      }
+    }
+    this.MyDataSetL$.push({ data: dataLine, label: obj.type });
+  }
+
+  DSpushC(obj) {
+    let datePipe = new DatePipe("en-US");
+    let star = parseInt(datePipe.transform(obj.timeConsumed, "H"), 10) - 2;
+    if (star < 0) star = star + 24;
+    this.MyDataSetS$.push(
+      {
+        data: [
+          { x: star, y: star },
+        ],
+        label: 'Series B',
+        pointRadius: 10,
+      },
+    );
+    console.log(this.MyDataSetS$);
+  }
+
   ngOnInit() {
     this.dpThis$ = new DataPoint(-10, "Prazan", new Date(), -1, "empty");
-    this.dpThis$.exercises.map((ex) => {
-      let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      this.MyDataSet$.push({ data: dataLine, label: ex.type });
-    })
+    this.DPtoDS();
 
     this.ownerForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(60)]),
@@ -79,17 +98,7 @@ export class DataPointComponent implements OnInit {
     });
   }
 
-  /*nekafunkcija() {
-    this.store.dispatch(dataPointActions.loadDataPoints({
-      dataPoints: [
-        new DataPoint(50, "Ljep Dan", new Date(), 5, "empty"),
-        new DataPoint(41, "Odlicno se provodim", new Date(), 7, "eyyyyy"),
-        new DataPoint(22, "Onaj jedan dan", new Date(), 8, "to")
-      ]
-    }))
-  }*/
-
-  Edit(){
+  Edit() {
     this.IsEdit = !this.IsEdit;
   }
 

@@ -6,7 +6,18 @@
       "date": "2019-06-23T19:40:57.034Z",
       "happy": 7,
       "dairy": "empty",
-      "consumables": [],
+      "consumables": [
+        {
+          "name": "Zoki i nena",
+          "timeConsumed": "2019-06-23T23:40:57.034Z",
+          "type": "ChickenWhite"
+        },
+        {
+          "name": "Zoki i nena",
+          "timeConsumed": "2019-06-23T00:40:57.034Z",
+          "type": "ChickenWhite"
+        }
+      ],
       "exercises": [
         {
           "name": "Gym1",
@@ -29,7 +40,15 @@
           "description": ""
         }
       ],
-      "activities": []
+      "activities": [
+        {
+          "name": "aktivnost",
+          "effectiveness": "100",
+          "startsOn": "2019-06-23T01:20:57.034Z",
+          "endsOn": "2019-06-23T03:20:57.034Z",
+          "type": "Gaming"
+        }
+      ]
     },
     {
       "ID": 1,

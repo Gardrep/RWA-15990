@@ -22,6 +22,7 @@ import { MenuNavComponent } from './components/menu-nav/menu-nav.component';
 import { SideNavDatesComponent } from './components/side-nav-dates/side-nav-dates.component';
 import { DataPointComponent } from './components/data-point/data-point.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
+import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
 import { ChartsModule } from 'ng2-charts';
 
 import { StoreModule } from '@ngrx/store';
@@ -39,7 +40,8 @@ import { HttpClientModule } from '@angular/common/http';
     MenuNavComponent,
     SideNavDatesComponent,
     DataPointComponent,
-    LineChartComponent
+    LineChartComponent,
+    ScatterChartComponent
   ],
   imports: [
     BrowserModule,
