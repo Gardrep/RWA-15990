@@ -24,6 +24,7 @@ export class SideNavDatesComponent implements OnInit {
   dataPoints$: Observable<IDataPoint[]>;
   dataPointList: DataPoint[] = [];
   selectedDP: DataPoint;
+  IsEdit: boolean = false;
 
 
   constructor(private store: Store<State>) { }
@@ -62,11 +63,28 @@ export class SideNavDatesComponent implements OnInit {
 
   showDP(dp:DataPoint){
     let datePipe = new DatePipe("en-US");
-    return "ID:" +dp.ID+"   " + datePipe.transform(dp.date, "dd.MM.yyyy") + "\nHappy: " + dp.happy+ "\n" + dp.name;
+    return datePipe.transform(dp.date, "dd.MM.yyyy") + "\nHappy: " + dp.happy+ "\n" + dp.name;
   }
 
   selectDP(dp: DataPoint){
     console.log(dp);
     this.selectedDP = dp;
+  }
+
+  AddSaveDP() {
+    /*let pomdp: DataPoint = new DataPoint(700, "Bas Lep Dan", new Date(), 5, "empty");
+    let pomexer = new Exercise();
+    pomexer.name = "kalistenika na keju";
+    pomexer.description = "neki opis";
+    pomexer.effectiveness = 50;
+    pomexer.ifInjury = false;
+    pomexer.startsOn = new Date();
+    pomexer.endsOn = new Date();
+    pomdp.exercises.push(pomexer);
+    this.store.dispatch(dataPointActions.addDataPoint({ dataPoint: pomdp }));*/
+  }
+
+  Edit() {
+    this.IsEdit = !this.IsEdit;
   }
 }

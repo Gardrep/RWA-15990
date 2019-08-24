@@ -12,11 +12,13 @@
       <mat-icon aria-hidden="false">swap_horiz</mat-icon>
     </button>
     <button mat-button (click)="nekaFunkcija()">Create Data Point</button>
+    <button mat-button (click)="Edit()">Edit DP</button>
+<!--<button mat-button (click)="AddSaveDP()">Add/Save this DataPoint</button>-->
     <div class="example-events">
       <div *ngFor="let dp of lastOpendDataPoint">{{dp}}</div>
     </div>
     <div>
-      <app-data-point [dpThis] = "selectedDP"></app-data-point>
+      <app-data-point [dpThis] = "selectedDP" [IsEdit] = "IsEdit"></app-data-point>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

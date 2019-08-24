@@ -23,6 +23,7 @@ import { SideNavDatesComponent } from './components/side-nav-dates/side-nav-date
 import { DataPointComponent } from './components/data-point/data-point.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
+import { EditDataPointComonent } from './components/edit-data-point/edit-data-point.component';
 import { ChartsModule } from 'ng2-charts';
 
 import { StoreModule } from '@ngrx/store';
@@ -41,7 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
     SideNavDatesComponent,
     DataPointComponent,
     LineChartComponent,
-    ScatterChartComponent
+    ScatterChartComponent,
+    EditDataPointComonent
   ],
   imports: [
     BrowserModule,

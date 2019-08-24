@@ -15,13 +15,13 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./data-point.component.css']
 })
 export class DataPointComponent implements OnInit {
-  public ownerForm: FormGroup;
+  public dpForm: FormGroup;
 
   dataIDS$: Observable<string[] | number[]>;
   MyDataSetL$: ChartDataSets[] = [];
   MyDataSetS$: ChartDataSets[] = [];
   dpThis$: DataPoint;
-  IsEdit: boolean = false;
+  IsEdit$: boolean = false;
 
   @Input()
   set dpThis(dp: DataPoint) {
@@ -29,7 +29,17 @@ export class DataPointComponent implements OnInit {
     this.DPtoDS();
   }
 
+  @Input()
+  set IsEdit(obj) {
+    this.IsEdit$ = obj;
+  }
+
   constructor(private store: Store<State>) { }
+
+  ngOnInit() {
+    this.dpThis$ = new DataPoint(-10, "Prazan", new Date(), -1, "empty");
+    this.DPtoDS();
+  }
 
   DPtoDS() {
     if (typeof (this.dpThis$) != "undefined")
@@ -37,21 +47,17 @@ export class DataPointComponent implements OnInit {
         this.MyDataSetL$ = [];
         this.MyDataSetS$ = [];
         
-        console.log(this.MyDataSetL$);
-        console.log(this.MyDataSetS$);
         this.dpThis$.exercises.map((ex) => {
           this.DSpush(ex);
         })
+
         this.dpThis$.activities.map((ac) => {
           this.DSpush(ac);
         })
-        console.log(this.MyDataSetS$);
+
         this.dpThis$.consumables.map((co) => {
-          console.log(this.MyDataSetS$);
           this.DSpushC(co);
         })
-        console.log(this.MyDataSetL$);
-        console.log(this.MyDataSetS$);
       }
   }
 
@@ -86,39 +92,4 @@ export class DataPointComponent implements OnInit {
     );
     console.log(this.MyDataSetS$);
   }
-
-  ngOnInit() {
-    this.dpThis$ = new DataPoint(-10, "Prazan", new Date(), -1, "empty");
-    this.DPtoDS();
-
-    this.ownerForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.maxLength(60)]),
-      dateOfBirth: new FormControl(new Date()),
-      address: new FormControl('', [Validators.required, Validators.maxLength(100)])
-    });
-  }
-
-  Edit() {
-    this.IsEdit = !this.IsEdit;
-  }
-
-
-  AddSaveDP() {
-    let pomdp: DataPoint = new DataPoint(700, "Bas Lep Dan", new Date(), 5, "empty");
-    let pomexer = new Exercise();
-    pomexer.name = "kalistenika na keju";
-    pomexer.description = "neki opis";
-    pomexer.effectiveness = 50;
-    pomexer.ifInjury = false;
-    pomexer.startsOn = new Date();
-    pomexer.endsOn = new Date();
-    pomdp.exercises.push(pomexer);
-    this.store.dispatch(dataPointActions.addDataPoint({ dataPoint: pomdp }));
-  }
-
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.ownerForm.controls[controlName].hasError(errorName);
-  }
-
 }

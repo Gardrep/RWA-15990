@@ -1,42 +1,19 @@
-<button mat-button (click)="Edit()">Edit DP</button>
-<button mat-button (click)="AddSaveDP()">Add/Save this DataPoint</button>
 <!--<div>Current Count: {{ count$ }}</div>
 <div *ngFor="let dp of dataPointss$">{{dp.myname()}}</div>-->
 <div class="data-point-container">
   <div>
-<mat-list dense *ngIf="IsEdit==false">
-    <mat-list-item> ID: {{dpThis$.ID}} </mat-list-item>
-    <mat-list-item> Name: {{dpThis$.name}} </mat-list-item>
-    <mat-list-item> Date: {{dpThis$.date}} </mat-list-item>
-    <mat-list-item> Happy: {{dpThis$.happy}} </mat-list-item>
+    <mat-list dense *ngIf="IsEdit$==false">
+      <!-- <mat-list-item> ID: {{dpThis$.ID}} </mat-list-item> -->
+      <mat-list-item> Name: {{dpThis$.name}} </mat-list-item>
+      <mat-list-item> Date: {{dpThis$.date}} </mat-list-item>
+      <mat-list-item> Happy: {{dpThis$.happy}} </mat-list-item>
+    </mat-list>
+    <app-line-chart [MyDataSet]="MyDataSetL$" *ngIf="IsEdit$==false"></app-line-chart>
 
-   </mat-list>
-<!--
-<mat-form-field>
-  <input matInput type="text" placeholder="Owner's name" formControlName="name" id="name">
-  <mat-hint align="end">Not more then 60 characters long.</mat-hint>
-  <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
-  <mat-error *ngIf="hasError('name', 'maxlength')">You have more than 60 characters</mat-error>
-</mat-form-field>
- 
-<mat-form-field>
-  <input matInput [matDatepicker]="picker" placeholder="Choose a date of birth" formControlName="dateOfBirth" id="dateOfBirth" 
-      readonly (click)="picker.open()">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
- 
-<mat-form-field>
-  <input matInput type="text" placeholder="Owner's address" formControlName="address">
-  <mat-hint align="end">Not more then 100 characters long.</mat-hint>
-  <mat-error *ngIf="hasError('address', 'required')">Address is required</mat-error>
-  <mat-error *ngIf="hasError('address', 'maxlength')">You have more than 100 characters</mat-error>
-</mat-form-field>
--->
-<app-line-chart [MyDataSet] = "MyDataSetL$" *ngIf="IsEdit==false"></app-line-chart>
-</div>
-<div>
-<app-scatter-chart [MyDataSet] = "MyDataSetS$" *ngIf="IsEdit==false"></app-scatter-chart>
-<mat-list-item *ngIf="IsEdit==false"> Daiary: {{dpThis$.dairy}} </mat-list-item>
-</div>
+    <edit-data-point  [dpThis]="dpThis$" *ngIf="IsEdit$==true"></edit-data-point>
+  </div>
+  <div>
+    <app-scatter-chart [MyDataSet]="MyDataSetS$" *ngIf="IsEdit$==false"></app-scatter-chart>
+    <mat-list-item *ngIf="IsEdit$==false"> Diary: {{dpThis$.diary}} </mat-list-item>
+  </div>
 </div>

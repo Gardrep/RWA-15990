@@ -13,7 +13,6 @@ export class ScatterChartComponent implements OnInit {
     responsive: true,
   };
   public scatterChartLabels: Label[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'];
-
   public scatterChartData: ChartDataSets[] = [
     {
       data: [
