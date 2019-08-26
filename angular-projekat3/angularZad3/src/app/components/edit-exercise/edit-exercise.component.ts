@@ -4,6 +4,7 @@ import { DataPoint } from 'src/app/_models/dataPoint';
 import { Exercise, Activity, Consumable } from 'src/app/_models';
 import { DatePipe } from '@angular/common';
 import { eExercises } from '../../_models/eExercise';
+//import { start } from 'repl';
 
 /** @title Form field theming */
 @Component({
@@ -18,6 +19,9 @@ export class EditExerciseComponent implements OnInit {
     listActivities: Activity[] = [];
     listConsumables: Consumable[] = [];
     selectedEx: Exercise;
+    starts: string;
+    ends: string;
+    datePipe: DatePipe;
 
 
     @Input()
@@ -28,12 +32,13 @@ export class EditExerciseComponent implements OnInit {
     }
 
     constructor(fb: FormBuilder) {
+        this.datePipe = new DatePipe("en-US");
         this.selectedEx = new Exercise("GymTest", 75, new Date(), new Date(), eExercises.Gym, false, "", "desc");
         this.dpForm = fb.group({
             name: [this.selectedEx.name, Validators.maxLength(60)],
             effectiveness: [this.selectedEx.effectiveness, Validators.maxLength(2)],
-            startsOn: this.selectedEx.startsOn,
-            endsOn: this.selectedEx.endsOn,
+            startsOn: this.datePipe.transform(this.selectedEx.startsOn, "hh:mm"),
+            endsOn: this.datePipe.transform(this.selectedEx.endsOn, "hh:mm"),
             type: this.selectedEx.type,
             ifInjury: this.selectedEx.ifInjury,
             injury: this.selectedEx.injury,
@@ -44,10 +49,17 @@ export class EditExerciseComponent implements OnInit {
     ngOnInit() {
     }
 
+    ngAfterViewInit(){
+        this.adaptEx();
+    }
+
+    get exerciseValues(){
+        return Object.keys(eExercises);
+    }
+
 
     showEx(ex: Exercise) {
-        let datePipe = new DatePipe("en-US");
-        return ex.effectiveness + " " + ex.name + "\n" + datePipe.transform(ex.startsOn, "hh.mm") + " - " + datePipe.transform(ex.endsOn, "hh.mm");
+        return ex.effectiveness + " " + ex.name + "\n" + this.datePipe.transform(ex.startsOn, "hh:mm") + " - " + this.datePipe.transform(ex.endsOn, "hh:mm");
     }
 
     selectEx(ex: Exercise) {
@@ -57,8 +69,9 @@ export class EditExerciseComponent implements OnInit {
     adaptEx(){
         this.dpForm.get('name').setValue(this.selectedEx.name);
         this.dpForm.get('effectiveness').setValue(this.selectedEx.effectiveness);
-        this.dpForm.get('startsOn').setValue(this.selectedEx.startsOn);
-        this.dpForm.get('endsOn').setValue(this.selectedEx.endsOn);
+        this.starts = this.datePipe.transform(this.selectedEx.startsOn, "hh:mm");
+        this.ends = this.datePipe.transform(this.selectedEx.endsOn, "hh:mm");
+        
         this.dpForm.get('type').setValue(this.selectedEx.type);
         this.dpForm.get('ifInjury').setValue(this.selectedEx.ifInjury);
         this.dpForm.get('injury').setValue(this.selectedEx.injury);

@@ -44,7 +44,8 @@ export class DataPoint implements IDataPoint {
             effectiveness: 100,
             startsOn: new Date("2019-06-23T01:20:57.034Z"),
             endsOn: new Date("2019-06-23T03:20:57.034Z"),
-            type: eActivities.Gaming
+            type: eActivities.Gaming,
+            description: "deskription"
         }];
     }
 }

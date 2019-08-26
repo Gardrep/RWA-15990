@@ -13,10 +13,6 @@ import { DatePipe } from '@angular/common';
 export class EditDataPointComponent implements OnInit {
     dpForm: FormGroup;
     dpThis$: DataPoint;
-    listExercises: Exercise[] = [];
-    listActivities: Activity[] = [];
-    listConsumables: Consumable[] = [];
-
 
     @Input()
     set dpThis(dp: DataPoint) {
@@ -35,16 +31,10 @@ export class EditDataPointComponent implements OnInit {
             date: this.dpThis$.date,
             happiness: [this.dpThis$.happy, Validators.maxLength(2)],
             diary: [this.dpThis$.diary, Validators.maxLength(1000)],
-            consumables: [this.dpThis$.consumables],
-            exercise: [this.dpThis$.exercises],
-            activities: [this.dpThis$.activities]
         });
     }
 
     ngOnInit() {
-        this.dpForm.controls['consumables'].setValue(this.listConsumables);
-        this.dpForm.controls['exercise'].setValue(this.listExercises);
-        this.dpForm.controls['activities'].setValue(this.listActivities);
     }
 
     showDate(){

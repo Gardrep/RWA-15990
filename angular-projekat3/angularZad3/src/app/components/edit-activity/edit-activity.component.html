@@ -32,7 +32,7 @@
             <label>Type: </label>
             <mat-form-field>
                 <mat-select formControlName="type">
-                  <mat-option *ngFor="let type of exerciseValues" [value]="type">
+                  <mat-option *ngFor="let type of activityValues" [value]="type">
                     {{type}}
                   </mat-option>
                 </mat-select>
@@ -49,6 +49,6 @@
 </div>
 <div>
     <mat-action-list class="myeventlist" dense>
-        <button mat-list-item (click)="selectEx(ex)" *ngFor="let ex of listExercises">{{showEx(ex)}} </button>
+        <button mat-list-item (click)="selectAc(ac)" *ngFor="let ac of listActivities">{{showAc(ac)}} </button>
     </mat-action-list>
 </div>

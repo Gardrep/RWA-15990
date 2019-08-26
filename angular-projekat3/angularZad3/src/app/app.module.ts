@@ -15,7 +15,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,9 @@ import { DataPointComponent } from './components/data-point/data-point.component
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
 import { EditDataPointComponent } from './components/edit-data-point/edit-data-point.component';
+import { EditExerciseComponent } from './components/edit-exercise/edit-exercise.component';
+import { EditActivityComponent } from './components/edit-activity/edit-activity.component';
+import { EditConsumableComponent } from './components/edit-consumable/edit-consumable.component';
 import { ChartsModule } from 'ng2-charts';
 
 import { StoreModule } from '@ngrx/store';
@@ -33,12 +37,9 @@ import { reducers } from './_reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './app.effects'; // Angular CLI environemnt
+import { AppEffects } from './app.effects'; 
 import { HttpClientModule } from '@angular/common/http';
-import { EditExerciseComponent } from './components/edit-exercise/edit-exercise.component';
-
-
-//import ngTimePicker from 'angular-material-time-picker';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ import { EditExerciseComponent } from './components/edit-exercise/edit-exercise.
     LineChartComponent,
     ScatterChartComponent,
     EditDataPointComponent,
-    EditExerciseComponent
+    EditExerciseComponent,
+    EditActivityComponent,
+    EditConsumableComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,8 @@ import { EditExerciseComponent } from './components/edit-exercise/edit-exercise.
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
-    //ngTimePicker,
+    MatSelectModule,
+    NgxMaterialTimepickerModule,
     ChartsModule,
     HttpClientModule,
     EffectsModule.forRoot([AppEffects])

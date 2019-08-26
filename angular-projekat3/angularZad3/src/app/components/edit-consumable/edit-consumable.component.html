@@ -1,0 +1,33 @@
+<div>
+    <form class="example-container" [formGroup]="dpForm">
+        <div>
+            <label>Name: </label>
+            <mat-form-field>
+                <input matInput type="text" formControlName="name" id="name">
+                <mat-error *ngIf="dpForm.get('name')?.invalid">You have more than 60 characters</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Time Consumed: </label>
+            <mat-form-field>
+    <input matInput [ngxTimepicker]="picker" [format]="24" [value]="timeCon" formControlName="timeConsumed">
+                <ngx-material-timepicker #picker></ngx-material-timepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Type: </label>
+            <mat-form-field>
+                <mat-select formControlName="type">
+                  <mat-option *ngFor="let type of consumableValues" [value]="type">
+                    {{type}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div>
+    <mat-action-list class="myconsumedlist" dense>
+        <button mat-list-item (click)="selectCo(co)" *ngFor="let co of listConsumables">{{showCo(co)}} </button>
+    </mat-action-list>
+</div>
