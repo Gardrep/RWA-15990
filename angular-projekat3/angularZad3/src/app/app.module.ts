@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatGridListModule} from '@angular/material/grid-list';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -13,7 +14,8 @@ import {
   MatListModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatInputModule
 } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +25,7 @@ import { SideNavDatesComponent } from './components/side-nav-dates/side-nav-date
 import { DataPointComponent } from './components/data-point/data-point.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
-import { EditDataPointComonent } from './components/edit-data-point/edit-data-point.component';
+import { EditDataPointComponent } from './components/edit-data-point/edit-data-point.component';
 import { ChartsModule } from 'ng2-charts';
 
 import { StoreModule } from '@ngrx/store';
@@ -33,7 +35,10 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects'; // Angular CLI environemnt
 import { HttpClientModule } from '@angular/common/http';
+import { EditExerciseComponent } from './components/edit-exercise/edit-exercise.component';
 
+
+//import ngTimePicker from 'angular-material-time-picker';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,8 @@ import { HttpClientModule } from '@angular/common/http';
     DataPointComponent,
     LineChartComponent,
     ScatterChartComponent,
-    EditDataPointComonent
+    EditDataPointComponent,
+    EditExerciseComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +63,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     MatMenuModule,
+    MatGridListModule,
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
@@ -66,6 +73,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatDatepickerModule, 
     MatNativeDateModule,
     MatFormFieldModule,
+    MatInputModule,
+    //ngTimePicker,
     ChartsModule,
     HttpClientModule,
     EffectsModule.forRoot([AppEffects])

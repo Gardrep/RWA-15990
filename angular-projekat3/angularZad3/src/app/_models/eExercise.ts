@@ -1,4 +1,4 @@
-export enum eExercise {
+export enum eExercises {
     Gym = 'Gym',
     Running = 'Running',
     Yoga = 'Yoga',

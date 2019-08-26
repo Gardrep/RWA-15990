@@ -20,16 +20,6 @@
       ],
       "exercises": [
         {
-          "name": "Gym1",
-          "effectiveness": "85",
-          "startsOn": "2019-06-23T18:40:57.034Z",
-          "endsOn": "2019-06-23T20:40:57.034Z",
-          "type": "Gym",
-          "ifInjury": "false",
-          "injury": "",
-          "description": ""
-        },
-        {
           "name": "Running1",
           "effectiveness": "25",
           "startsOn": "2019-06-23T09:40:57.034Z",
@@ -37,7 +27,17 @@
           "type": "Running",
           "ifInjury": "false",
           "injury": "",
-          "description": ""
+          "description": "Desc"
+        },
+        {
+          "name": "Gym1",
+          "effectiveness": "85",
+          "startsOn": "2019-06-23T18:40:57.034Z",
+          "endsOn": "2019-06-23T20:40:57.034Z",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Description"
         }
       ],
       "activities": [
@@ -66,7 +66,7 @@
           "type": "Gym",
           "ifInjury": "false",
           "injury": "",
-          "description": ""
+          "description": "Descc"
         },
         {
           "name": "Running1",
@@ -76,7 +76,7 @@
           "type": "Running",
           "ifInjury": "false",
           "injury": "",
-          "description": ""
+          "description": "Descrip"
         }
       ],
       "activities": []
@@ -97,7 +97,7 @@
           "type": "Gym",
           "ifInjury": "false",
           "injury": "",
-          "description": ""
+          "description": "Des"
         },
         {
           "name": "Running1",
@@ -107,7 +107,7 @@
           "type": "Running",
           "ifInjury": "false",
           "injury": "",
-          "description": ""
+          "description": "empty"
         },
         {
           "name": "Gym2",
@@ -117,7 +117,7 @@
           "type": "Gym",
           "ifInjury": "false",
           "injury": "",
-          "description": ""
+          "description": "nothing special"
         },
         {
           "name": "Running2",
@@ -127,7 +127,7 @@
           "type": "Running",
           "ifInjury": "false",
           "injury": "",
-          "description": ""
+          "description": "something"
         },
         {
           "name": "Running3",
@@ -137,7 +137,7 @@
           "type": "Running",
           "ifInjury": "false",
           "injury": "",
-          "description": ""
+          "description": "Desc"
         }
       ],
       "activities": []

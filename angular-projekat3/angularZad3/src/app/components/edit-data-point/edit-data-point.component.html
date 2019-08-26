@@ -1,45 +1,32 @@
-<div><label> Date: {{dpThis$.date}} </label></div>
-
-<form class="example-container" [formGroup]="dpForm" [style.fontSize.px]="getFontSize()">
+<div class="edit-data-point-container">
     <div>
-        <label>Name: </label>
-        <mat-form-field>
-            <input matInput type="text" placeholder="DP name" formControlName="name" id="name">
-            <mat-hint>Not more then 60 characters long.</mat-hint>
-            <mat-error *ngIf="dpForm.get('name')?.invalid">You have more than 60 characters</mat-error>
-        </mat-form-field>
+        <div><label> Date: {{showDate()}} </label></div>
+        <form class="example-container" [formGroup]="dpForm">
+            <div>
+                <label>Name: </label>
+                <mat-form-field>
+                    <input matInput type="text" formControlName="name" id="name">
+                    <mat-error *ngIf="dpForm.get('name')?.invalid">You have more than 60 characters</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <label>Happiness: </label>
+                <mat-form-field>
+                    <input matInput type="number"  formControlName="happiness">
+                    <mat-error *ngIf="dpForm.get('happiness')?.invalid">You have more than 2 characters</mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <label>Diary: </label>
+                <mat-form-field>
+                    <textarea matInput type="text" formControlName="diary"></textarea>
+                    <mat-error *ngIf="dpForm.get('diary')?.invalid">You have more than 1000 characters</mat-error>
+                </mat-form-field>
+            </div>
+            <!---->
+        </form>
     </div>
-
     <div>
-        <label>Date: </label>
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="DP date" formControlName="date"
-                id="dateOfBirth" readonly (click)="picker.open()">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+        <edit-exercise [dpExercise]="dpThis$.exercises"></edit-exercise>
     </div>
-
-    <div>
-        <label>Happiness: </label>
-        <mat-form-field>
-            <input matInput type="number" placeholder="DP happiness" formControlName="happiness">
-            <mat-hint>Not more then 2 characters long.</mat-hint>
-            <mat-error *ngIf="dpForm.get('happiness')?.invalid">You have more than 2 characters</mat-error>
-        </mat-form-field>
-    </div>
-
-    <div>
-        <label>Diary: </label>
-        <mat-form-field>
-            <input matInput type="text" placeholder="DP diary" formControlName="diary">
-            <mat-hint>Not more then 1000 characters long.</mat-hint>
-            <mat-error *ngIf="dpForm.get('diary')?.invalid">You have more than 1000 characters</mat-error>
-        </mat-form-field>
-    </div>
-
-    <!--
-
-    -->
-
-</form>
+</div>

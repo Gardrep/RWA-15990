@@ -1,4 +1,4 @@
-import { Consumable, Exercise, Activities } from "../_models/";
+import { Consumable, Exercise, Activity } from "../_models/";
 
 export interface IDataPoint {
     ID?: number;
@@ -9,5 +9,5 @@ export interface IDataPoint {
 
     consumables?: Consumable[];
     exercises?: Exercise[];
-    activities?: Activities[];
+    activities?: Activity[];
 }

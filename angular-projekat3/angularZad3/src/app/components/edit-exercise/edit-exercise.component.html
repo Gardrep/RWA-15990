@@ -1,0 +1,49 @@
+<div>
+    <form class="example-container" [formGroup]="dpForm">
+        <div>
+            <label>Name: </label>
+            <mat-form-field>
+                <input matInput type="text" formControlName="name" id="name">
+                <mat-error *ngIf="dpForm.get('name')?.invalid">You have more than 60 characters</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Effectiveness: </label>
+            <mat-form-field>
+                <input matInput type="number" formControlName="effectiveness">
+                <mat-error *ngIf="dpForm.get('effectiveness')?.invalid">You have more than 3 characters</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Stars on: </label>
+            <mat-form-field>
+                <input matInput [matDatepicker]="pickers" formControlName="startsOn" id="startsOn" readonly
+                    (click)="pickers.open()">
+                <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+                <mat-datepicker #pickers></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Ends on: </label>
+            <mat-form-field>
+                <input matInput [matDatepicker]="pickere" formControlName="endsOn" id="endsOn" readonly
+                    (click)="pickere.open()">
+                <mat-datepicker-toggle matSuffix [for]="pickere"></mat-datepicker-toggle>
+                <mat-datepicker #pickere></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <label>Description: </label>
+            <mat-form-field>
+                <textarea matInput type="text" formControlName="description"></textarea>
+                <mat-error *ngIf="dpForm.get('diary')?.invalid">You have more than 1000 characters</mat-error>
+            </mat-form-field>
+        </div>
+        <!--<div><md-time-picker ng-model="time" message="message" read-only="readonly" mandatory="required" no-meridiem no-auto-switch></md-time-picker></div>-->
+    </form>
+</div>
+<div>
+    <mat-action-list class="myeventlist" dense>
+        <button mat-list-item (click)="selectEx(ex)" *ngFor="let ex of listExercises">{{showEx(ex)}} </button>
+    </mat-action-list>
+</div>

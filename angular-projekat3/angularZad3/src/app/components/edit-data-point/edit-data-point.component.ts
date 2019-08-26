@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataPoint } from 'src/app/_models/dataPoint';
+import { Exercise, Activity, Consumable } from 'src/app/_models';
+import { DatePipe } from '@angular/common';
 
 /** @title Form field theming */
 @Component({
@@ -8,9 +10,12 @@ import { DataPoint } from 'src/app/_models/dataPoint';
     templateUrl: 'edit-data-point.component.html',
     styleUrls: ['edit-data-point.component.css'],
 })
-export class EditDataPointComonent implements OnInit {
+export class EditDataPointComponent implements OnInit {
     dpForm: FormGroup;
     dpThis$: DataPoint;
+    listExercises: Exercise[] = [];
+    listActivities: Activity[] = [];
+    listConsumables: Consumable[] = [];
 
 
     @Input()
@@ -18,6 +23,7 @@ export class EditDataPointComonent implements OnInit {
         this.dpThis$ = dp;
 
         this.dpForm.get('name').setValue(this.dpThis$.name);
+        this.dpForm.get('date').setValue(this.dpThis$.date);
         this.dpForm.get('happiness').setValue(this.dpThis$.happy);
         this.dpForm.get('diary').setValue(this.dpThis$.diary);
     }
@@ -28,15 +34,26 @@ export class EditDataPointComonent implements OnInit {
             name: [this.dpThis$.name, Validators.maxLength(60)],
             date: this.dpThis$.date,
             happiness: [this.dpThis$.happy, Validators.maxLength(2)],
-            diary: [this.dpThis$.diary, Validators.maxLength(1000)]
+            diary: [this.dpThis$.diary, Validators.maxLength(1000)],
+            consumables: [this.dpThis$.consumables],
+            exercise: [this.dpThis$.exercises],
+            activities: [this.dpThis$.activities]
         });
     }
 
     ngOnInit() {
+        this.dpForm.controls['consumables'].setValue(this.listConsumables);
+        this.dpForm.controls['exercise'].setValue(this.listExercises);
+        this.dpForm.controls['activities'].setValue(this.listActivities);
+    }
+
+    showDate(){
+        let datePipe = new DatePipe("en-US");
+        return datePipe.transform(this.dpThis$.date, "dd.MM hh:mm")
     }
 
 
     getFontSize() {
-        return Math.max(10, this.dpForm.value.happiness);
+        return Math.max(1, this.dpForm.value.happiness);
     }
 }

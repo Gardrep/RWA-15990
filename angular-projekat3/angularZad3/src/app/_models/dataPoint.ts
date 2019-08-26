@@ -1,6 +1,6 @@
-import { Consumable, Exercise, Activities } from "./";
+import { Consumable, Exercise, Activity } from "./";
 import { IDataPoint } from '../_models/IDatapoint';
-import { eExercise } from '../_models/eExercise';
+import { eExercises } from '../_models/eExercise';
 import { eActivities } from '../_models/eActivities';
 import { eConsumables } from '../_models/eConsumables';
 
@@ -14,7 +14,7 @@ export class DataPoint implements IDataPoint {
 
     consumables?: Consumable[];
     exercises?: Exercise[];
-    activities?: Activities[];
+    activities?: Activity[];
 
     // constructor(data?:DataPoint);
     constructor(ID: number, name: string, date: Date, happy: number, diary: string) {
@@ -34,7 +34,7 @@ export class DataPoint implements IDataPoint {
             effectiveness: 85,
             startsOn: new Date(),
             endsOn: new Date(),
-            type: eExercise.Gym,
+            type: eExercises.Gym,
             ifInjury: false,
             injury: "",
             description: ""

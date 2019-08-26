@@ -1,6 +1,6 @@
 import { eActivities } from "./eActivities";
 
-export class Activities {
+export class Activity {
     name: string;
     effectiveness: number;
     startsOn: Date;

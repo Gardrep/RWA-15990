@@ -1,0 +1,4 @@
+.edit-data-point-container{
+    display: flex;
+    flex-direction: row;
+}
