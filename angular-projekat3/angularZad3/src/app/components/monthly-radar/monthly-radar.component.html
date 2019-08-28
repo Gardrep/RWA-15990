@@ -1,0 +1,23 @@
+<div class="monthly-radar-container">
+    <div>
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="EndDateChange($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker startView="year" [startAt]="startDate" ></mat-datepicker>
+        </mat-form-field>
+        <mat-select>
+            <mat-option (click)="ChangeList('Activites')" [value]="Activites">
+                Activites
+            </mat-option>
+            <mat-option (click)="ChangeList('Exercises')" [value]="Exercises">
+                Exercises
+            </mat-option>
+            <mat-option (click)="ChangeList('Consumables')" [value]="Consumables">
+                Consumables
+            </mat-option>
+        </mat-select>
+    </div>
+    <div class="radar-container">
+        <app-radar-chart [showList]="showList" [showLabels]="showLabels"></app-radar-chart>
+    </div>
+</div>

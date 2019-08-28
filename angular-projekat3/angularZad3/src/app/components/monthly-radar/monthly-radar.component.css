@@ -1,0 +1,8 @@
+.monthly-radar-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.radar-container{
+flex-grow:1;
+}

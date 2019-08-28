@@ -24,8 +24,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MenuNavComponent } from './components/menu-nav/menu-nav.component';
 import { SideNavDatesComponent } from './components/side-nav-dates/side-nav-dates.component';
 import { DataPointComponent } from './components/data-point/data-point.component';
+
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
+import { RadarChartComponent } from './components/radar-chart/radar-chart.component';
+import { MonthlyRadarComponent } from './components/monthly-radar/monthly-radar.component';
+
 import { EditDataPointComponent } from './components/edit-data-point/edit-data-point.component';
 import { EditExerciseComponent } from './components/edit-exercise/edit-exercise.component';
 import { EditActivityComponent } from './components/edit-activity/edit-activity.component';
@@ -41,14 +45,19 @@ import { AppEffects } from './app.effects';
 import { HttpClientModule } from '@angular/common/http';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     MenuNavComponent,
     SideNavDatesComponent,
     DataPointComponent,
+
     LineChartComponent,
     ScatterChartComponent,
+    RadarChartComponent,
+    MonthlyRadarComponent,
+
     EditDataPointComponent,
     EditExerciseComponent,
     EditActivityComponent,
@@ -83,12 +92,23 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     HttpClientModule,
     EffectsModule.forRoot([AppEffects])
   ],
-  exports:[    
+  exports:[
+    MatMenuModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
     MatDatepickerModule, 
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
   ],
   providers: [],
-  bootstrap: [AppComponent, MenuNavComponent, SideNavDatesComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [SideNavDatesComponent]
 })
 export class AppModule { }

@@ -10,7 +10,7 @@ import * as allReducers from '../../_reducers';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-side-nav-dates',
+  selector: 'side-nav-dates',
   templateUrl: './side-nav-dates.component.html',
   styleUrls: ['./side-nav-dates.component.css']
 })

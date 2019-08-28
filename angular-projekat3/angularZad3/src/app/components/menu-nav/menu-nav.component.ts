@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-menu-nav',
@@ -7,12 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuNavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   TodaysDP(){
     
+  }
+
+  OpenMonthlyRadar(){
+    this.router.navigate(['/monthlyRadar'],5 as NavigationExtras);
+    console.log("fjosapjpo");
   }
 }

@@ -2,6 +2,7 @@
     <div>
         <div><label> Date: {{showDate()}} </label></div>
         <form class="example-container" [formGroup]="dpForm">
+            <div><button mat-raised-button color="primary" type="submit" (click)="saveDP()">Save</button></div>
             <div>
                 <label>Name: </label>
                 <mat-form-field>

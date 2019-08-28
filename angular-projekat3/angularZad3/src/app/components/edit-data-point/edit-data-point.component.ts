@@ -1,8 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataPoint } from 'src/app/_models/dataPoint';
-import { Exercise, Activity, Consumable } from 'src/app/_models';
+import { Exercise, eExercises } from 'src/app/_models';
 import { DatePipe } from '@angular/common';
+import * as dataPointActions from '../../_actions/datapoint.actions';
+import { State } from 'src/app/_reducers';
+import { Store } from '@ngrx/store';
 
 /** @title Form field theming */
 @Component({
@@ -24,7 +27,7 @@ export class EditDataPointComponent implements OnInit {
         this.dpForm.get('diary').setValue(this.dpThis$.diary);
     }
 
-    constructor(fb: FormBuilder) {
+    constructor(fb: FormBuilder, private store: Store<State>) {
         this.dpThis$ = new DataPoint(-10, "Prazan", new Date(), -1, "empty");
         this.dpForm = fb.group({
             name: [this.dpThis$.name, Validators.maxLength(60)],
@@ -45,5 +48,18 @@ export class EditDataPointComponent implements OnInit {
 
     getFontSize() {
         return Math.max(1, this.dpForm.value.happiness);
+    }
+
+    saveDP(){
+     let pomdp: DataPoint = new DataPoint(700, "Bas Lep Dan", new Date(), 5, "empty");
+    let pomexer = new Exercise("kalistenika na keju",50,new Date(),new Date(),eExercises.Calisthenics,false,"","neki opis");
+    /*pomexer.name = "kalistenika na keju";
+    pomexer.description = "neki opis";
+    pomexer.effectiveness = 50;
+    pomexer.ifInjury = false;
+    pomexer.startsOn = new Date();
+    pomexer.endsOn = new Date();*/
+    pomdp.exercises.push(pomexer);
+    this.store.dispatch(dataPointActions.addDataPoint({ dataPoint: pomdp }));
     }
 }

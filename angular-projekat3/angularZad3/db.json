@@ -46,7 +46,15 @@
           "effectiveness": "100",
           "startsOn": "2019-06-23T01:20:57.034Z",
           "endsOn": "2019-06-23T03:20:57.034Z",
-          "type": "Gaming",
+          "type": "Studying",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "70",
+          "startsOn": "2019-06-23T01:20:57.034Z",
+          "endsOn": "2019-06-23T03:20:57.034Z",
+          "type": "Networking",
           "description": "Description4"
         }
       ]
@@ -107,8 +115,24 @@
           "effectiveness": "100",
           "startsOn": "2019-06-23T05:20:57.034Z",
           "endsOn": "2019-06-23T08:20:57.034Z",
-          "type": "Gaming",
+          "type": "Sleep",
           "description": "Description3"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "12",
+          "startsOn": "2019-06-23T01:20:57.034Z",
+          "endsOn": "2019-06-23T03:20:57.034Z",
+          "type": "Faculty",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "50",
+          "startsOn": "2019-06-23T01:20:57.034Z",
+          "endsOn": "2019-06-23T03:20:57.034Z",
+          "type": "Outside",
+          "description": "Description4"
         }
       ]
     },
@@ -193,7 +217,7 @@
           "effectiveness": "10",
           "startsOn": "2019-06-23T02:20:57.034Z",
           "endsOn": "2019-06-23T08:20:57.034Z",
-          "type": "Gaming",
+          "type": "Studying",
           "description": "Description1"
         },
         {
@@ -201,8 +225,32 @@
           "effectiveness": "17",
           "startsOn": "2019-06-23T05:20:57.034Z",
           "endsOn": "2019-06-23T08:20:57.034Z",
-          "type": "Gaming",
+          "type": "Other",
           "description": "Description2"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "100",
+          "startsOn": "2019-06-23T05:20:57.034Z",
+          "endsOn": "2019-06-23T08:20:57.034Z",
+          "type": "Family",
+          "description": "Description3"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "92",
+          "startsOn": "2019-06-23T01:20:57.034Z",
+          "endsOn": "2019-06-23T03:20:57.034Z",
+          "type": "Hobby",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "50",
+          "startsOn": "2019-06-23T01:20:57.034Z",
+          "endsOn": "2019-06-23T03:20:57.034Z",
+          "type": "Outside",
+          "description": "Description4"
         }
       ]
     }
