@@ -12,11 +12,11 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 export class LineChartComponent implements OnInit {
 
   public lineChartData: ChartDataSets[] = [
-    { data: [0, 0, 0, 0, 0, 0, 0, 30, 30, 30, 30, 30, 30, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: 'Faculty' },
-    { data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 80, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: 'Gym' },
-    { data: [70, 70, 70, 70, 70, 70, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0], label: 'Sleep', yAxisID: 'y-axis-1' }
+    { data: [0, 0, 0, 0, 0, 0, 0, 30, 30, 30, 30, 30, 30, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: 'Faculty' },
+    { data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 80, 80, 0, 0, 0, 0, 0, 0, 0, 0], label: 'Gym' },
+    { data: [70, 70, 70, 70, 70, 70, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0], label: 'Sleep', yAxisID: 'y-axis-1' }
   ];
-  public lineChartLabels: Label[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
+  public lineChartLabels: Label[] = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
@@ -110,7 +110,6 @@ export class LineChartComponent implements OnInit {
 
   @Input()
   set  MyDataSet(ds: ChartDataSets[]) {
-    console.log(ds);
     this.lineChartData = ds;
     this.chart.update();
   }

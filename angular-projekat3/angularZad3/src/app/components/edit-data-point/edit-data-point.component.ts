@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataPoint } from 'src/app/_models/dataPoint';
-import { Exercise, eExercises } from 'src/app/_models';
+import { Exercise, eExercises, Activity, Consumable } from 'src/app/_models';
 import { DatePipe } from '@angular/common';
 import * as dataPointActions from '../../_actions/datapoint.actions';
 import { State } from 'src/app/_reducers';
@@ -16,6 +16,9 @@ import { Store } from '@ngrx/store';
 export class EditDataPointComponent implements OnInit {
     dpForm: FormGroup;
     dpThis$: DataPoint;
+    exerciseList: Exercise[] = [];
+    activityList: Activity[] = [];
+    consumableList: Consumable[] = [];
 
     @Input()
     set dpThis(dp: DataPoint) {
@@ -40,7 +43,7 @@ export class EditDataPointComponent implements OnInit {
     ngOnInit() {
     }
 
-    showDate(){
+    showDate() {
         let datePipe = new DatePipe("en-US");
         return datePipe.transform(this.dpThis$.date, "dd.MM hh:mm")
     }
@@ -50,16 +53,17 @@ export class EditDataPointComponent implements OnInit {
         return Math.max(1, this.dpForm.value.happiness);
     }
 
-    saveDP(){
-     let pomdp: DataPoint = new DataPoint(700, "Bas Lep Dan", new Date(), 5, "empty");
-    let pomexer = new Exercise("kalistenika na keju",50,new Date(),new Date(),eExercises.Calisthenics,false,"","neki opis");
-    /*pomexer.name = "kalistenika na keju";
-    pomexer.description = "neki opis";
-    pomexer.effectiveness = 50;
-    pomexer.ifInjury = false;
-    pomexer.startsOn = new Date();
-    pomexer.endsOn = new Date();*/
-    pomdp.exercises.push(pomexer);
-    this.store.dispatch(dataPointActions.addDataPoint({ dataPoint: pomdp }));
+    saveDP() {
+        let pomdp: DataPoint = new DataPoint(this.dpThis$.id, this.dpForm.get('name').value, this.dpForm.get('date').value, this.dpForm.get('happiness').value, this.dpForm.get('diary').value);
+
+        pomdp.exercises = this.exerciseList;
+        pomdp.activities = this.activityList;
+        pomdp.consumables = this.consumableList;
+
+
+        console.log(this.exerciseList);
+        console.log(this.activityList);
+        console.log(this.consumableList);
+        this.store.dispatch(dataPointActions.updateDataPoint({ dataPoint: pomdp }));
     }
 }

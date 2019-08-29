@@ -45,7 +45,9 @@ export class SideNavDatesComponent implements OnInit {
     this.dataPointList = Array();
     this.dataPoints$.subscribe((dps) => {
       this.dataPointList = Array();
+      console.log(dps);
       dps.map((dp) => {
+        console.log(dp);
         this.dataPointList.push(dp);
       })
     })
@@ -67,7 +69,6 @@ export class SideNavDatesComponent implements OnInit {
   }
 
   selectDP(dp: DataPoint){
-    console.log(dp);
     this.selectedDP = dp;
   }
 

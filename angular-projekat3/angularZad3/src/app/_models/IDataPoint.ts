@@ -1,7 +1,7 @@
 import { Consumable, Exercise, Activity } from "../_models/";
 
 export interface IDataPoint {
-    ID?: number;
+    id?: number;
     name?: string;
     date: Date;
     happy?: number;

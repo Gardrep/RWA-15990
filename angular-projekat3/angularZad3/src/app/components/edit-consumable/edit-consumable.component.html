@@ -1,5 +1,5 @@
 <div>
-    <form class="example-container" [formGroup]="dpForm">
+    <form class="example-container" [formGroup]="dpForm" (change)="CallChange()">
         <div>
             <label>Name: </label>
             <mat-form-field>
@@ -10,17 +10,17 @@
         <div>
             <label>Time Consumed: </label>
             <mat-form-field>
-    <input matInput [ngxTimepicker]="picker" [format]="24" [value]="timeCon" formControlName="timeConsumed">
-                <ngx-material-timepicker #picker></ngx-material-timepicker>
+                <input matInput [ngxTimepicker]="picker" [format]="24" [value]="timeCon" formControlName="timeConsumed">
+                <ngx-material-timepicker (closed)="CallChange()" #picker></ngx-material-timepicker>
             </mat-form-field>
         </div>
         <div>
             <label>Type: </label>
             <mat-form-field>
-                <mat-select formControlName="type">
-                  <mat-option *ngFor="let type of consumableValues" [value]="type">
-                    {{type}}
-                  </mat-option>
+                <mat-select formControlName="type" (selectionChange)="CallChange()">
+                    <mat-option *ngFor="let type of consumableValues" [value]="type">
+                        {{type}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -28,6 +28,9 @@
 </div>
 <div>
     <mat-action-list class="myconsumedlist" dense>
-        <button mat-list-item (click)="selectCo(co)" *ngFor="let co of listConsumables">{{showCo(co)}} </button>
+        <div class="container" *ngFor="let co of List">
+            <div class="text-container"><button mat-list-item (click)="selectCo(co)">{{showCo(co)}} </button></div>
+            <div><button mat-list-item (click)="deleteCo(co)">X</button></div>
+        </div>
     </mat-action-list>
 </div>

@@ -1,5 +1,5 @@
 <div>
-    <form class="example-container" [formGroup]="dpForm">
+    <form class="example-container" [formGroup]="dpForm" (change)="CallChange()">
         <div>
             <label>Name: </label>
             <mat-form-field>
@@ -18,23 +18,23 @@
             <label>Stars on: </label>
             <mat-form-field>
                 <input matInput [ngxTimepicker]="pickerS" [format]="24" [value]="starts" formControlName="startsOn">
-                <ngx-material-timepicker #pickerS></ngx-material-timepicker>
+                <ngx-material-timepicker (closed)="CallChange()" #pickerS></ngx-material-timepicker>
             </mat-form-field>
         </div>
         <div>
             <label>Ends on: </label>
             <mat-form-field>
                 <input matInput [ngxTimepicker]="pickerE" [format]="24" [value]="ends" formControlName="endsOn">
-                <ngx-material-timepicker #pickerE></ngx-material-timepicker>
+                <ngx-material-timepicker (closed)="CallChange()" #pickerE></ngx-material-timepicker>
             </mat-form-field>
         </div>
         <div>
             <label>Type: </label>
             <mat-form-field>
-                <mat-select formControlName="type">
-                  <mat-option *ngFor="let type of activityValues" [value]="type">
-                    {{type}}
-                  </mat-option>
+                <mat-select formControlName="type" (selectionChange)="CallChange()">
+                    <mat-option *ngFor="let type of activityValues" [value]="type">
+                        {{type}}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -49,6 +49,9 @@
 </div>
 <div>
     <mat-action-list class="myeventlist" dense>
-        <button mat-list-item (click)="selectAc(ac)" *ngFor="let ac of listActivities">{{showAc(ac)}} </button>
+        <div class="container" *ngFor="let ac of List">
+            <div class="text-container"><button mat-list-item (click)="selectAc(ac)">{{showAc(ac)}} </button></div>
+            <div><button mat-list-item (click)="deleteAc(ac)">X</button></div>
+        </div>
     </mat-action-list>
 </div>

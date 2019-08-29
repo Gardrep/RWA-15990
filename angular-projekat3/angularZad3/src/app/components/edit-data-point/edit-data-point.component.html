@@ -28,12 +28,12 @@
         </form>
     </div>
     <div>
-        <edit-exercise [dpExercise]="dpThis$.exercises"></edit-exercise>
+        <edit-exercise [dpExercise]="dpThis$.exercises" [(List)] = "exerciseList" ></edit-exercise>
     </div>
     <div>
-        <edit-activity [dpActivity]="dpThis$.activities"></edit-activity>
+        <edit-activity [dpActivity]="dpThis$.activities" [(List)] = "activityList"></edit-activity>
     </div>
     <div>
-        <edit-consumable [dpConsumable]="dpThis$.consumables"></edit-consumable>
+        <edit-consumable [dpConsumable]="dpThis$.consumables" [(List)] = "consumableList"></edit-consumable>
     </div>
 </div>

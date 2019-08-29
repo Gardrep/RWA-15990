@@ -1,170 +1,49 @@
 {
   "dataPoints": [
     {
-      "ID": 0,
-      "name": "Ime nekog dana",
-      "date": "2019-06-23T19:40:57.034Z",
-      "happy": 7,
-      "dairy": "empty",
+      "id": 0,
+      "name": "Empty day",
+      "date": "2019-06-24T17:40:57.000Z",
+      "happy": 1,
+      "diary": "emptu",
       "consumables": [
         {
-          "name": "Zoki i nena",
-          "timeConsumed": "2019-06-23T23:40:57.034Z",
-          "type": "ChickenWhite"
+          "name": "Ramen",
+          "timeConsumed": "2019-07-28T19:40:57",
+          "type": "Broth"
         },
         {
-          "name": "Sokic",
-          "timeConsumed": "2019-06-23T00:40:57.034Z",
-          "type": "Juice"
-        }
-      ],
-      "exercises": [
-        {
-          "name": "Running1",
-          "effectiveness": "25",
-          "startsOn": "2019-06-23T09:40:57.034Z",
-          "endsOn": "2019-06-23T10:20:57.034Z",
-          "type": "Running",
-          "ifInjury": "false",
-          "injury": "",
-          "description": "Desc"
+          "name": "Wiski",
+          "timeConsumed": "2019-07-28T12:40:57",
+          "type": "Liquor"
         },
         {
-          "name": "Gym1",
-          "effectiveness": "85",
-          "startsOn": "2019-06-23T18:40:57.034Z",
-          "endsOn": "2019-06-23T20:40:57.034Z",
-          "type": "Gym",
-          "ifInjury": "false",
-          "injury": "",
-          "description": "Description"
-        }
-      ],
-      "activities": [
-        {
-          "name": "aktivnost",
-          "effectiveness": "100",
-          "startsOn": "2019-06-23T01:20:57.034Z",
-          "endsOn": "2019-06-23T03:20:57.034Z",
-          "type": "Studying",
-          "description": "Description4"
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-07-28T06:40:57",
+          "type": "Burger"
         },
         {
-          "name": "aktivnost",
-          "effectiveness": "70",
-          "startsOn": "2019-06-23T01:20:57.034Z",
-          "endsOn": "2019-06-23T03:20:57.034Z",
-          "type": "Networking",
-          "description": "Description4"
-        }
-      ]
-    },
-    {
-      "ID": 1,
-      "name": "Nestolepo se desilo",
-      "date": "2019-06-23T20:40:57.034Z",
-      "happy": 10,
-      "dairy": "empty",
-      "consumables": [
-        {
-          "name": "Zoki i ceca",
-          "timeConsumed": "2019-06-23T23:40:57.034Z",
-          "type": "ChickenWhite"
+          "name": "Coca Zero",
+          "timeConsumed": "2019-07-28T19:40:57",
+          "type": "Soda"
         },
         {
-          "name": "Sokic",
-          "timeConsumed": "2019-06-23T00:40:57.034Z",
-          "type": "Juice"
+          "name": "Nudle",
+          "timeConsumed": "2019-07-28T12:40:57",
+          "type": "Pastry"
         },
         {
-          "name": "Zoki i beca",
-          "timeConsumed": "2019-06-23T23:40:57.034Z",
-          "type": "ChickenWhite"
-        },
-        {
-          "name": "Sokic",
-          "timeConsumed": "2019-06-23T00:40:57.034Z",
-          "type": "Juice"
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-07-28T06:40:57",
+          "type": "Burger"
         }
       ],
       "exercises": [
         {
           "name": "Gym1",
           "effectiveness": "85",
-          "startsOn": "2019-06-23T15:40:57.034Z",
-          "endsOn": "2019-06-23T17:40:57.034Z",
-          "type": "Gym",
-          "ifInjury": "false",
-          "injury": "",
-          "description": "Descc"
-        },
-        {
-          "name": "Running1",
-          "effectiveness": "35",
-          "startsOn": "2019-06-23T12:40:57.034Z",
-          "endsOn": "2019-06-23T13:20:57.034Z",
-          "type": "Running",
-          "ifInjury": "false",
-          "injury": "",
-          "description": "Descrip"
-        }
-      ],
-      "activities": [
-        {
-          "name": "Kej",
-          "effectiveness": "100",
-          "startsOn": "2019-06-23T05:20:57.034Z",
-          "endsOn": "2019-06-23T08:20:57.034Z",
-          "type": "Sleep",
-          "description": "Description3"
-        },
-        {
-          "name": "aktivnost",
-          "effectiveness": "12",
-          "startsOn": "2019-06-23T01:20:57.034Z",
-          "endsOn": "2019-06-23T03:20:57.034Z",
-          "type": "Faculty",
-          "description": "Description4"
-        },
-        {
-          "name": "aktivnost",
-          "effectiveness": "50",
-          "startsOn": "2019-06-23T01:20:57.034Z",
-          "endsOn": "2019-06-23T03:20:57.034Z",
-          "type": "Outside",
-          "description": "Description4"
-        }
-      ]
-    },
-    {
-      "ID": 7,
-      "name": "Prelep dan",
-      "date": "2019-06-23T19:40:57.034Z",
-      "happy": 3,
-      "dairy": "empty",
-      "consumables": [
-        {
-          "name": "Zajacarsko",
-          "timeConsumed": "2019-06-23T00:40:57.034Z",
-          "type": "Beer"
-        },
-        {
-          "name": "Zoki i beca",
-          "timeConsumed": "2019-06-23T23:40:57.034Z",
-          "type": "ChickenWhite"
-        },
-        {
-          "name": "Sokic",
-          "timeConsumed": "2019-06-23T00:40:57.034Z",
-          "type": "Juice"
-        }
-      ],
-      "exercises": [
-        {
-          "name": "Gym1",
-          "effectiveness": "85",
-          "startsOn": "2019-06-23T14:40:57.034Z",
-          "endsOn": "2019-06-23T15:40:57.034Z",
+          "startsOn": "2019-07-28T03:40:57",
+          "endsOn": "2019-07-28T04:40:57",
           "type": "Gym",
           "ifInjury": "false",
           "injury": "",
@@ -173,8 +52,8 @@
         {
           "name": "Running1",
           "effectiveness": "65",
-          "startsOn": "2019-06-23T14:40:57.034Z",
-          "endsOn": "2019-06-23T16:20:57.034Z",
+          "startsOn": "2019-07-28T06:40:57",
+          "endsOn": "2019-07-28T07:20:57",
           "type": "Running",
           "ifInjury": "false",
           "injury": "",
@@ -183,8 +62,8 @@
         {
           "name": "Gym2",
           "effectiveness": "85",
-          "startsOn": "2019-06-23T21:40:57.034Z",
-          "endsOn": "2019-06-23T23:40:57.034Z",
+          "startsOn": "2019-07-28T11:40:57",
+          "endsOn": "2019-07-28T15:40:57",
           "type": "Gym",
           "ifInjury": "false",
           "injury": "",
@@ -193,8 +72,8 @@
         {
           "name": "Running2",
           "effectiveness": "45",
-          "startsOn": "2019-06-23T13:40:57.034Z",
-          "endsOn": "2019-06-23T16:20:57.034Z",
+          "startsOn": "2019-07-28T19:40:57",
+          "endsOn": "2019-07-28T19:45:57",
           "type": "Running",
           "ifInjury": "false",
           "injury": "",
@@ -203,8 +82,8 @@
         {
           "name": "Running3",
           "effectiveness": "45",
-          "startsOn": "2019-06-23T02:40:57.034Z",
-          "endsOn": "2019-06-23T05:20:57.034Z",
+          "startsOn": "2019-07-28T14:40:57",
+          "endsOn": "2019-07-28T15:20:57",
           "type": "Running",
           "ifInjury": "false",
           "injury": "",
@@ -215,44 +94,907 @@
         {
           "name": "MAjanje",
           "effectiveness": "10",
-          "startsOn": "2019-06-23T02:20:57.034Z",
-          "endsOn": "2019-06-23T08:20:57.034Z",
+          "startsOn": "2019-07-28T16:10:57",
+          "endsOn": "2019-07-28T17:11:57",
           "type": "Studying",
           "description": "Description1"
         },
         {
           "name": "Kej",
           "effectiveness": "17",
-          "startsOn": "2019-06-23T05:20:57.034Z",
-          "endsOn": "2019-06-23T08:20:57.034Z",
+          "startsOn": "2019-07-28T22:02:57",
+          "endsOn": "2019-07-28T23:20:57",
           "type": "Other",
           "description": "Description2"
         },
         {
           "name": "Kej",
           "effectiveness": "100",
-          "startsOn": "2019-06-23T05:20:57.034Z",
-          "endsOn": "2019-06-23T08:20:57.034Z",
+          "startsOn": "2019-07-28T01:01:57",
+          "endsOn": "2019-07-28T01:02:57",
           "type": "Family",
           "description": "Description3"
         },
         {
           "name": "aktivnost",
           "effectiveness": "92",
-          "startsOn": "2019-06-23T01:20:57.034Z",
-          "endsOn": "2019-06-23T03:20:57.034Z",
+          "startsOn": "2019-07-28T01:20:57",
+          "endsOn": "2019-07-28T09:20:57",
           "type": "Hobby",
           "description": "Description4"
         },
         {
           "name": "aktivnost",
           "effectiveness": "50",
-          "startsOn": "2019-06-23T01:20:57.034Z",
-          "endsOn": "2019-06-23T03:20:57.034Z",
+          "startsOn": "2019-07-28T11:20:57",
+          "endsOn": "2019-07-28T19:20:57",
           "type": "Outside",
           "description": "Description4"
         }
       ]
+    },
+    {
+      "id": 1,
+      "name": "Nestolepo se desilo",
+      "date": "2019-06-25T20:40:57",
+      "happy": 10,
+      "dairy": "empty",
+      "consumables": [
+        {
+          "name": "Medvedjeva krv",
+          "timeConsumed": "2019-06-25T22:40:57",
+          "type": "Vine"
+        },
+        {
+          "name": "Cips",
+          "timeConsumed": "2019-06-25T11:40:57",
+          "type": "Snacks"
+        },
+        {
+          "name": "Domaci",
+          "timeConsumed": "2019-06-25T10:40:57",
+          "type": "Bread"
+        },
+        {
+          "name": "Prolom",
+          "timeConsumed": "2019-06-25T09:40:57",
+          "type": "Water"
+        }
+      ],
+      "exercises": [
+        {
+          "name": "Gym1",
+          "effectiveness": "85",
+          "startsOn": "2019-06-25T06:40:57",
+          "endsOn": "2019-06-25T07:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Descc"
+        },
+        {
+          "name": "Running1",
+          "effectiveness": "35",
+          "startsOn": "2019-06-25T16:40:57",
+          "endsOn": "2019-06-25T19:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Descrip"
+        }
+      ],
+      "activities": [
+        {
+          "name": "Kej",
+          "effectiveness": "100",
+          "startsOn": "2019-06-25T13:20:57",
+          "endsOn": "2019-06-25T15:20:57",
+          "type": "Sleep",
+          "description": "Description3"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "12",
+          "startsOn": "2019-06-25T16:20:57",
+          "endsOn": "2019-06-25T18:20:57",
+          "type": "Faculty",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "50",
+          "startsOn": "2019-06-25T18:20:57",
+          "endsOn": "2019-06-25T20:20:57",
+          "type": "Outside",
+          "description": "Description4"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Prelep dan",
+      "date": "2019-08-29T19:40:57",
+      "happy": 3,
+      "dairy": "empty",
+      "consumables": [
+        {
+          "name": "Ramen",
+          "timeConsumed": "2019-08-29T19:40:57",
+          "type": "Broth"
+        },
+        {
+          "name": "Wiski",
+          "timeConsumed": "2019-08-29T12:40:57",
+          "type": "Liquor"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-29T06:40:57",
+          "type": "Burger"
+        },
+        {
+          "name": "Coca Zero",
+          "timeConsumed": "2019-08-29T19:40:57",
+          "type": "Soda"
+        },
+        {
+          "name": "Nudle",
+          "timeConsumed": "2019-08-29T12:40:57",
+          "type": "Pastry"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-29T06:40:57",
+          "type": "Burger"
+        }
+      ],
+      "exercises": [
+        {
+          "name": "Gym1",
+          "effectiveness": "85",
+          "startsOn": "2019-08-29T03:40:57",
+          "endsOn": "2019-08-29T04:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Des"
+        },
+        {
+          "name": "Running1",
+          "effectiveness": "65",
+          "startsOn": "2019-08-29T06:40:57",
+          "endsOn": "2019-08-29T07:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "empty"
+        },
+        {
+          "name": "Gym2",
+          "effectiveness": "85",
+          "startsOn": "2019-08-29T11:40:57",
+          "endsOn": "2019-08-29T15:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "nothing special"
+        },
+        {
+          "name": "Running2",
+          "effectiveness": "45",
+          "startsOn": "2019-08-29T19:40:57",
+          "endsOn": "2019-08-29T19:45:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "something"
+        },
+        {
+          "name": "Running3",
+          "effectiveness": "45",
+          "startsOn": "2019-08-29T14:40:57",
+          "endsOn": "2019-08-29T15:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Desc"
+        }
+      ],
+      "activities": [
+        {
+          "name": "MAjanje",
+          "effectiveness": "10",
+          "startsOn": "2019-08-29T16:10:57",
+          "endsOn": "2019-08-29T17:11:57",
+          "type": "Studying",
+          "description": "Description1"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "17",
+          "startsOn": "2019-08-29T22:02:57",
+          "endsOn": "2019-08-29T23:20:57",
+          "type": "Other",
+          "description": "Description2"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "100",
+          "startsOn": "2019-08-29T01:01:57",
+          "endsOn": "2019-08-29T01:02:57",
+          "type": "Family",
+          "description": "Description3"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "92",
+          "startsOn": "2019-08-29T01:20:57",
+          "endsOn": "2019-08-29T09:20:57",
+          "type": "Hobby",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "50",
+          "startsOn": "2019-08-29T11:20:57",
+          "endsOn": "2019-08-29T19:20:57",
+          "type": "Outside",
+          "description": "Description4"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Prelep dan",
+      "date": "2019-08-30T17:40:57.000Z",
+      "happy": 3,
+      "diary": "empty",
+      "consumables": [
+        {
+          "name": "Ramen",
+          "timeConsumed": "2019-08-30T19:40:57",
+          "type": "Broth"
+        },
+        {
+          "name": "Wiski",
+          "timeConsumed": "2019-08-30T12:40:57",
+          "type": "Liquor"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-30T06:40:57",
+          "type": "Burger"
+        },
+        {
+          "name": "Coca Zero",
+          "timeConsumed": "2019-08-30T19:40:57",
+          "type": "Soda"
+        },
+        {
+          "name": "Nudle",
+          "timeConsumed": "2019-08-30T12:40:57",
+          "type": "Pastry"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-30T06:40:57",
+          "type": "Burger"
+        }
+      ],
+      "exercises": [],
+      "activities": [
+        {
+          "name": "MAjanje",
+          "effectiveness": "10",
+          "startsOn": "2019-08-30T16:10:57",
+          "endsOn": "2019-08-30T17:11:57",
+          "type": "Studying",
+          "description": "Description1"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "17",
+          "startsOn": "2019-08-30T22:02:57",
+          "endsOn": "2019-08-30T23:20:57",
+          "type": "Other",
+          "description": "Description2"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "100",
+          "startsOn": "2019-08-30T01:01:57",
+          "endsOn": "2019-08-30T01:02:57",
+          "type": "Family",
+          "description": "Description3"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "92",
+          "startsOn": "2019-08-30T01:20:57",
+          "endsOn": "2019-08-30T09:20:57",
+          "type": "Hobby",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "50",
+          "startsOn": "2019-08-30T11:20:57",
+          "endsOn": "2019-08-30T19:20:57",
+          "type": "Outside",
+          "description": "Description4"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Prelep dan",
+      "date": "2019-07-28T19:40:57",
+      "happy": 3,
+      "dairy": "empty",
+      "consumables": [
+        {
+          "name": "Ramen",
+          "timeConsumed": "2019-07-28T19:40:57",
+          "type": "Broth"
+        },
+        {
+          "name": "Wiski",
+          "timeConsumed": "2019-07-28T12:40:57",
+          "type": "Liquor"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-07-28T06:40:57",
+          "type": "Burger"
+        },
+        {
+          "name": "Coca Zero",
+          "timeConsumed": "2019-07-28T19:40:57",
+          "type": "Soda"
+        },
+        {
+          "name": "Nudle",
+          "timeConsumed": "2019-07-28T12:40:57",
+          "type": "Pastry"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-07-28T06:40:57",
+          "type": "Burger"
+        }
+      ],
+      "exercises": [
+        {
+          "name": "Gym1",
+          "effectiveness": "85",
+          "startsOn": "2019-07-28T03:40:57",
+          "endsOn": "2019-07-28T04:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Des"
+        },
+        {
+          "name": "Running1",
+          "effectiveness": "65",
+          "startsOn": "2019-07-28T06:40:57",
+          "endsOn": "2019-07-28T07:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "empty"
+        },
+        {
+          "name": "Gym2",
+          "effectiveness": "85",
+          "startsOn": "2019-07-28T11:40:57",
+          "endsOn": "2019-07-28T15:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "nothing special"
+        },
+        {
+          "name": "Running2",
+          "effectiveness": "45",
+          "startsOn": "2019-07-28T19:40:57",
+          "endsOn": "2019-07-28T19:45:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "something"
+        },
+        {
+          "name": "Running3",
+          "effectiveness": "45",
+          "startsOn": "2019-07-28T14:40:57",
+          "endsOn": "2019-07-28T15:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Desc"
+        }
+      ],
+      "activities": [
+        {
+          "name": "MAjanje",
+          "effectiveness": "10",
+          "startsOn": "2019-07-28T16:10:57",
+          "endsOn": "2019-07-28T17:11:57",
+          "type": "Studying",
+          "description": "Description1"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "17",
+          "startsOn": "2019-07-28T22:02:57",
+          "endsOn": "2019-07-28T23:20:57",
+          "type": "Other",
+          "description": "Description2"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "100",
+          "startsOn": "2019-07-28T01:01:57",
+          "endsOn": "2019-07-28T01:02:57",
+          "type": "Family",
+          "description": "Description3"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "92",
+          "startsOn": "2019-07-28T01:20:57",
+          "endsOn": "2019-07-28T09:20:57",
+          "type": "Hobby",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "50",
+          "startsOn": "2019-07-28T11:20:57",
+          "endsOn": "2019-07-28T19:20:57",
+          "type": "Outside",
+          "description": "Description4"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Prelep dan",
+      "date": "2019-08-27T19:40:57",
+      "happy": 3,
+      "dairy": "empty",
+      "consumables": [
+        {
+          "name": "Ramen",
+          "timeConsumed": "2019-08-27T19:40:57",
+          "type": "Broth"
+        },
+        {
+          "name": "Wiski",
+          "timeConsumed": "2019-08-27T12:40:57",
+          "type": "Liquor"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-27T06:40:57",
+          "type": "Burger"
+        },
+        {
+          "name": "Coca Zero",
+          "timeConsumed": "2019-08-27T19:40:57",
+          "type": "Soda"
+        },
+        {
+          "name": "Nudle",
+          "timeConsumed": "2019-08-27T12:40:57",
+          "type": "Pastry"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-27T06:40:57",
+          "type": "Burger"
+        }
+      ],
+      "exercises": [
+        {
+          "name": "Gym1",
+          "effectiveness": "85",
+          "startsOn": "2019-08-27T03:40:57",
+          "endsOn": "2019-08-27T04:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Des"
+        },
+        {
+          "name": "Running1",
+          "effectiveness": "65",
+          "startsOn": "2019-08-27T06:40:57",
+          "endsOn": "2019-08-27T07:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "empty"
+        },
+        {
+          "name": "Gym2",
+          "effectiveness": "85",
+          "startsOn": "2019-08-27T11:40:57",
+          "endsOn": "2019-08-27T15:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "nothing special"
+        },
+        {
+          "name": "Running2",
+          "effectiveness": "45",
+          "startsOn": "2019-08-27T19:40:57",
+          "endsOn": "2019-08-27T19:45:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "something"
+        },
+        {
+          "name": "Running3",
+          "effectiveness": "45",
+          "startsOn": "2019-08-27T14:40:57",
+          "endsOn": "2019-08-27T15:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Desc"
+        }
+      ],
+      "activities": [
+        {
+          "name": "MAjanje",
+          "effectiveness": "10",
+          "startsOn": "2019-08-27T16:10:57",
+          "endsOn": "2019-08-27T17:11:57",
+          "type": "Studying",
+          "description": "Description1"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "17",
+          "startsOn": "2019-08-27T22:02:57",
+          "endsOn": "2019-08-27T23:20:57",
+          "type": "Other",
+          "description": "Description2"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "100",
+          "startsOn": "2019-08-27T01:01:57",
+          "endsOn": "2019-08-27T01:02:57",
+          "type": "Family",
+          "description": "Description3"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "92",
+          "startsOn": "2019-08-27T01:20:57",
+          "endsOn": "2019-08-27T09:20:57",
+          "type": "Hobby",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "50",
+          "startsOn": "2019-08-27T11:20:57",
+          "endsOn": "2019-08-27T19:20:57",
+          "type": "Outside",
+          "description": "Description4"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Prelep dan",
+      "date": "2019-08-26T17:40:57.000Z",
+      "happy": 3,
+      "diary": "empty",
+      "consumables": [
+        {
+          "name": "Ramen",
+          "timeConsumed": "2019-08-26T19:40:57",
+          "type": "Broth"
+        },
+        {
+          "name": "Wiski",
+          "timeConsumed": "2019-08-26T12:40:57",
+          "type": "Liquor"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-26T06:40:57",
+          "type": "Burger"
+        },
+        {
+          "name": "Coca Zero",
+          "timeConsumed": "2019-08-26T19:40:57",
+          "type": "Soda"
+        },
+        {
+          "name": "Nudle",
+          "timeConsumed": "2019-08-26T12:40:57",
+          "type": "Pastry"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-26T06:40:57",
+          "type": "Burger"
+        }
+      ],
+      "exercises": [
+        {
+          "name": "Gym1",
+          "effectiveness": "85",
+          "startsOn": "2019-08-26T03:40:57",
+          "endsOn": "2019-08-26T04:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Des"
+        },
+        {
+          "name": "Running1",
+          "effectiveness": "65",
+          "startsOn": "2019-08-26T06:40:57",
+          "endsOn": "2019-08-26T07:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "empty"
+        },
+        {
+          "name": "Gym2",
+          "effectiveness": "85",
+          "startsOn": "2019-08-26T11:40:57",
+          "endsOn": "2019-08-26T15:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "nothing special"
+        },
+        {
+          "name": "Running2",
+          "effectiveness": "45",
+          "startsOn": "2019-08-26T19:40:57",
+          "endsOn": "2019-08-26T19:45:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "something"
+        },
+        {
+          "name": "Running3",
+          "effectiveness": "45",
+          "startsOn": "2019-08-26T14:40:57",
+          "endsOn": "2019-08-26T15:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Desc"
+        }
+      ],
+      "activities": []
+    },
+    {
+      "id": 7,
+      "name": "PrazanDP",
+      "date": "2019-08-25T17:40:57.000Z",
+      "happy": 0,
+      "diary": "emp",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "id": 8,
+      "name": "Prelep dan",
+      "date": "2019-08-24T19:40:57",
+      "happy": 3,
+      "dairy": "empty",
+      "consumables": [
+        {
+          "name": "Ramen",
+          "timeConsumed": "2019-08-24T19:40:57",
+          "type": "Broth"
+        },
+        {
+          "name": "Laf",
+          "timeConsumed": "2019-08-24T12:40:57",
+          "type": "Burger"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-24T06:40:57",
+          "type": "Burger"
+        },
+        {
+          "name": "Coca Zero",
+          "timeConsumed": "2019-08-24T19:40:57",
+          "type": "Soda"
+        },
+        {
+          "name": "Nudle",
+          "timeConsumed": "2019-08-24T12:40:57",
+          "type": "Pastry"
+        },
+        {
+          "name": "Mega-Tron",
+          "timeConsumed": "2019-08-24T06:40:57",
+          "type": "Burger"
+        }
+      ],
+      "exercises": [
+        {
+          "name": "Gym1",
+          "effectiveness": "85",
+          "startsOn": "2019-08-24T03:40:57",
+          "endsOn": "2019-08-24T04:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Des"
+        },
+        {
+          "name": "Running1",
+          "effectiveness": "65",
+          "startsOn": "2019-08-24T06:40:57",
+          "endsOn": "2019-08-24T07:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "empty"
+        },
+        {
+          "name": "Gym2",
+          "effectiveness": "85",
+          "startsOn": "2019-08-24T11:40:57",
+          "endsOn": "2019-08-24T15:40:57",
+          "type": "Gym",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "nothing special"
+        },
+        {
+          "name": "Running2",
+          "effectiveness": "45",
+          "startsOn": "2019-08-24T19:40:57",
+          "endsOn": "2019-08-24T19:45:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "something"
+        },
+        {
+          "name": "Running3",
+          "effectiveness": "45",
+          "startsOn": "2019-08-24T14:40:57",
+          "endsOn": "2019-08-24T15:20:57",
+          "type": "Running",
+          "ifInjury": "false",
+          "injury": "",
+          "description": "Desc"
+        }
+      ],
+      "activities": [
+        {
+          "name": "MAjanje",
+          "effectiveness": "10",
+          "startsOn": "2019-08-24T16:10:57",
+          "endsOn": "2019-08-24T17:11:57",
+          "type": "Studying",
+          "description": "Description1"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "17",
+          "startsOn": "2019-08-24T22:02:57",
+          "endsOn": "2019-08-24T23:20:57",
+          "type": "Other",
+          "description": "Description2"
+        },
+        {
+          "name": "Kej",
+          "effectiveness": "100",
+          "startsOn": "2019-08-24T01:01:57",
+          "endsOn": "2019-08-24T01:02:57",
+          "type": "Family",
+          "description": "Description3"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "92",
+          "startsOn": "2019-08-24T01:20:57",
+          "endsOn": "2019-08-24T09:20:57",
+          "type": "Hobby",
+          "description": "Description4"
+        },
+        {
+          "name": "aktivnost",
+          "effectiveness": "50",
+          "startsOn": "2019-08-24T11:20:57",
+          "endsOn": "2019-08-24T19:20:57",
+          "type": "Outside",
+          "description": "Description4"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Empty day",
+      "date": "2019-09-01T00:00:00",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "id": 10,
+      "name": "Empty day",
+      "date": "2019-09-02T00:00:00",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "id": 11,
+      "name": "Empty day",
+      "date": "2019-09-03T00:00:00",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "id": 12,
+      "name": "Empty day",
+      "date": "2019-09-04T00:00:00",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "id": 13,
+      "name": "Empty day",
+      "date": "2019-09-05T00:00:00",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "id": 14,
+      "name": "Empty day",
+      "date": "2019-09-06T00:00:00",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
+    },
+    {
+      "id": 15,
+      "name": "Empty day",
+      "date": "2019-09-07T00:00:00",
+      "happy": 0,
+      "dairy": "empty",
+      "consumables": [],
+      "exercises": [],
+      "activities": []
     }
   ]
 }

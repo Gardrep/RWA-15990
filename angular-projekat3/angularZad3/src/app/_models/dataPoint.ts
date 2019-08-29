@@ -6,7 +6,7 @@ import { eConsumables } from '../_models/eConsumables';
 
 
 export class DataPoint implements IDataPoint {
-    ID?: number;
+    id?: number;
     name?: string;
     date: Date;
     happy?: number;
@@ -17,35 +17,35 @@ export class DataPoint implements IDataPoint {
     activities?: Activity[];
 
     // constructor(data?:DataPoint);
-    constructor(ID: number, name: string, date: Date, happy: number, diary: string) {
-        this.ID = !ID ? 0 : ID;
+    constructor(id: number, name: string, date: Date, happy: number, diary: string) {
+        this.id = !id ? 0 : id;
         this.name = !name ? "unnamed" : name;
-        this.date = !date ? null : date;
+        this.date = new Date(!date ? null : date);
         this.happy = !happy ? 0 : happy;
         this.diary = !diary ? "empty" : diary;
 
         this.consumables = [{
-            name: "Cufte",
-            timeConsumed: new Date("2019-06-23T15:40:57.034Z"),
-            type: eConsumables.MomsFood
+            name: "empty",
+            timeConsumed: new Date(),
+            type: eConsumables.Other
         }];
         this.exercises = [{
-            name: "Gym1",
-            effectiveness: 85,
+            name: "empty",
+            effectiveness: 0,
             startsOn: new Date(),
             endsOn: new Date(),
-            type: eExercises.Gym,
+            type: eExercises.Other,
             ifInjury: false,
             injury: "",
-            description: ""
+            description: "empty"
         }];
         this.activities = [{
-            name: "aktivnost",
-            effectiveness: 100,
-            startsOn: new Date("2019-06-23T01:20:57.034Z"),
-            endsOn: new Date("2019-06-23T03:20:57.034Z"),
-            type: eActivities.Gaming,
-            description: "deskription"
+            name: "empty",
+            effectiveness: 0,
+            startsOn: new Date(),
+            endsOn: new Date(),
+            type: eActivities.Other,
+            description: "empty"
         }];
     }
 }

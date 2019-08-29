@@ -1,23 +1,26 @@
 <div class="monthly-radar-container">
-    <div>
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="EndDateChange($event)">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker startView="year" [startAt]="startDate" ></mat-datepicker>
-        </mat-form-field>
-        <mat-select>
-            <mat-option (click)="ChangeList('Activites')" [value]="Activites">
-                Activites
-            </mat-option>
-            <mat-option (click)="ChangeList('Exercises')" [value]="Exercises">
-                Exercises
-            </mat-option>
-            <mat-option (click)="ChangeList('Consumables')" [value]="Consumables">
-                Consumables
-            </mat-option>
-        </mat-select>
+    <div class="column-container">
+        <div>
+            <button mat-raised-button color="primary" (click)="RadioToggle()">ToggleChart</button>
+        </div>
+        <div>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" [value]="monthlyDate" placeholder="Choose a date"
+                    (dateInput)="EndDateChange($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="year"></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-select [(value)]="monthlyChoice" (valueChange)="Change()">
+                <mat-option  [value]="option" *ngFor="let option of dataPointTypes">
+                        {{option}}
+                </mat-option>
+            </mat-select>
+        </div>
     </div>
     <div class="radar-container">
-        <app-radar-chart [showList]="showList" [showLabels]="showLabels"></app-radar-chart>
+        <radar-chart [showList]="showListRadar" [showLabels]="showLabelsRadar" *ngIf="IsRadio==true"></radar-chart>
+        <dynamic-chart [showList]="showListBar" [showLabels]="showLabelsBar" *ngIf="IsRadio==false"></dynamic-chart>
     </div>
 </div>

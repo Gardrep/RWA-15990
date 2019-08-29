@@ -27,7 +27,7 @@ export class DataPointService {
   }
 
   public setDataPoint(id, model) {
-    return this.http.patch<DataPoint>(`${config}dataPoints`, model, httpOptions).toPromise();
+    return this.http.put<DataPoint>(`${config}dataPoints/${id}`, model, httpOptions);
 
     /*let options = {
       method: 'PATCH',

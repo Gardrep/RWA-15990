@@ -30,7 +30,6 @@ export class ScatterChartComponent implements OnInit {
 
   @Input()
   set  MyDataSet(ds: ChartDataSets[]) {
-    console.log(ds);
     this.scatterChartData = ds;
   }
 

@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import * as DataPointActions from '../_actions/datapoint.actions';
 import { IDataPoint } from '../_models/IDataPoint';
+import { prepareSyntheticListenerFunctionName } from '@angular/compiler/src/render3/util';
 
 export interface State extends EntityState<IDataPoint> {
     // additional entity state properties
@@ -10,11 +11,13 @@ export interface State extends EntityState<IDataPoint> {
 
 export function selectUserId(a: IDataPoint): number {
     //In this case this would be optional since primary key is id
-    return a.ID;
+    return a.id;
   }
    
   export function sortByName(a: IDataPoint, b: IDataPoint): number {
-    return a.name.localeCompare(b.name);
+    //return new Date(a.date).getTime()<new Date(b.date).getTime()?1:0;
+    return a.date>b.date?1:-1;
+    //return a.name.localeCompare(b.name);
   }
 
 export const adapter: EntityAdapter<IDataPoint> = createEntityAdapter<IDataPoint>({
@@ -42,7 +45,7 @@ export const initialState: State = adapter.getInitialState({
     on(DataPointActions.upsertUsers, (state, { users }) => {
       return adapter.upsertUsers(users, state);
     }),*/
-    on(DataPointActions.updateDataPoint, (state, { dataPoint }) => {
+    on(DataPointActions.updateDataPointSuccess, (state, { dataPoint }) => {
       return adapter.updateOne(dataPoint, state);
     }),
    /* on(DataPointActions.updateUsers, (state, { users }) => {

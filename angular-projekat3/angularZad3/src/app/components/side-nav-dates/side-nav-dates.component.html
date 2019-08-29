@@ -1,7 +1,7 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')"
     class="mysidenav myeventlist">
-    <mat-action-list class="myeventlist">
+    <mat-action-list class="myeventlist" dense>
       <button mat-list-item (click)="selectDP(dp)" *ngFor="let dp of dataPointList">{{showDP(dp)}} </button>
 
     </mat-action-list>

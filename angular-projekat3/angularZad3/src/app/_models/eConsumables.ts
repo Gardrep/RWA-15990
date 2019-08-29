@@ -12,5 +12,5 @@ export enum eConsumables {
     Snacks = 'Snacks',
     MomsFood = 'MomsFood',
     Broth = 'Broth',
-    Ostalo = 'Ostalo'
+    Other = 'Other'
 }

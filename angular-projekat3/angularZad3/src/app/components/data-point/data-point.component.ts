@@ -18,7 +18,7 @@ export class DataPointComponent implements OnInit {
   public dpForm: FormGroup;
 
   dataIDS$: Observable<string[] | number[]>;
-  MyDataSetL$: ChartDataSets[] = [];
+  MyDataSetL$: ChartDataSets[] = [{ data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: 'Empty' }];
   MyDataSetS$: ChartDataSets[] = [];
   dpThis$: DataPoint;
   IsEdit$: boolean = false;
@@ -63,13 +63,13 @@ export class DataPointComponent implements OnInit {
 
   DSpush(obj) {
     let datePipe = new DatePipe("en-US");
-    let star = parseInt(datePipe.transform(obj.startsOn, "H"), 10) - 2;
+    let star = parseInt(datePipe.transform(obj.startsOn, "H"), 10);
     if (star < 0) star = star + 24;
-    let ends = parseInt(datePipe.transform(obj.endsOn, "H"), 10) - 2;
+    let ends = parseInt(datePipe.transform(obj.endsOn, "H"), 10);
     if (ends < 0) ends = ends + 24;
 
-    let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    for (let i = 0; i < 25; i++) {
+    let dataLine = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (let i = 0; i < 24; i++) {
       if (i >= star && i <= ends) {
         dataLine[i] = obj.effectiveness;
       }
@@ -79,7 +79,7 @@ export class DataPointComponent implements OnInit {
 
   DSpushC(obj) {
     let datePipe = new DatePipe("en-US");
-    let star = parseInt(datePipe.transform(obj.timeConsumed, "H"), 10) - 2;
+    let star = parseInt(datePipe.transform(obj.timeConsumed, "H"), 10);
     if (star < 0) star = star + 24;
     this.MyDataSetS$.push(
       {
@@ -90,6 +90,5 @@ export class DataPointComponent implements OnInit {
         pointRadius: 10,
       },
     );
-    console.log(this.MyDataSetS$);
   }
 }

@@ -25,16 +25,17 @@ import { MenuNavComponent } from './components/menu-nav/menu-nav.component';
 import { SideNavDatesComponent } from './components/side-nav-dates/side-nav-dates.component';
 import { DataPointComponent } from './components/data-point/data-point.component';
 
+import { ChartsModule } from 'ng2-charts';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { ScatterChartComponent } from './components/scatter-chart/scatter-chart.component';
 import { RadarChartComponent } from './components/radar-chart/radar-chart.component';
+import { DynamicChartComponent } from './components/dynamic-chart/dynamic-chart.component';
 import { MonthlyRadarComponent } from './components/monthly-radar/monthly-radar.component';
 
 import { EditDataPointComponent } from './components/edit-data-point/edit-data-point.component';
 import { EditExerciseComponent } from './components/edit-exercise/edit-exercise.component';
 import { EditActivityComponent } from './components/edit-activity/edit-activity.component';
 import { EditConsumableComponent } from './components/edit-consumable/edit-consumable.component';
-import { ChartsModule } from 'ng2-charts';
 
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './_reducers';
@@ -56,6 +57,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     LineChartComponent,
     ScatterChartComponent,
     RadarChartComponent,
+    DynamicChartComponent,
     MonthlyRadarComponent,
 
     EditDataPointComponent,

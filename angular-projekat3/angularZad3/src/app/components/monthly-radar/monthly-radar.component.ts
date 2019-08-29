@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataPoint } from 'src/app/_models/dataPoint';
 import * as dataPointActions from '../../_actions/datapoint.actions';
 import { IDataPoint } from 'src/app/_models/IDatapoint';
@@ -19,21 +19,29 @@ import { eActivities, eConsumables, eExercises, Activity, Exercise, Consumable }
 })
 export class MonthlyRadarComponent implements OnInit {
     dpThis$: DataPoint;
-    showLabels: Label[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running','Hobby'];
-    showList: ChartDataSets[] = [{ data: [100, 100, 100, 100, 100, 100, 100, 100], label: 'Empty series' }];
-    startDate = new Date(2019, 8, 23);
-    monthlyDate: Date = new Date();
-    monthlyChoice: string = "Activites";
     dataPoints$: Observable<IDataPoint[]>;
     dataPointList: DataPoint[] = [];
-    datePipe: DatePipe;
+
+    showLabelsRadar: Label[] = ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running', 'Hobby'];
+    showListRadar: ChartDataSets[] = [{ data: [100, 100, 100, 100, 100, 100, 100, 100], label: 'Empty series' }];
+
+    showLabelsBar: Label[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
+    showListBar: ChartDataSets[] = [{ data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,], label: 'Empty series' }];
+
+    //startDate: Date = new Date(2019, 5, 23);
+    monthlyDate: Date = new Date(2019, 5, 23);
+    monthlyChoice: string = "Activities";
+
+    datePipe: DatePipe = new DatePipe("en-US");;
+    IsRadio: boolean = true;
+
+    dataPointTypes: string[] = ["Activities", "Exercises", "Consumables"];
 
     constructor(private store: Store<State>) {
     }
 
     ngOnInit() {
         this.store.dispatch(dataPointActions.loadDataPoints());
-        this.datePipe = new DatePipe("en-US");
 
         this.dataPoints$ = this.store.select(allReducers.selectAllDataPoints);
         this.dataPointList = Array();
@@ -42,6 +50,7 @@ export class MonthlyRadarComponent implements OnInit {
             dps.map((dp) => {
                 this.dataPointList.push(dp);
             })
+            this.Change();
         })
     }
     /*
@@ -67,55 +76,18 @@ export class MonthlyRadarComponent implements OnInit {
         this.Change();
     }
 
-    ChangeList(data: any) {
-        switch (data) {
-            case "Activites": {
-                this.monthlyChoice = "Activites";
-                this.Change();
-            } break;
-            case "Exercises": {
-                this.monthlyChoice = "Exercises";
-                this.Change();
-            } break;
-            case "Consumables": {
-                this.monthlyChoice = "Consumables";
-                this.Change();
-            } break;
-        }
-    }
-
     Change() {
         let list: any[] = [];
         this.dataPointList.map((dp) => {
+            console.log(dp.date);
             if (this.datePipe.transform(dp.date, "MM:yyyy") == this.datePipe.transform(this.monthlyDate, "MM:yyyy")) {
-                switch (this.monthlyChoice) {
-                    case "Activites": {
-                        dp.activities.forEach(element => { list.push(element); })
-
-                    } break;
-                    case "Exercises": {
-                        dp.exercises.forEach(element => { list.push(element); })
-                    } break;
-                    case "Consumables": {
-                        dp.consumables.forEach(element => { list.push(element); })
-                    } break;
-                }
+                dp[this.monthlyChoice.toLowerCase()].forEach(element => {
+                    list.push(element);
+                });
             }
         });
-        console.log(list);
         if (list.length != 0) {
-            console.log(list);
-            switch (this.monthlyChoice) {
-                case "Activites": {
-                    this.CDSActivities(list);
-                } break;
-                case "Exercises": {
-                    this.CDSExercises(list);
-                } break;
-                case "Consumables": {
-                    this.CDSConsumables(list);
-                } break;
-            }
+            this[`CDS${this.monthlyChoice}`](list);
         }
     }
 
@@ -123,61 +95,122 @@ export class MonthlyRadarComponent implements OnInit {
         let eff: number;
         let i: number;
         let nizEff: Array<number> = [];
+        let nizBar: Array<number> = [];
+        let barLabels: string[] = [];
+        for (i = 1; i <= this.getDaysInMonth(this.datePipe.transform(list[0].startsOn, "MM"), this.datePipe.transform(list[0].startsOn, "yyyy")); i++) {
+            nizBar.push(0);
+            barLabels.push(i.toString());
+        }
+        this.showListBar = [];
+        this.showLabelsBar = barLabels;
         Object.keys(eActivities).forEach(element => {
             eff = 0;
-            i =0;
-            console.log(list.length);
+            i = 0;
+            nizBar = [];
+            for (i = 1; i <= this.getDaysInMonth(this.datePipe.transform(list[0].startsOn, "MM"), this.datePipe.transform(list[0].startsOn, "yyyy")); i++) {
+                nizBar.push(0);
+            }
             list.map((obj: Activity) => {
                 if (element == obj.type) {
-                    eff = parseInt(eff.toString())+ parseInt(obj.effectiveness.toString());
+                    eff = parseInt(eff.toString()) + parseInt(obj.effectiveness.toString());
                     i++;
+                    let date = parseInt(this.datePipe.transform(obj.startsOn, "dd"), 10) - 1;
+                    if (date < 0) date = date + this.getDaysInMonth(this.datePipe.transform(obj.startsOn, "MM"), this.datePipe.transform(obj.startsOn, "yyyy"));
+                    nizBar[date] = obj.effectiveness;
                 }
             });
-            if(i==0)
-            nizEff.push(0);
-            else
-            nizEff.push(eff / i);
+            if (i == 0) {
+                nizEff.push(0);
+            }
+            else {
+                nizEff.push(eff / i);
+            }
+            this.showListBar.push({ data: nizBar, label: element });
         });
-        this.showList = [{ data: nizEff, label: 'Activity for ' + this.datePipe.transform(list[0].startsOn, "MM:yyyy") }];
-        this.showLabels = Object.keys(eActivities);
-        console.log(nizEff);
+        this.showListRadar = [{ data: nizEff, label: 'Activity for ' + this.datePipe.transform(list[0].startsOn, "MM:yyyy") }];
+        this.showLabelsRadar = Object.keys(eActivities);
     }
 
     CDSExercises(list: Array<any>) {
         let eff: number;
         let i: number;
         let nizEff: Array<number> = [];
+        let nizBar: Array<number> = [];
+        let barLabels: string[] = [];
+        for (i = 1; i <= this.getDaysInMonth(this.datePipe.transform(list[0].startsOn, "MM"), this.datePipe.transform(list[0].startsOn, "yyyy")); i++) {
+            nizBar.push(0);
+            barLabels.push(i.toString());
+        }
+        this.showListBar = [];
+        this.showLabelsBar = barLabels;
         Object.keys(eExercises).forEach(element => {
             eff = 0;
-            i =0;
+            i = 0;
+            nizBar = [];
+            for (i = 1; i <= this.getDaysInMonth(this.datePipe.transform(list[0].startsOn, "MM"), this.datePipe.transform(list[0].startsOn, "yyyy")); i++) {
+                nizBar.push(0);
+            }
             list.map((obj: Exercise) => {
                 if (element == obj.type) {
-                    eff = parseInt(eff.toString())+ parseInt(obj.effectiveness.toString());
+                    eff = parseInt(eff.toString()) + parseInt(obj.effectiveness.toString());
                     i++;
+                    let date = parseInt(this.datePipe.transform(obj.startsOn, "dd"), 10) - 1;
+                    if (date < 0) date = date + this.getDaysInMonth(this.datePipe.transform(obj.startsOn, "MM"), this.datePipe.transform(obj.startsOn, "yyyy"));
+                    nizBar[date] = obj.effectiveness;
                 }
             });
-            if(i==0)
-            nizEff.push(0);
-            else
-            nizEff.push(eff / i);
+            if (i == 0) {
+                nizEff.push(0);
+            }
+            else {
+                nizEff.push(eff / i);
+            }
+            this.showListBar.push({ data: nizBar, label: element });
         });
-        this.showList.push({ data: nizEff, label: 'Exercise for ' + this.datePipe.transform(list[0].startsOn, "MM:yyyy") });
-        this.showLabels = Object.keys(eExercises);
+        this.showListRadar = [{ data: nizEff, label: 'Exercise for ' + this.datePipe.transform(list[0].startsOn, "MM:yyyy") }];
+        this.showLabelsRadar = Object.keys(eExercises);
     }
 
-    CDSConsumables(list: Array<any>) {
+    CDSConsumables(list: Array<Consumable>) {
         let eff;
+        let i: number;
         let nizEff: Array<number> = [];
+        let nizBar: Array<number> = [];
+        let barLabels: string[] = [];
+        for (i = 1; i <= this.getDaysInMonth(this.datePipe.transform(list[0].timeConsumed, "MM"), this.datePipe.transform(list[0].timeConsumed, "yyyy")); i++) {
+            nizBar.push(0);
+            barLabels.push(i.toString());
+        }
+        this.showListBar = [];
+        this.showLabelsBar = barLabels;
         Object.keys(eConsumables).forEach(element => {
             eff = 0;
+            i = 0;
+            nizBar = [];
+            for (i = 1; i <= this.getDaysInMonth(this.datePipe.transform(list[0].timeConsumed, "MM"), this.datePipe.transform(list[0].timeConsumed, "yyyy")); i++) {
+                nizBar.push(0);
+            }
             list.map((obj: Consumable) => {
                 if (element == obj.type) {
                     eff++;
+                    let date = parseInt(this.datePipe.transform(obj.timeConsumed, "dd"), 10) - 1;
+                    if (date < 0) date = date + this.getDaysInMonth(this.datePipe.transform(obj.timeConsumed, "MM"), this.datePipe.transform(obj.timeConsumed, "yyyy"));
+                    nizBar[date]++;
                 }
             });
             nizEff.push(eff);
+            this.showListBar.push({ data: nizBar, label: element });
         });
-        this.showList.push({ data: nizEff, label: 'Consumable for ' + this.datePipe.transform(list[0].startsOn, "MM:yyyy") });
-        this.showLabels = Object.keys(eConsumables);
+        this.showListRadar = [{ data: nizEff, label: 'Consumable for ' + this.datePipe.transform(list[0].timeConsumed, "MM:yyyy") }];
+        this.showLabelsRadar = Object.keys(eConsumables);
     }
+
+    RadioToggle() {
+        this.IsRadio = !this.IsRadio;
+    }
+
+    getDaysInMonth = function (month: string, year: string) {
+        return new Date(parseInt(year), parseInt(month), 0).getDate();
+    };
+
 }

@@ -6,3 +6,7 @@
 .radar-container{
 flex-grow:1;
 }
+.column-container{
+    display: flex;
+    flex-direction: column;
+}

@@ -3,7 +3,7 @@ import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 
 @Component({
-  selector: 'app-radar-chart',
+  selector: 'radar-chart',
   templateUrl: './radar-chart.component.html',
   styleUrls: ['./radar-chart.component.css']
 })
@@ -23,15 +23,11 @@ export class RadarChartComponent implements OnInit {
   @Input()
   set showList(data: ChartDataSets[]) {
     this.radarChartData = data;
-    console.log(this.showList);
-    console.log(this.showLabels);
   }
 
   @Input()
   set showLabels(labels :Label[]) {
     this.radarChartLabels = labels;
-    console.log(this.showList);
-    console.log(this.showLabels);
   }
 
 
