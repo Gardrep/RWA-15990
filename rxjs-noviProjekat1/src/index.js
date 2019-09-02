@@ -12,49 +12,7 @@ export const mainDiv = document.querySelector(".mainDiv");
 ShowLogin();
 ShowHome();
 
-document.querySelector("#ClassesLink").onclick = function () {
-    mainDiv.innerHTML = "";
-    ClassService.ShowClassesTable(mainDiv, false);
-}
-
-document.querySelector("#RacesLink").onclick = function () {
-     mainDiv.innerHTML = ""; 
-     RaceService.ShowRacesTable(mainDiv, false); 
-    }
-
-document.querySelector("#SpellsLink").onclick = function () { 
-    mainDiv.innerHTML = ""; 
-    SpellService.ShowSpellsTable(mainDiv, false); 
-}
-    
-document.querySelector("#CharacterListLink").onclick = function () {
-     mainDiv.innerHTML = ""; 
-     CharacterService.ShowCharactersTable(mainDiv); 
-    }
-
-document.querySelector("#LoginLink").onclick = function () { 
-    mainDiv.innerHTML = ""; 
-    UserService.ShowLogin(mainDiv); 
-}
-
-document.querySelector("#BuildLink").onclick = function () { Global.ShowBuild(); }
-
-function ShowLogin() {
-    let token = localStorage.getItem('token');
-    if (!token) {
-        mainDiv.innerHTML = "";
-        LoginMngr.ShowLogin(mainDiv);
-    }
-    else {
-        if (!Global.userID) {
-            Global.userID = token;
-            DBService.Get("users", token).subscribe((user) => document.getElementById("LoginLink").innerHTML = "Logged in as " + user.username);
-        }
-    }
-}
-
-let HomeLink = document.querySelector("#HomeLink");
-HomeLink.onclick = function () { ShowHome(); }
+document.querySelector("#HomeLink").onclick = function () { ShowHome(); }
 
 function ShowHome() {
     let mainDiv = document.querySelector(".mainDiv");
@@ -68,4 +26,45 @@ function ShowHome() {
         </blockquote>
     </div>
     `;
+}
+
+document.querySelector("#BuildLink").onclick = function () { Global.ShowBuild(); }
+
+document.querySelector("#ClassesLink").onclick = function () {
+    mainDiv.innerHTML = "";
+    ClassService.ShowClassesTable( false);
+}
+
+document.querySelector("#RacesLink").onclick = function () {
+     mainDiv.innerHTML = ""; 
+     RaceService.ShowRacesTable( false); 
+    }
+
+document.querySelector("#SpellsLink").onclick = function () { 
+    mainDiv.innerHTML = ""; 
+    SpellService.ShowSpellsTable( false); 
+}
+    
+document.querySelector("#CharacterListLink").onclick = function () {
+     mainDiv.innerHTML = ""; 
+     CharacterService.ShowCharactersTable(); 
+    }
+
+document.querySelector("#LoginLink").onclick = function () { 
+    mainDiv.innerHTML = ""; 
+    UserService.ShowLogin(); 
+}
+
+function ShowLogin() {
+    let token = localStorage.getItem('token');
+    if (!token) {
+        mainDiv.innerHTML = "";
+        UserService.ShowLogin();
+    }
+    else {
+        if (!Global.userID) {
+            Global.userID = token;
+            DBService.Get("users", token).subscribe((user) => document.getElementById("LoginLink").innerHTML = "Logged in as " + user.username);
+        }
+    }
 }

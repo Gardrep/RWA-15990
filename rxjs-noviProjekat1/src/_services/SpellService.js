@@ -1,4 +1,5 @@
 import { Global } from "../Global.js";
+import { mainDiv } from '../index.js';
 import { fromEvent, range, from } from 'rxjs';
 import { Spell } from "../_models/Spell.js";
 import { CharacterService } from "./CharacterService.js";
@@ -9,7 +10,7 @@ export const SpellService = {
 
     AllSpells: DBService.GetAll("spells"),
 
-    ShowSpellsTable(mainDiv, showRadio) {
+    ShowSpellsTable(showRadio) {
         var inputdiv = document.createElement("div");
         inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
@@ -29,7 +30,7 @@ export const SpellService = {
                     Global.character.spells.push(spel.value);
                 });
                 mainDiv.innerHTML = "";
-                CharacterService.AddCharacter(mainDiv);
+                CharacterService.AddCharacter();
             });
         }
 

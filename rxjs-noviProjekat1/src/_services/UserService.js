@@ -1,12 +1,13 @@
+import { Global } from "../Global.js";
+import { mainDiv } from '../index.js';
 import { User } from "../_models/User.js";
 import { fromEvent } from 'rxjs';
-import { Global } from "../Global.js";
 import { DBService } from "./DBService.js";
 
 export const UserService = {
   attempt : 3,
 
-  ShowLogin(mainDiv) {
+  ShowLogin() {
     mainDiv.innerHTML = `
         <form class="form-horizontal">
         <div class="form-group">

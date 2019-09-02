@@ -1,4 +1,5 @@
 import { Global } from "../Global.js";
+import { mainDiv } from '../index.js';
 import { fromEvent } from 'rxjs';
 import { Race } from "../_models/Race.js";
 import { SpellService } from "./SpellService.js";
@@ -8,7 +9,7 @@ export const RaceService = {
 
     AllRaces : DBService.GetAll("races"),
 
-    ShowRacesTable(mainDiv, showRadio) {
+    ShowRacesTable(showRadio) {
         var inputdiv = document.createElement("div");
         inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
@@ -34,8 +35,8 @@ export const RaceService = {
                 </div>
                 `;
                 }
-                Global.Crtaj(mainDiv);
-                SpellService.ShowSpellsTable(mainDiv, true);
+                Global.Crtaj();
+                SpellService.ShowSpellsTable(true);
             });
         }
         var serchdiv = document.createElement("div");
@@ -101,7 +102,6 @@ export const RaceService = {
     },
 
     MakeRows(body, showRadio, list) {
-        body.innerHTML = "";
         body.innerHTML = "";
         let item;
         list.forEach(race => {

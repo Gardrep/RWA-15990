@@ -1,4 +1,5 @@
 import { Global } from "../Global.js";
+import { mainDiv } from '../index.js';
 import { fromEvent, zip } from 'rxjs';
 import { Character } from "../_models/Character.js";
 import { ClassService } from "./ClassService.js";
@@ -12,8 +13,8 @@ export const CharacterService = {
 
     AllCharacters: DBService.GetAll("characters"),
 
-    AddCharacter(mainDiv) {
-        Global.Crtaj(mainDiv);
+    AddCharacter() {
+        Global.Crtaj();
         var inputdiv = document.createElement("div");
         inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
@@ -56,7 +57,7 @@ export const CharacterService = {
 
             DBService.PostById("characters", model).then(() => {
                 mainDiv.innerHTML = "";
-                this.ShowCharactersTable(mainDiv);
+                this.ShowCharactersTable();
             });
         });
 
@@ -67,8 +68,8 @@ export const CharacterService = {
         });
     },
 
-    ShowAddCharacter(mainDiv) {
-        Global.Crtaj(mainDiv);
+    ShowAddCharacter() {
+        Global.Crtaj();
         var inputdiv = document.createElement("div");
         inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
@@ -103,12 +104,12 @@ export const CharacterService = {
                 </blockquote>
             </div>
             `;
-            Global.Crtaj(mainDiv);
-            ClassService.ShowClassesTable(mainDiv, true);
+            Global.Crtaj();
+            ClassService.ShowClassesTable(true);
         });
     },
 
-    ShowCharactersTable(mainDiv) {
+    ShowCharactersTable() {
         var inputdiv = document.createElement("div");
         inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);

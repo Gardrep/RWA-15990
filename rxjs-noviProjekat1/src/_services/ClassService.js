@@ -1,4 +1,5 @@
 import { Global } from "../Global.js";
+import { mainDiv } from '../index.js';
 import { Observable, fromEvent } from 'rxjs';
 import { Class } from "../_models/Class.js";
 import { RaceService } from "./RaceService.js";
@@ -8,7 +9,7 @@ export const ClassService = {
 
     AllClasses: DBService.GetAll("classes"),
 
-    GetClass(id) {
+    /*GetClass(id) {
         if (!id) {
             return Observable.create(generator => { generator.next(new Class()); })
         }
@@ -23,9 +24,27 @@ export const ClassService = {
                     });
             });
         }
+    },*/
+    async GetHeaderHTML() {
+        return await fetch('./src/_services/GetHeaderHTML.html')
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (res) {
+                return res;
+            });
+    },
+    async GetRowHTML() {
+        return await fetch('./src/_services/GetRowHTML.html')
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (res) {
+                return res;
+            });
     },
 
-    ShowClassesTable(mainDiv, showRadio) {
+    ShowClassesTable(showRadio) {
         var inputdiv = document.createElement("div");
         inputdiv.className = "form-row align-items-center";
         mainDiv.appendChild(inputdiv);
@@ -48,8 +67,8 @@ export const ClassService = {
                     </blockquote>
                 </div>
                 `;
-                Global.Crtaj(mainDiv);
-                RaceService.ShowRacesTable(mainDiv, true);
+                Global.Crtaj();
+                RaceService.ShowRacesTable(true);
             });
 
         }
@@ -83,21 +102,7 @@ export const ClassService = {
 
         var header = document.createElement("thead");
         tabela.appendChild(header);
-        header.innerHTML = `
-        <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Class Name</th>
-        <th scope="col">Description</th>
-        <th scope="col">Hit Die</th>
-        <th scope="col">Proficiency Choices</th>
-        <th scope="col">Proficiencies</th>
-        <th scope="col">Saving Throws</th>
-        <th scope="col">Starting Equipment</th>
-        <th scope="col">Class Level</th>
-        <th scope="col">Subclasses</th>
-        <th scope="col">Spellcasting</th>
-        </tr>
-        `;
+        this.GetHeaderHTML().then((text) => { header.innerHTML = text });
 
         var body = document.createElement("tbody");
         body.innerHTML = "";
@@ -131,7 +136,7 @@ export const ClassService = {
         });
     },
 
-    FillClassRow(row, clas, showRadio) {
+    async FillClassRow(row, clas, showRadio) {
         if (showRadio) {
             row.innerHTML += `
             <td>    
@@ -149,29 +154,8 @@ export const ClassService = {
             <td>${clas.id}</td>
             `;
         }
-        row.innerHTML += `
-            <td>${clas.name}</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="${clas.description}">
-                description
-                </button>
-            </td>
-            <td>${clas.hit_die}</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="${clas.proficiency_choices}">
-                proficiency choices
-                </button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="${clas.proficiencies}">
-                proficiencies
-                </button>
-            </td>
-            <td>${clas.saving_throws}</td>
-            <td>${clas.starting_equipment}</td>
-            <td>${clas.class_level}</td>
-            <td>${clas.subclasses}</td>
-            <td>${clas.spellcasting}</td>
-        `;
+
+        let prom = await this.GetRowHTML();
+        row.innerHTML += Global.populateHTML(prom, clas);
     }
 }

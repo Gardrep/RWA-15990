@@ -16184,6 +16184,46 @@
         }
       ],
       "id": 38
+    },
+    {
+      "name": "fjiaposjpofas",
+      "class": "4",
+      "race": "3",
+      "spells": [
+        {
+          "id": "1",
+          "name": "Acid Arrow"
+        },
+        {
+          "id": "2",
+          "name": "Acid Splash"
+        },
+        {
+          "id": "3",
+          "name": "Aid"
+        },
+        {
+          "id": "4",
+          "name": "Alarm"
+        }
+      ],
+      "id": 39
+    },
+    {
+      "name": "tvoja mama",
+      "class": "3",
+      "race": "1",
+      "spells": [
+        {
+          "id": "4",
+          "name": "Alarm"
+        },
+        {
+          "id": "5",
+          "name": "Alter Self"
+        }
+      ],
+      "id": 40
     }
   ],
   "users": [
