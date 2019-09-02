@@ -6,45 +6,14 @@
       "date": "2019-06-24T17:40:57.000Z",
       "happy": 1,
       "diary": "emptu",
-      "consumables": [
-        {
-          "name": "Ramen",
-          "timeConsumed": "2019-07-28T19:40:57",
-          "type": "Broth"
-        },
-        {
-          "name": "Wiski",
-          "timeConsumed": "2019-07-28T12:40:57",
-          "type": "Liquor"
-        },
-        {
-          "name": "Mega-Tron",
-          "timeConsumed": "2019-07-28T06:40:57",
-          "type": "Burger"
-        },
-        {
-          "name": "Coca Zero",
-          "timeConsumed": "2019-07-28T19:40:57",
-          "type": "Soda"
-        },
-        {
-          "name": "Nudle",
-          "timeConsumed": "2019-07-28T12:40:57",
-          "type": "Pastry"
-        },
-        {
-          "name": "Mega-Tron",
-          "timeConsumed": "2019-07-28T06:40:57",
-          "type": "Burger"
-        }
-      ],
+      "consumables": [],
       "exercises": [
         {
-          "name": "Gym1",
+          "name": "Gy",
           "effectiveness": "85",
-          "startsOn": "2019-07-28T03:40:57",
-          "endsOn": "2019-07-28T04:40:57",
-          "type": "Gym",
+          "startsOn": "2019-07-28T08:52:00",
+          "endsOn": "2019-07-28T10:55:00",
+          "type": "Calisthenics",
           "ifInjury": "false",
           "injury": "",
           "description": "Des"
@@ -93,9 +62,9 @@
       "activities": [
         {
           "name": "MAjanje",
-          "effectiveness": "10",
-          "startsOn": "2019-07-28T16:10:57",
-          "endsOn": "2019-07-28T17:11:57",
+          "effectiveness": 17,
+          "startsOn": "2019-07-28T08:52:00",
+          "endsOn": "2019-07-28T08:52:00",
           "type": "Studying",
           "description": "Description1"
         },
@@ -223,14 +192,14 @@
           "type": "Broth"
         },
         {
-          "name": "Wiski",
+          "name": "Cipsi",
           "timeConsumed": "2019-08-29T12:40:57",
-          "type": "Liquor"
+          "type": "Snacks"
         },
         {
-          "name": "Mega-Tron",
+          "name": "Prolom",
           "timeConsumed": "2019-08-29T06:40:57",
-          "type": "Burger"
+          "type": "Water"
         },
         {
           "name": "Coca Zero",
@@ -238,9 +207,9 @@
           "type": "Soda"
         },
         {
-          "name": "Nudle",
+          "name": "Limunada",
           "timeConsumed": "2019-08-29T12:40:57",
-          "type": "Pastry"
+          "type": "Juice"
         },
         {
           "name": "Mega-Tron",
@@ -361,14 +330,14 @@
           "type": "Liquor"
         },
         {
-          "name": "Mega-Tron",
+          "name": "Apatinsko",
           "timeConsumed": "2019-08-30T06:40:57",
-          "type": "Burger"
+          "type": "Beer"
         },
         {
-          "name": "Coca Zero",
+          "name": "BalkanFoods",
           "timeConsumed": "2019-08-30T19:40:57",
-          "type": "Soda"
+          "type": "ChickenWhite"
         },
         {
           "name": "Nudle",
@@ -376,9 +345,9 @@
           "type": "Pastry"
         },
         {
-          "name": "Mega-Tron",
+          "name": "Zajacarsko",
           "timeConsumed": "2019-08-30T06:40:57",
-          "type": "Burger"
+          "type": "Beer"
         }
       ],
       "exercises": [],
@@ -576,9 +545,9 @@
           "type": "Liquor"
         },
         {
-          "name": "Mega-Tron",
+          "name": "Merak",
           "timeConsumed": "2019-08-27T06:40:57",
-          "type": "Burger"
+          "type": "Beer"
         },
         {
           "name": "Coca Zero",

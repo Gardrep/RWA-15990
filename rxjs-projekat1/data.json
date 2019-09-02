@@ -16148,6 +16148,26 @@
         }
       ],
       "id": 36
+    },
+    {
+      "name": "TestNeki",
+      "class": "9",
+      "race": "6",
+      "spells": [
+        {
+          "id": "2",
+          "name": "Acid Splash"
+        },
+        {
+          "id": "3",
+          "name": "Aid"
+        },
+        {
+          "id": "4",
+          "name": "Alarm"
+        }
+      ],
+      "id": 37
     }
   ],
   "users": [
