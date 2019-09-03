@@ -59,7 +59,7 @@ export const RaceService = {
                 list = list.filter(race => {
                     return race.name.toUpperCase().indexOf(filter) >= 0
                 });
-                this.FillTable(body, showRadio, list);
+                Global.FillTable(body, "Races", showRadio, list);
             })
         });
 
@@ -67,80 +67,6 @@ export const RaceService = {
         tabela.className = "table table-striped table-hover";
         mainDiv.appendChild(tabela);
 
-        var header = document.createElement("thead");
-        tabela.appendChild(header);
-        header.innerHTML = `
-        <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Race Name</th>
-        <th scope="col">Speed</th>
-        <th scope="col">Ability Bonuses</th>
-        <th scope="col">Size</th>
-        <th scope="col">Starting Proficiencies</th>
-        <th scope="col">Languages</th>
-        <th scope="col">Traits</th>
-        <th scope="col">Subraces</th>
-        </tr>
-        `;
-
-        var body = document.createElement("tbody");
-        body.innerHTML = "";
-        tabela.appendChild(body);
-        this.FillTable(body, showRadio);
+        Global.FillTable(tabela, "Races", showRadio);
     },
-
-    FillTable(body, showRadio, list) {
-        if (list) {
-            this.MakeRows(body, showRadio, list)
-        }
-        else {
-            this.AllRaces.subscribe((list) => {
-                list = list.map(race => { return new Race(race); });
-                this.MakeRows(body, showRadio, list)
-            });
-        }
-    },
-
-    MakeRows(body, showRadio, list) {
-        body.innerHTML = "";
-        let item;
-        list.forEach(race => {
-            item = document.createElement("tr");
-            body.appendChild(item);
-            this.FillRaceRow(item, race, showRadio);
-            if (showRadio)
-                item.onclick = function () { document.getElementById(`exampleRadios${race.id}`).checked = true; };
-            item.scope = "row";
-        });
-    },
-
-    FillRaceRow(row, race, showRadio) {
-        if (showRadio) {
-            row.innerHTML += `
-            <td>    
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios${race.id}" value="${race.id}" checked>
-                    <label class="form-check-label" for="exampleRadios${race.id}">
-                    ${race.id}
-                    </label>
-                </div>
-            </td>
-            `;
-        }
-        else {
-            row.innerHTML += `
-            <td>${race.id}</td>
-            `;
-        }
-        row.innerHTML += `
-            <td>${race.name}</td>
-            <td>${race.speed}</td>
-            <td>${race.ability_bonuses}</td>
-            <td>${race.size}</td>
-            <td>${race.starting_proficiencies}</td>
-            <td>${race.languages}</td>
-            <td>${race.traits}</td>
-            <td>${race.subraces}</td>
-        `;
-    }
 }

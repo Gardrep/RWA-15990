@@ -3,13 +3,16 @@ import { mainDiv } from './index.js'
 import { Race } from './_models/Race.js';
 import { Class } from "./_models/Class.js";
 import { Character } from './_models/Character.js';
-import {CharacterService} from './_services/CharacterService.js';
+import { CharacterService } from './_services/CharacterService.js';
 import { DBService } from "./_services/DBService.js";
 import { Spell } from './_models/Spell.js';
 const saferEval = require('safer-eval');
 
 export const Global = {
 
+    AllClasses: DBService.GetAll("classes"),
+    AllRaces: DBService.GetAll("races"),
+    AllSpells: DBService.GetAll("spells"),
     character: new Character(),
     userID: "",
     Crtaj() {
@@ -63,7 +66,7 @@ export const Global = {
     },
 
     ShowBuild() {
-        Global.character = new Character();
+        this.character = new Character();
         mainDiv.innerHTML = `
         <div class="container-fluid">
             <blockquote class="blockquote">
@@ -78,103 +81,95 @@ export const Global = {
         CharacterService.ShowAddCharacter(mainDiv);
     },
 
-    populateHTML(html, promenljiva){
-        console.log(promenljiva);
+    populateHTML(html, promenljiva) {
+        let m;
+        let reg = new RegExp('{{ ?(#[A-Za-z]+ )?[A-Za-z]+.[A-Za-z]* }}', 'g');
+        // do {
+        //     m = reg.exec(html);
+        //     if (m) {
+        //         let prop = m[0].slice(3, -3).trim();
+        //         html = html.replace(m[0], saferEval(prop, promenljiva));
+        //     }
+        // }
+        // while (m);
+        html = html.replace(reg, (prop) => {
+            if (prop) {
+                prop = prop.replace(/{/g, '').replace(/}/g, '').trim();
 
-    //let reg = /\{(.*?)\}/;//
-    //let reg = /(?<=% \{\{\{ )(.*)(?= \}\}\} )/
-    let reg = /{{{?\s*.*?\s*}}}///{{{xx.yyyy.z}}}
-    let m;
-
-    reg = /{{?\s*.*?\s*}}///{{ asd }}
-    do {
-      m = reg.exec(html);
-
-     
-      if (m) {
-        let prop = m[0].slice(3, -3).trim();//.replace(/\s/g, '');
-
-        //let x = saferEval(prop, promenljiva);
-        html = html.replace(m[0], saferEval(prop, promenljiva));
-      }
-    }
-    while (m);
+                return `${saferEval(prop, promenljiva)}`;
+            }
+        });
 
         return html;
     },
 
-    // FillTable(body, showRadio, echoice, list) {
-    //     if (list) {
-    //         this.MakeRows(body, showRadio, list)
-    //     }
-    //     else {
-    //         this.AllClasses.subscribe((list) => {
-    //             list = list.map(obj => { 
-    //                 switch(echoice){
-    //                     case "Class": return new Class(obj);
-    //                     case "Races": return new Race(obj);
-    //                     case "Spells": return new Spell(obj);
-    //                 }
-    //             });
-    //             this.MakeRows(body, showRadio, list)
-    //         });
-    //     }
-    // },
+    async GetHTML(name) {
+        return await fetch('./src/_services/' + name + '.html')
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (res) {
+                return res;
+            });
+    },
 
-    // MakeRows(body, showRadio, list) {
-    //     body.innerHTML = "";
-    //     let item;
-    //     list.forEach((clas) => {
-    //         item = document.createElement("tr");
-    //         body.appendChild(item);
-    //         this.FillClassRow(item, clas, showRadio);
-    //         if (showRadio)
-    //             item.onclick = function () { document.getElementById(`exampleRadios${clas.id}`).checked = true; };
-    //         item.scope = "row";
-    //     });
-    // },
+    FillTable(tabela, status, showRadio, list) {
+        var header = document.createElement("thead");
+        tabela.appendChild(header);
+        Global.GetHTML(status + "Header").then((text) => { header.innerHTML = text });
 
-    // FillClassRow(row, clas, showRadio) {
-    //     if (showRadio) {
-    //         row.innerHTML += `
-    //         <td>    
-    //             <div class="form-check">
-    //             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios${clas.id}" value="${clas.id}" checked>
-    //                 <label class="form-check-label" for="exampleRadios${clas.id}">
-    //                 ${clas.id}
-    //                 </label>
-    //             </div>
-    //         </td>
-    //         `;
-    //     }
-    //     else {
-    //         row.innerHTML += `
-    //         <td>${clas.id}</td>
-    //         `;
-    //     }
-    //     row.innerHTML += `
-    //         <td>${clas.name}</td>
-    //         <td>
-    //             <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="${clas.description}">
-    //             description
-    //             </button>
-    //         </td>
-    //         <td>${clas.hit_die}</td>
-    //         <td>
-    //             <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="${clas.proficiency_choices}">
-    //             proficiency choices
-    //             </button>
-    //         </td>
-    //         <td>
-    //             <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top" title="${clas.proficiencies}">
-    //             proficiencies
-    //             </button>
-    //         </td>
-    //         <td>${clas.saving_throws}</td>
-    //         <td>${clas.starting_equipment}</td>
-    //         <td>${clas.class_level}</td>
-    //         <td>${clas.subclasses}</td>
-    //         <td>${clas.spellcasting}</td>
-    //     `;
-    // }
+        var body = document.createElement("tbody");
+        body.innerHTML = "";
+        tabela.appendChild(body);
+
+        if (list) {
+            this.MakeRows(body, status, showRadio, list)
+        }
+        else {
+            this['All' + status].subscribe((list) => {
+                list = list.map(obj => {
+                    switch (status) {
+                        case "Classes": return new Class(obj);
+                        case "Races": return new Race(obj);
+                        case "Spells": return new Spell(obj);
+                    }
+                });
+                this.MakeRows(body, status, showRadio, list)
+            });
+        }
+    },
+
+    async MakeRows(tbody, status, showRadio, list) {
+        tbody.innerHTML = "";
+        let tableRow;
+        let tamplate = await this.GetHTML(status + "Row");
+        let inner = ""
+        const tbodytest = document.createElement("tbody");
+        const rows = list.map((obj) => {
+            
+            // tableRow = document.createElement("tr");
+
+            // tableRow.innerHTML += this.populateHTML(tamplate, obj);
+            console.log("izvrseno");
+            // if (showRadio)
+            //     tableRow.onclick = () => {
+            //         document.getElementById(`exampleRadios${obj.id}`).checked = true;
+            //     };
+            // tableRow.scope = "row";
+            // tbody.appendChild(tableRow);
+            inner += this.populateHTML(tamplate, obj);
+        });
+
+        tbody.innerHTML=inner;
+
+        if (showRadio)
+        document.querySelectorAll('[test-click]').forEach(x=>x.onclick = () => {
+            document.getElementById(`exampleRadios${obj.id}`).checked = true;
+        });
+
+    }
+}
+
+function trClick() {
+    document.getElementById(`exampleRadios${obj.id}`).checked = true;
 }

@@ -9,41 +9,6 @@ export const ClassService = {
 
     AllClasses: DBService.GetAll("classes"),
 
-    /*GetClass(id) {
-        if (!id) {
-            return Observable.create(generator => { generator.next(new Class()); })
-        }
-        else {
-            return Observable.create(generator => {
-                fetch(`http://178.149.70.120:3000/classes/${id}`)
-                    .then(x => x.json())
-                    .then(data => {
-                        generator.next(
-                            new Class(data)
-                        );
-                    });
-            });
-        }
-    },*/
-    async GetHeaderHTML() {
-        return await fetch('./src/_services/GetHeaderHTML.html')
-            .then(function (response) {
-                return response.text();
-            })
-            .then(function (res) {
-                return res;
-            });
-    },
-    async GetRowHTML() {
-        return await fetch('./src/_services/GetRowHTML.html')
-            .then(function (response) {
-                return response.text();
-            })
-            .then(function (res) {
-                return res;
-            });
-    },
-
     ShowClassesTable(showRadio) {
         var inputdiv = document.createElement("div");
         inputdiv.className = "form-row align-items-center";
@@ -92,7 +57,7 @@ export const ClassService = {
                 list = list.filter(clas => {
                     return clas.name.toUpperCase().indexOf(filter) >= 0
                 });
-                this.FillTable(body, showRadio, list);
+                Global.FillTable(body, "Classes", showRadio, list);
             })
         });
 
@@ -100,62 +65,6 @@ export const ClassService = {
         tabela.className = "table table-striped table-hover";
         mainDiv.appendChild(tabela);
 
-        var header = document.createElement("thead");
-        tabela.appendChild(header);
-        this.GetHeaderHTML().then((text) => { header.innerHTML = text });
-
-        var body = document.createElement("tbody");
-        body.innerHTML = "";
-        tabela.appendChild(body);
-
-        this.FillTable(body, showRadio);
+        Global.FillTable(tabela, "Classes", showRadio);
     },
-
-    FillTable(body, showRadio, list) {
-        if (list) {
-            this.MakeRows(body, showRadio, list)
-        }
-        else {
-            this.AllClasses.subscribe((list) => {
-                list = list.map(clas => { return new Class(clas); });
-                this.MakeRows(body, showRadio, list)
-            });
-        }
-    },
-
-    MakeRows(body, showRadio, list) {
-        body.innerHTML = "";
-        let item;
-        list.forEach((clas) => {
-            item = document.createElement("tr");
-            body.appendChild(item);
-            this.FillClassRow(item, clas, showRadio);
-            if (showRadio)
-                item.onclick = function () { document.getElementById(`exampleRadios${clas.id}`).checked = true; };
-            item.scope = "row";
-        });
-    },
-
-    async FillClassRow(row, clas, showRadio) {
-        if (showRadio) {
-            row.innerHTML += `
-            <td>    
-                <div class="form-check">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios${clas.id}" value="${clas.id}" checked>
-                    <label class="form-check-label" for="exampleRadios${clas.id}">
-                    ${clas.id}
-                    </label>
-                </div>
-            </td>
-            `;
-        }
-        else {
-            row.innerHTML += `
-            <td>${clas.id}</td>
-            `;
-        }
-
-        let prom = await this.GetRowHTML();
-        row.innerHTML += Global.populateHTML(prom, clas);
-    }
 }

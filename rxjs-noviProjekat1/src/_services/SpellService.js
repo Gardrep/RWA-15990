@@ -219,11 +219,10 @@ export const SpellService = {
 
                 document.getElementById(`${x}`).checked = !document.getElementById(`${x}`).checked;
             }
-            //<label for="subscribeNews">Subscribe to newsletter?</label>
 
             const class$ = fromEvent(classinput, 'click');
-            class$.subscribe((chosenClass) => {
-                this.Filter(body, showRadio);
+            class$.subscribe(() => {
+                Global.Filter(body, "Spells", showRadio);
             });
         });
 
@@ -233,93 +232,7 @@ export const SpellService = {
         tabela.className = "table table-striped table-hover";
         mainDiv.appendChild(tabela);
 
-        var header = document.createElement("thead");
-        tabela.appendChild(header);
-        header.innerHTML = `
-        <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Spell Name</th>
-        <th scope="col">Level</th>
-        <th scope="col">Range</th>
-        <th scope="col">Ritual</th>
-        <th scope="col">Duration</th>
-        <th scope="col">Concentration</th>
-        <th scope="col">Casting_time</th>
-        <th scope="col">School</th>
-        <th scope="col">Classes</th>
-        <th scope="col">Description</th>
-        </tr>
-        `;
-
-        var headerFilter = document.createElement("thead");
-        tabela.appendChild(headerFilter);
-
-        var body = document.createElement("tbody");
-        body.innerHTML = "";
-        tabela.appendChild(body);
-
-        this.FillTable(body, showRadio);
-    },
-
-    FillTable(body, showRadio, list) {
-        if (list) {
-            this.MakeRows(body, showRadio, list)
-        }
-        else {
-            this.AllSpells.subscribe((list) => {
-                list = list.map(spell => { return new Spell(spell); });
-                this.MakeRows(body, showRadio, list)
-            });
-        }
-    },
-
-    MakeRows(body, showRadio, list) {
-        body.innerHTML = "";
-        let item;
-        list.forEach(spel => {
-            item = document.createElement("tr");
-            body.appendChild(item);
-            this.FillSpellRow(item, spel, showRadio);
-            if (showRadio)
-                item.onclick = function () { document.getElementById(`exampleRadios${spel.id}`).checked = true; };
-            item.scope = "row";
-        });
-    },
-
-    FillSpellRow(row, spel, showRadio) {
-        if (showRadio) {
-            row.innerHTML += `
-            <td>    
-                <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox input" name="exampleRadios" id="exampleRadios${spel.id}" value="${spel.id}" >
-                    <label class="form-check-label" for="exampleRadios${spel.id}">
-                        ${spel.id}
-                    </label>
-                </div>
-            </td>
-            `;
-        }
-        else {
-            row.innerHTML += `
-            <td>${spel.id}</td>
-            `;
-        }
-        row.innerHTML += `
-            <td>${spel.name}</td>
-            <td>${spel.level}</td>
-            <td>${spel.range}</td>
-            <td>${spel.ritual}</td>
-            <td>${spel.duration}</td>
-            <td>${spel.concentration}</td>
-            <td>${spel.casting_time}</td>
-            <td>${spel.school}</td>
-            <td>${spel.classes}</td>
-            <td>
-                <button type="button" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="left" title="${spel.desc}">
-                description
-                </button>
-            </td>
-        `;
+        Global.FillTable(tabela, "Spells", showRadio);
     },
 
     Filter(body, showRadio) {
