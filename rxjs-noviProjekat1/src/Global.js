@@ -113,7 +113,11 @@ export const Global = {
             });
     },
 
-    FillTable(tabela, status, showRadio, list) {
+    FillTable(status, showRadio, list) {
+        var tabela = document.createElement("table");
+        tabela.className = "table table-striped table-hover";
+        mainDiv.appendChild(tabela);
+
         var header = document.createElement("thead");
         tabela.appendChild(header);
         Global.GetHTML(status + "Header").then((text) => { header.innerHTML = text });

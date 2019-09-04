@@ -10,9 +10,9 @@ export const ClassService = {
     AllClasses: DBService.GetAll("classes"),
 
     ShowClassesTable(showRadio) {
-        var inputdiv = document.createElement("div");
-        inputdiv.className = "form-row align-items-center";
-        mainDiv.appendChild(inputdiv);
+        Global.GetHTML("Template").then((text) => {
+            mainDiv.innerHTML = text;
+        /*
         if (showRadio) {
             var btndiv = document.createElement("div");
             btndiv.className = "col-auto my-1";
@@ -37,34 +37,26 @@ export const ClassService = {
             });
 
         }
-        var serchdiv = document.createElement("div");
-        serchdiv.className = "col-sm-3 my-1";
-        inputdiv.appendChild(serchdiv);
+*/
+            var search = document.getElementById("InputName");
 
-        var search = document.createElement("input");
-        search.type = "text";
-        search.id = "myInput";
-        search.placeholder = "Search for names..";
-        search.className = "form-control";
-        serchdiv.appendChild(search);
-
-        const input$ = fromEvent(search, 'input');
-        input$.subscribe((typed) => {
-            var filter;
-            filter = typed.target.value.toUpperCase();
-            this.AllClasses.subscribe((list) => {
-                list = list.map(clas => { return new Class(clas); });
-                list = list.filter(clas => {
-                    return clas.name.toUpperCase().indexOf(filter) >= 0
-                });
-                Global.FillTable(body, "Classes", showRadio, list);
-            })
+            const input = fromEvent(search, 'input');
+            input.subscribe((typed) => {
+                var filter;
+                filter = typed.target.value.toUpperCase();
+                this.AllClasses.subscribe((list) => {
+                    list = list.map(clas => { return new Class(clas); });
+                    list = list.filter(clas => {
+                        return clas.name.toUpperCase().indexOf(filter) >= 0
+                    });
+                    Global.FillTable("Classes", showRadio, list);
+                })
+            });
+            Global.FillTable("Classes", showRadio);
         });
 
-        var tabela = document.createElement("table");
-        tabela.className = "table table-striped table-hover";
-        mainDiv.appendChild(tabela);
 
-        Global.FillTable(tabela, "Classes", showRadio);
+
+
     },
 }
