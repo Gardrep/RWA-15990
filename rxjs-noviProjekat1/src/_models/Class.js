@@ -1,5 +1,6 @@
 export class Class {
-    constructor(clas) {
+constructor(clas) {
+    //this.atributeList = ["id","name","description","hit_die","proficiency_choices","proficiencies","saving_throws","starting_equipment","class_level","subclasses","spellcasting"];
         if (!clas) {
             this.id = "empty";
             this.name = "empty";
@@ -12,7 +13,6 @@ export class Class {
             this.class_level = "empty";
             this.subclasses = "empty";
             this.spellcasting = "empty";
-            this.url = "empty";
             this.url = "empty";
         }
         else {
@@ -38,4 +38,8 @@ export class Class {
             this.url = clas.url;
         }
     }
+
+    static atributeList() {
+        return ["ID","Class Name","Description","Hit Die","Proficiency Choices","Proficiencies","Saving Throws","Starting Equipment","Class Level","Subclasses","Spellcasting"];
+      }
 }

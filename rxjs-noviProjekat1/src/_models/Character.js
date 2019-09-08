@@ -8,7 +8,7 @@ export class Character{
             this.name = "empty";
             this.class = "";
             this.race = "";
-            this.spells ;
+            this.spells =[] ;
         }
         else{
         let spellsList = character.spells.reduce((acc,character)=>{return acc + character.name+", "},"").slice(0, -2);
@@ -19,4 +19,8 @@ export class Character{
         this.spells = spellsList;
         }
     }
+
+    static atributeList() {
+        return ["ID","Name","Class","Race","Spells"];
+      }
    }

@@ -1,46 +1,15 @@
+import { fromEvent } from 'rxjs';
 import { Global } from "../Global.js";
 import { mainDiv } from '../index.js';
+
 import { User } from "../_models/User.js";
-import { fromEvent } from 'rxjs';
 import { DBService } from "./DBService.js";
 
 export const UserService = {
   attempt : 3,
 
-  ShowLogin() {
-    mainDiv.innerHTML = `
-        <form class="form-horizontal">
-        <div class="form-group">
-          <label for="username" class="col-sm-2 control-label">Username</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="username" placeholder="Username">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="password" class="col-sm-2 control-label">Password</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="password" placeholder="Password">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" id="rememberMe"> Remember me
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="form-row align-items-center">
-            <div class="col--sm-1 my-1">
-                <button type="submit" class="btn btn-primary" id="signin">Sign in</button>
-            </div>
-            <div class="col--sm-1 my-1">
-                <button type="submit" class="btn btn-primary" id="signout">Sign out</button>
-            </div>
-        </div>
-      </form>
-        `
+  async ShowLogin() {
+    await Global.GetHTML("LogInForm").then((html) => mainDiv.innerHTML = html);
     var signin = document.getElementById("signin");
     fromEvent(signin, 'click').subscribe(() => {
       this.LogIn();

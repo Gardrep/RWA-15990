@@ -1,8 +1,8 @@
+import { fromEvent } from 'rxjs';
 import { Global } from "../Global.js";
 import { mainDiv } from '../index.js';
-import { fromEvent } from 'rxjs';
+
 import { Race } from "../_models/Race.js";
-import { SpellService } from "./SpellService.js";
 import { DBService } from "./DBService.js";
 
 export const RaceService = {
@@ -11,33 +11,11 @@ export const RaceService = {
 
     ShowRacesTable(showRadio) {
         Global.GetHTML("Template").then((text) => {
-            mainDiv.innerHTML = text;
-            /*if (showRadio) {
-                var btndiv = document.createElement("div");
-                btndiv.className = "col-auto my-1";
-                inputdiv.appendChild(btndiv);
-    
-                var commitbtn = document.createElement("button");
-                commitbtn.innerHTML = "Commit";
-                commitbtn.className = "btn btn-primary";
-                btndiv.appendChild(commitbtn);
-    
-                fromEvent(commitbtn, 'click').subscribe(function () {
-                    const value = document.querySelector('input[name="exampleRadios"]:checked').value;
-                    Global.character.race = document.querySelector('input[name="exampleRadios"]:checked').value;
-                    if (showRadio) {
-                        mainDiv.innerHTML = `
-                    <div class="container-fluid">
-                        <blockquote class="blockquote">
-                            <p class="mb-0">Choose your spells.</p>
-                        </blockquote>
-                    </div>
-                    `;
-                    }
-                    Global.Crtaj();
-                    SpellService.ShowSpellsTable(true);
-                });
-            }*/
+            mainDiv.innerHTML += text;
+
+            if (showRadio) {
+                Global.Crtaj(false);
+            }
 
             var search = document.getElementById("InputName");
 
@@ -53,7 +31,6 @@ export const RaceService = {
                     Global.FillTable("Races", showRadio, list);
                 })
             });
-
             Global.FillTable("Races", showRadio);
         });
     }

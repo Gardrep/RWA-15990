@@ -1,11 +1,19 @@
 import { zip } from 'rxjs';
 import { mainDiv } from './index.js'
-import { Race } from './_models/Race.js';
-import { Class } from "./_models/Class.js";
+
 import { Character } from './_models/Character.js';
-import { CharacterService } from './_services/CharacterService.js';
-import { DBService } from "./_services/DBService.js";
+import { Class } from "./_models/Class.js";
+import { Race } from './_models/Race.js';
 import { Spell } from './_models/Spell.js';
+
+import { CharacterService } from './_services/CharacterService.js';
+import { ClassService } from './_services/ClassService.js';
+import { RaceService } from './_services/RaceService.js';
+import { SpellService } from './_services/SpellService.js';
+
+import { DBService } from "./_services/DBService.js";
+import { HTML } from './_services/HTML.js';
+
 const saferEval = require('safer-eval');
 
 export const Global = {
@@ -13,72 +21,69 @@ export const Global = {
     AllClasses: DBService.GetAll("classes"),
     AllRaces: DBService.GetAll("races"),
     AllSpells: DBService.GetAll("spells"),
+    AllClasses: DBService.GetAll("Classes"),
     character: new Character(),
     userID: "",
-    Crtaj() {
-        var tabela = document.createElement("table");
-        tabela.className = "table table-striped table-hover";
-        mainDiv.appendChild(tabela);
+    Crtaj(isSpellsEditable) {
 
-        var header = document.createElement("thead");
-        tabela.appendChild(header);
-        header.innerHTML = `
-        <tr>
-        <th scope="col">Your Characters Name</th>
-        <th scope="col">Class</th>
-        <th scope="col">Race</th>
-        <th scope="col">Spells</th>
-        </tr>
-        `;
-        var body = document.createElement("tbody");
-        tabela.appendChild(body);
+        document.querySelector("#NameTab").onclick = function () { 
+            mainDiv.innerHTML = "";
+            CharacterService.ShowAddCharacter(true);
+        }
 
-        var row = document.createElement("tr");
-        row.scope = "row";
-        body.appendChild(row);
-
-        zip(
-            DBService.Get("classes", this.character.class),
-            DBService.Get("races", this.character.race),
-            DBService.GetAll("spells")
-        ).subscribe(([clas, race, spells]) => {
-            let showrace = new Race(race);
-            let showclass = new Class(clas);
-            let showspells = "";
-            let spel, i;
-
-            if (this.character.spells) {
-                spells.forEach((y) => {
-                    this.character.spells.forEach((x) => {
-                        if (x == y.id) {
-                            showspells += y.name + ", ";
-                        }
-                    })
-                })
+        document.querySelector("#ClassesTab").onclick = function () {
+            mainDiv.innerHTML = "";
+            ClassService.ShowClassesTable(true);
+        }
+        
+        document.querySelector("#RacesTab").onclick = function () {
+             mainDiv.innerHTML = ""; 
+             RaceService.ShowRacesTable(true); 
             }
-            row.innerHTML += `
-            <td>${this.character.name}</td>
-            <td>${showclass.name}</td>
-            <td>${showrace.name}</td>
-            <td>${showspells.slice(0, -2)}</td>
-            `
+        
+        document.querySelector("#SpellsTab").onclick = function () { 
+            mainDiv.innerHTML = ""; 
+            SpellService.ShowSpellsTable(true); 
+        }
+
+        Global.GetHTML("Character").then((text) => {
+            var characterDiv = document.getElementById("characterDiv");
+            characterDiv.innerHTML += text;
+
+            var CharacterName = document.getElementById("CharacterName");
+            var CharacterClass = document.getElementById("CharacterClass");
+            var CharacterRace = document.getElementById("CharacterRace");
+            var CharacterSpells = document.getElementById("CharacterSpells");
+            zip(
+                DBService.Get("classes", this.character.class),
+                DBService.Get("races", this.character.race),
+                DBService.GetAll("spells")
+            ).subscribe(([clas, race, spells]) => {
+                let showrace = new Race(race);
+                let showclass = new Class(clas);
+                let showspells = "";
+
+                if (this.character.spells) {
+                    spells.forEach((y) => {
+                        this.character.spells.forEach((x) => {
+                            if (x == y.id) {
+                                showspells += `<li class='li'>${y.id} ${y.name}</li>`;
+                            }
+                        })
+                    })
+                }
+
+                CharacterName.innerHTML = this.character.name;
+                CharacterClass.innerHTML = showclass.name;
+                CharacterRace.innerHTML = showrace.name;
+                CharacterSpells.innerHTML = showspells;
+
+                if(isSpellsEditable)
+                document.querySelectorAll('.li').forEach(x => x.onclick = () => {
+                    deleteSpellsOnClick();
+                });
+            });
         });
-    },
-
-    ShowBuild() {
-        this.character = new Character();
-        mainDiv.innerHTML = `
-        <div class="container-fluid">
-            <blockquote class="blockquote">
-                <p class="mb-0">Here you can choose characteristics for your character.</p>
-                <p class="mb-0">First choose your name.</p>
-            </blockquote>
-        </div>
-        `;
-        var divTabela = document.createElement("div");
-        mainDiv.appendChild(divTabela);
-
-        CharacterService.ShowAddCharacter(mainDiv);
     },
 
     populateHTML(html, promenljiva) {
@@ -114,66 +119,88 @@ export const Global = {
     },
 
     FillTable(status, showRadio, list) {
-        var tabela = document.createElement("table");
-        tabela.className = "table table-striped table-hover";
-        mainDiv.appendChild(tabela);
-
-        var header = document.createElement("thead");
-        tabela.appendChild(header);
-        Global.GetHTML(status + "Header").then((text) => { header.innerHTML = text });
-
-        var body = document.createElement("tbody");
-        body.innerHTML = "";
-        tabela.appendChild(body);
+        var thead = document.getElementById("thead");
+        var tbody = document.getElementById("tbody");
 
         if (list) {
-            this.MakeRows(body, status, showRadio, list)
+            this.MakeRows(tbody, status, showRadio, list)
         }
         else {
+            switch (status) {
+                case "Classes": Class.atributeList().map((atrr) => { thead.innerHTML += `<th scope='col'>${atrr}</th>` }); break;
+                case "Races": Race.atributeList().map((atrr) => { thead.innerHTML += `<th scope='col'>${atrr}</th>` }); break;
+                case "Spells": Spell.atributeList().map((atrr) => { thead.innerHTML += `<th scope='col'>${atrr}</th>` }); break;
+                case "Characters": Character.atributeList().map((atrr) => { thead.innerHTML += `<th scope='col'>${atrr}</th>` }); break;
+            }
+            //Global.GetHTML(status + "Header").then((text) => { thead.innerHTML = text });
+
             this['All' + status].subscribe((list) => {
                 list = list.map(obj => {
                     switch (status) {
                         case "Classes": return new Class(obj);
                         case "Races": return new Race(obj);
                         case "Spells": return new Spell(obj);
+                        case "Characters": return new Character(obj);
                     }
                 });
-                this.MakeRows(body, status, showRadio, list)
+                this.MakeRows(tbody, status, showRadio, list)
             });
         }
     },
 
     async MakeRows(tbody, status, showRadio, list) {
         tbody.innerHTML = "";
-        let tableRow;
         let tamplate = await this.GetHTML(status + "Row");
         let inner = ""
-        const tbodytest = document.createElement("tbody");
-        const rows = list.map((obj) => {
-            
-            // tableRow = document.createElement("tr");
-
-            // tableRow.innerHTML += this.populateHTML(tamplate, obj);
-            console.log("izvrseno");
-            // if (showRadio)
-            //     tableRow.onclick = () => {
-            //         document.getElementById(`exampleRadios${obj.id}`).checked = true;
-            //     };
-            // tableRow.scope = "row";
-            // tbody.appendChild(tableRow);
-            inner += this.populateHTML(tamplate, obj);
+        list.map((obj) => {
+            if(status != "Characters"){
+                inner += HTML[status+"Tamplate"](obj);
+                //inner += this.populateHTML(tamplate, obj);
+            }else{
+                inner += CharacterService.FillClassRow(obj);
+            }
         });
 
-        tbody.innerHTML=inner;
+        tbody.innerHTML = inner;
 
         if (showRadio)
-        document.querySelectorAll('[test-click]').forEach(x=>x.onclick = () => {
-            document.getElementById(`exampleRadios${obj.id}`).checked = true;
-        });
+            document.querySelectorAll('[test-click]').forEach(x => x.onclick = () => {
+                switch (status) {
+                    case "Classes": return changeValue('class', x);
+                    case "Races": return changeValue('race', x);
+                    case "Spells": return addSpell(x);
+                }
+            });
 
     }
 }
 
-function trClick() {
-    document.getElementById(`exampleRadios${obj.id}`).checked = true;
+function changeValue(string, row) {
+    Global.character[string] = row.cells[0].innerHTML;
+    var label = document.getElementById("Character"+string.charAt(0).toUpperCase() + string.slice(1));
+    label.innerHTML = row.cells[1].innerHTML;
 }
+
+function addSpell(row) {
+    if(!Global.character.spells.includes(row.cells[0].innerHTML)){
+        Global.character.spells.push(row.cells[0].innerHTML);
+        var label = document.getElementById("CharacterSpells");
+        label.innerHTML += `<li class='li'>${row.cells[0].innerHTML} ${row.cells[1].innerHTML}</li>`;
+        deleteSpellsOnClick();
+    }
+}
+
+function deleteSpellsOnClick(){
+    document.querySelectorAll('.li').forEach(x => x.onclick = () => {
+        x.remove();
+        console.log(Global.character.spells);
+        Global.character.spells = Global.character.spells.filter((spell)=>{
+            return x.innerHTML.slice(0,1)!=spell;
+            console.log(x.innerHTML.slice(0,1));
+            console.log(spell);
+            console.log(Global.character.spells);
+        });
+        console.log(Global.character.spells);
+    });
+}
+

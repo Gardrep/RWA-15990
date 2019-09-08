@@ -31,4 +31,7 @@ export class Race {
             this.url = race.url;
         }
     }
+    static atributeList() {
+        return ["ID", "Race Name", "Speed", "Ability Bonuses", "Size", "Starting Proficiencies", "Languages", "Traits", "Subraces"] ;
+      }
 }

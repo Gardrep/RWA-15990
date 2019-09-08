@@ -1,9 +1,12 @@
 import { Global } from "./Global.js";
+import { Character } from './_models/Character.js';
+
 import { ClassService } from "./_services/ClassService.js";
 import { RaceService } from "./_services/RaceService.js";
 import { SpellService } from "./_services/SpellService.js";
 import { CharacterService } from "./_services/CharacterService.js";
 import { UserService } from './_services/UserService.js';
+
 import { DBService } from "./_services/DBService.js";
 
 export const mainDiv = document.querySelector(".mainDiv");
@@ -15,8 +18,6 @@ ShowHome();
 document.querySelector("#HomeLink").onclick = function () { ShowHome(); }
 
 function ShowHome() {
-    let mainDiv = document.querySelector(".mainDiv");
-    mainDiv.innerHTML = "";
     mainDiv.innerHTML = `
     <div class="bg container-fluid" id="prepravi">
         <blockquote class="blockquote">
@@ -28,21 +29,24 @@ function ShowHome() {
     `;
 }
 
-document.querySelector("#BuildLink").onclick = function () { Global.ShowBuild(); }
+document.querySelector("#BuildLink").onclick = function () { 
+    this.character = new Character();
+    CharacterService.ShowAddCharacter();
+}
 
 document.querySelector("#ClassesLink").onclick = function () {
     mainDiv.innerHTML = "";
-    ClassService.ShowClassesTable( false);
+    ClassService.ShowClassesTable(false);
 }
 
 document.querySelector("#RacesLink").onclick = function () {
      mainDiv.innerHTML = ""; 
-     RaceService.ShowRacesTable( false); 
+     RaceService.ShowRacesTable(false); 
     }
 
 document.querySelector("#SpellsLink").onclick = function () { 
     mainDiv.innerHTML = ""; 
-    SpellService.ShowSpellsTable( false); 
+    SpellService.ShowSpellsTable(false); 
 }
     
 document.querySelector("#CharacterListLink").onclick = function () {
