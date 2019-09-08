@@ -6,13 +6,13 @@ import { Class } from "./_models/Class.js";
 import { Race } from './_models/Race.js';
 import { Spell } from './_models/Spell.js';
 
-import { CharacterService } from './_services/CharacterService.js';
-import { ClassService } from './_services/ClassService.js';
-import { RaceService } from './_services/RaceService.js';
-import { SpellService } from './_services/SpellService.js';
+import { CharacterService } from './_components/character/CharacterService.js';
+import { ClassService } from './_components/class/ClassService.js';
+import { RaceService } from './_components/race/RaceService.js';
+import { SpellService } from './_components/spell/SpellService.js';
 
 import { DBService } from "./_services/DBService.js";
-import { HTML } from './_services/HTML.js';
+import { HTML } from './HTML.js';
 
 const saferEval = require('safer-eval');
 
@@ -21,7 +21,7 @@ export const Global = {
     AllClasses: DBService.GetAll("classes"),
     AllRaces: DBService.GetAll("races"),
     AllSpells: DBService.GetAll("spells"),
-    AllClasses: DBService.GetAll("Classes"),
+    AllCharacters: DBService.GetAll("characters"),
     character: new Character(),
     userID: "",
     Crtaj(isSpellsEditable) {
@@ -46,7 +46,7 @@ export const Global = {
             SpellService.ShowSpellsTable(true); 
         }
 
-        Global.GetHTML("Character").then((text) => {
+        DBService.GetCharactersHTML("Character").then((text) => {
             var characterDiv = document.getElementById("characterDiv");
             characterDiv.innerHTML += text;
 
@@ -86,38 +86,6 @@ export const Global = {
         });
     },
 
-    populateHTML(html, promenljiva) {
-        let m;
-        let reg = new RegExp('{{ ?(#[A-Za-z]+ )?[A-Za-z]+.[A-Za-z]* }}', 'g');
-        // do {
-        //     m = reg.exec(html);
-        //     if (m) {
-        //         let prop = m[0].slice(3, -3).trim();
-        //         html = html.replace(m[0], saferEval(prop, promenljiva));
-        //     }
-        // }
-        // while (m);
-        html = html.replace(reg, (prop) => {
-            if (prop) {
-                prop = prop.replace(/{/g, '').replace(/}/g, '').trim();
-
-                return `${saferEval(prop, promenljiva)}`;
-            }
-        });
-
-        return html;
-    },
-
-    async GetHTML(name) {
-        return await fetch('./src/_services/' + name + '.html')
-            .then(function (response) {
-                return response.text();
-            })
-            .then(function (res) {
-                return res;
-            });
-    },
-
     FillTable(status, showRadio, list) {
         var thead = document.getElementById("thead");
         var tbody = document.getElementById("tbody");
@@ -132,8 +100,6 @@ export const Global = {
                 case "Spells": Spell.atributeList().map((atrr) => { thead.innerHTML += `<th scope='col'>${atrr}</th>` }); break;
                 case "Characters": Character.atributeList().map((atrr) => { thead.innerHTML += `<th scope='col'>${atrr}</th>` }); break;
             }
-            //Global.GetHTML(status + "Header").then((text) => { thead.innerHTML = text });
-
             this['All' + status].subscribe((list) => {
                 list = list.map(obj => {
                     switch (status) {
@@ -150,19 +116,18 @@ export const Global = {
 
     async MakeRows(tbody, status, showRadio, list) {
         tbody.innerHTML = "";
-        let tamplate = await this.GetHTML(status + "Row");
+        console.log("Get"+status+"HTML");
+        let tamplate = await DBService["Get"+status+"HTML"](status + "Row");
         let inner = ""
         list.map((obj) => {
             if(status != "Characters"){
                 inner += HTML[status+"Tamplate"](obj);
-                //inner += this.populateHTML(tamplate, obj);
+                //inner += populateHTML(tamplate, obj);
             }else{
                 inner += CharacterService.FillClassRow(obj);
             }
         });
-
         tbody.innerHTML = inner;
-
         if (showRadio)
             document.querySelectorAll('[test-click]').forEach(x => x.onclick = () => {
                 switch (status) {
@@ -171,8 +136,26 @@ export const Global = {
                     case "Spells": return addSpell(x);
                 }
             });
-
     }
+}
+
+function populateHTML(html, promenljiva) {
+    let m;
+    let reg = new RegExp('{{ ?(#[A-Za-z]+ )?[A-Za-z]+.[A-Za-z]* }}', 'g');
+    // do {
+    //     m = reg.exec(html);
+    //     if (m) {
+    //         let prop = m[0].slice(3, -3).trim();
+    //         html = html.replace(m[0], saferEval(prop, promenljiva));
+    //     }
+    // }while (m);
+    html = html.replace(reg, (prop) => {
+        if (prop) {
+            prop = prop.replace(/{/g, '').replace(/}/g, '').trim();
+            return `${saferEval(prop, promenljiva)}`;
+        }
+    });
+    return html;
 }
 
 function changeValue(string, row) {
@@ -196,9 +179,6 @@ function deleteSpellsOnClick(){
         console.log(Global.character.spells);
         Global.character.spells = Global.character.spells.filter((spell)=>{
             return x.innerHTML.slice(0,1)!=spell;
-            console.log(x.innerHTML.slice(0,1));
-            console.log(spell);
-            console.log(Global.character.spells);
         });
         console.log(Global.character.spells);
     });

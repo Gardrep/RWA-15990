@@ -1,11 +1,11 @@
 import { fromEvent, zip } from 'rxjs';
-import { Global } from "../Global.js";
-import { mainDiv } from '../index.js';
+import { Global } from "../../Global.js";
+import { mainDiv } from '../../index.js';
 
-import { Race } from '../_models/Race.js';
-import { Class } from "../_models/Class.js";
-import { Character } from "../_models/Character.js";
-import { DBService } from "./DBService.js";
+import { Race } from '../../_models/Race.js';
+import { Class } from "../../_models/Class.js";
+import { Character } from "../../_models/Character.js";
+import { DBService } from "../../_services/DBService.js";
 
 
 
@@ -74,7 +74,7 @@ export const CharacterService = {
             </blockquote>
         </div>
         `;
-        Global.GetHTML("Template").then((text) => {
+        DBService.GetHTML("Template").then((text) => {
             mainDiv.innerHTML += text;
             Global.Crtaj(false);
 
@@ -88,7 +88,7 @@ export const CharacterService = {
     },
 
     ShowCharactersTable() {
-        Global.GetHTML("Template").then((text) => {
+        DBService.GetHTML("Template").then((text) => {
             mainDiv.innerHTML += text;
 
             var search = document.getElementById("InputName");

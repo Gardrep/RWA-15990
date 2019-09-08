@@ -43,21 +43,57 @@ export const DBService = {
     }
   },
 
-  GetSome(table, some) {
-    if (!some) {
-      return Observable.create(generator => { generator.next(); generator.complete(); })
-    }
-    else {
-      return Observable.create(generator => {
-        let list = [];
-        some.forEach((id) => {
-          fetch(`${this.baseUrl}${table}/${id}`)
-            .then(x => x.json())
-            .then(data => { list.push(data) });
-        });
-        generator.next(list);
-        generator.complete();
+  async GetHTML(name) {
+    return await fetch('./src/_services/' + name + '.html')
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (res) {
+        return res;
       });
-    }
-  }
+  },
+
+  relativePath: './src/_components/',
+
+  async GetCharactersHTML(name) {
+    return await fetch(this.relativePath+ "character/" + name + '.html')
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (res) {
+        return res;
+      });
+  },
+
+  async GetClassesHTML(name) {
+    return await fetch(this.relativePath+ "class/" + name + '.html')
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (res) {
+        return res;
+      });
+  },
+
+  async GetRacesHTML(name) {
+    return await fetch(this.relativePath+ "race/" + name + '.html')
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (res) {
+        return res;
+      });
+  },
+
+  async GetSpellsHTML(name) {
+    return await fetch(this.relativePath+ "spell/" + name + '.html')
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (res) {
+        return res;
+      });
+  },
+
+
 }

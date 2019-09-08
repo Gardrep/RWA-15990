@@ -1,14 +1,14 @@
 import { fromEvent, range, from } from 'rxjs';
 import { filter, toArray } from 'rxjs/operators';
-import { Global } from "../Global.js";
-import { mainDiv } from '../index.js';
+import { Global } from "../../Global.js";
+import { mainDiv } from '../../index.js';
 
-import { Spell } from "../_models/Spell.js";
-import { DBService } from "./DBService.js";
+import { Spell } from "../../_models/Spell.js";
+import { DBService } from "../../_services/DBService.js";
 
 export const SpellService = {
     ShowSpellsTable(showRadio) {
-        Global.GetHTML("Template").then((text) => {
+        DBService.GetHTML("Template").then((text) => {
             mainDiv.innerHTML += text;
 
             if (showRadio) Global.Crtaj(true);

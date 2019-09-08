@@ -1,11 +1,10 @@
 import { Global } from "./Global.js";
 import { Character } from './_models/Character.js';
 
-import { ClassService } from "./_services/ClassService.js";
-import { RaceService } from "./_services/RaceService.js";
-import { SpellService } from "./_services/SpellService.js";
-import { CharacterService } from "./_services/CharacterService.js";
-import { UserService } from './_services/UserService.js';
+import { ClassService } from "./_components/class/ClassService.js";
+import { RaceService } from "./_components/race/RaceService.js";
+import { SpellService } from "./_components/spell/SpellService.js";
+import { CharacterService } from "./_components/character/CharacterService.js";
 
 import { DBService } from "./_services/DBService.js";
 

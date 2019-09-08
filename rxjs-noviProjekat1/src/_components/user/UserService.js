@@ -1,15 +1,15 @@
 import { fromEvent } from 'rxjs';
-import { Global } from "../Global.js";
-import { mainDiv } from '../index.js';
+import { Global } from "../../Global.js";
+import { mainDiv } from '../../index.js';
 
-import { User } from "../_models/User.js";
-import { DBService } from "./DBService.js";
+import { User } from "../../_models/User.js";
+import { DBService } from "../../_services/DBService.js";
 
 export const UserService = {
   attempt : 3,
 
   async ShowLogin() {
-    await Global.GetHTML("LogInForm").then((html) => mainDiv.innerHTML = html);
+    await DBService.GetHTML("LogInForm").then((html) => mainDiv.innerHTML = html);
     var signin = document.getElementById("signin");
     fromEvent(signin, 'click').subscribe(() => {
       this.LogIn();
