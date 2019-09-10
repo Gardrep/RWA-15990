@@ -5,24 +5,25 @@ import { mainDiv } from '../../index.js';
 
 import { Spell } from "../../_models/Spell.js";
 import { DBService } from "../../_services/DBService.js";
+import { HTML } from '../../HTML.js';
 
 export const SpellService = {
-    ShowSpellsTable(showRadio) {
-        DBService.GetHTML("Template").then((text) => {
-            mainDiv.innerHTML += text;
-
-            if (showRadio) Global.Crtaj(true);
+    ShowSpellsTable(isBuilding) {
+        if (isBuilding) {
+            mainDiv.innerHTML = HTML.SpellsText();
+        }
+        Global.LoadTamplate(isBuilding, false).then(() => {
 
             //----------------------------------------------------------NAME
             const input = fromEvent(document.getElementById("InputName"), 'input');
             input.subscribe(() => {
-                Filter(showRadio);
+                Filter(isBuilding);
             });
 
             //----------------------------------------------------------LEVEL
             crateFilterButton("level");
             let AddLevel = (x) => {
-                addLink(showRadio, "level", x);
+                addLink(isBuilding, "level", x);
             };
             AddLevel("Level");
             range(0, 10).subscribe(x => { AddLevel(x); });
@@ -31,14 +32,14 @@ export const SpellService = {
             crateFilterButton("range");
             const rangeOptions = from(Spell.rangeList());
             rangeOptions.subscribe(x => {
-                addLink(showRadio, "range", x);
+                addLink(isBuilding, "range", x);
             });
 
             //----------------------------------------------------------RITUAL
             crateFilterButton("ritual");
             const ritualOptions = from(Spell.ritualList());
             ritualOptions.subscribe(x => {
-                addLink(showRadio, "ritual", x);
+                addLink(isBuilding, "ritual", x);
             });
 
             //----------------------------------------------------------CLASSES
@@ -71,17 +72,17 @@ export const SpellService = {
 
                 const class$ = fromEvent(classinput, 'click');
                 class$.subscribe(() => {
-                    Filter(showRadio);
+                    Filter(isBuilding);
                 });
             });
 
             //------------------------------------------------------------------TABELA
-            Global.FillTable("Spells", showRadio);
+            Global.FillTable("Spells", isBuilding);
         });
     }
 }
 
-function Filter(showRadio) {
+function Filter(isBuilding) {
     DBService.GetAll("spells").subscribe((list) => {
         list = list.map(spell => { return new Spell(spell); });
         let source = from(list);
@@ -115,7 +116,7 @@ function Filter(showRadio) {
                 }, false)
             }),
             toArray()
-        ).subscribe(val => Global.FillTable("Spells", showRadio, val));
+        ).subscribe(val => Global.FillTable("Spells", isBuilding, val));
     });
 }
 
@@ -146,7 +147,7 @@ function crateFilterButton(type) {
     btndiv.appendChild(menudiv);
 }
 
-function addLink(showRadio, type, x) {
+function addLink(isBuilding, type, x) {
     let link;
     let btn = document.getElementById(type + "Button");
     let menudiv = document.getElementById(type + "Menu");
@@ -159,6 +160,6 @@ function addLink(showRadio, type, x) {
     const observer = fromEvent(link, 'click');
     observer.subscribe((clickedLink) => {
         btn.innerHTML = clickedLink.path[0].innerHTML;
-        Filter(showRadio);
+        Filter(isBuilding);
     });
 }

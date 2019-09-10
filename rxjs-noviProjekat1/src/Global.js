@@ -1,4 +1,4 @@
-import { zip } from 'rxjs';
+import { fromEvent, zip } from 'rxjs';
 import { mainDiv } from './index.js'
 
 import { Character } from './_models/Character.js';
@@ -24,9 +24,61 @@ export const Global = {
     AllCharacters: DBService.GetAll("characters"),
     character: new Character(),
     userID: "",
-    Crtaj(isSpellsEditable) {
 
-        document.querySelector("#NameTab").onclick = function () { 
+    LoadTamplate(isBuilding, isSpellsEditable){
+       return DBService.GetHTML("Template").then((text) => {
+            mainDiv.innerHTML += text;
+            if (isBuilding) {
+                Global.ShowBuildCharacter(isSpellsEditable);
+            } else {
+                var tab = document.getElementById("tab");
+                tab.remove();
+            }
+        })
+    },
+
+    ShowBuildCharacter(isSpellsEditable) {
+        var inputdiv = document.getElementById("Input");
+
+        var btndiv = document.createElement("div");
+        btndiv.className = "col--sm-1 my-1";
+        inputdiv.appendChild(btndiv);
+
+        var commitbtn = document.createElement("button");
+        commitbtn.innerHTML = "Commit";
+        commitbtn.id="btnCommit"
+        commitbtn.className = "btn btn-primary";
+        if(Global.character.name != "empty" && Global.character.class  && Global.character.race ){
+            commitbtn.disabled = false;
+        }else{
+            commitbtn.disabled = true;
+        }
+        btndiv.appendChild(commitbtn);
+
+        let spell = [];
+        fromEvent(commitbtn, 'click').subscribe(async () => {
+            for (const val of Global.character.spells) {
+                let data = await DBService.Get("spells", val).toPromise();
+                spell.push({
+                    id: `${val}`,
+                    name: `${data.name}`
+                });
+            }
+
+            let model = {
+                name: `${Global.character.name}`,
+                class: `${Global.character.class}`,
+                race: `${Global.character.race}`,
+                spells: spell
+            };
+
+            DBService.PostById("characters", model).then(() => {
+                mainDiv.innerHTML = "";
+                CharacterService.ShowCharactersTable();
+            });
+        });
+
+        document.querySelector("#NameTab").onclick = function () {
             mainDiv.innerHTML = "";
             CharacterService.ShowAddCharacter(true);
         }
@@ -35,15 +87,15 @@ export const Global = {
             mainDiv.innerHTML = "";
             ClassService.ShowClassesTable(true);
         }
-        
+
         document.querySelector("#RacesTab").onclick = function () {
-             mainDiv.innerHTML = ""; 
-             RaceService.ShowRacesTable(true); 
-            }
-        
-        document.querySelector("#SpellsTab").onclick = function () { 
-            mainDiv.innerHTML = ""; 
-            SpellService.ShowSpellsTable(true); 
+            mainDiv.innerHTML = "";
+            RaceService.ShowRacesTable(true);
+        }
+
+        document.querySelector("#SpellsTab").onclick = function () {
+            mainDiv.innerHTML = "";
+            SpellService.ShowSpellsTable(true);
         }
 
         DBService.GetCharactersHTML("Character").then((text) => {
@@ -78,20 +130,20 @@ export const Global = {
                 CharacterRace.innerHTML = showrace.name;
                 CharacterSpells.innerHTML = showspells;
 
-                if(isSpellsEditable)
-                document.querySelectorAll('.li').forEach(x => x.onclick = () => {
-                    deleteSpellsOnClick();
-                });
+                if (isSpellsEditable)
+                    document.querySelectorAll('.li').forEach(x => x.onclick = () => {
+                        deleteSpellsOnClick();
+                    });
             });
         });
     },
 
-    FillTable(status, showRadio, list) {
+    FillTable(status, isBuilding, list) {
         var thead = document.getElementById("thead");
         var tbody = document.getElementById("tbody");
 
         if (list) {
-            this.MakeRows(tbody, status, showRadio, list)
+            MakeRows(tbody, status, isBuilding, list)
         }
         else {
             switch (status) {
@@ -109,34 +161,36 @@ export const Global = {
                         case "Characters": return new Character(obj);
                     }
                 });
-                this.MakeRows(tbody, status, showRadio, list)
+                MakeRows(tbody, status, isBuilding, list)
             });
         }
-    },
+    }
+}
 
-    async MakeRows(tbody, status, showRadio, list) {
-        tbody.innerHTML = "";
-        console.log("Get"+status+"HTML");
-        let tamplate = await DBService["Get"+status+"HTML"](status + "Row");
-        let inner = ""
-        list.map((obj) => {
-            if(status != "Characters"){
-                inner += HTML[status+"Tamplate"](obj);
-                //inner += populateHTML(tamplate, obj);
-            }else{
-                inner += CharacterService.FillClassRow(obj);
+async function MakeRows(tbody, status, isBuilding, list) {
+    tbody.innerHTML = "";
+    let tamplate = await DBService["Get" + status + "HTML"](status + "Row");
+    let inner = ""
+    list.map((obj) => {
+        if (status != "Characters") {
+            inner += HTML[status + "Tamplate"](obj);
+            //inner += populateHTML(tamplate, obj);
+        } else {
+            CharacterService.FillClassRow(obj).subscribe(([clas, race]) => {
+                tbody.innerHTML+=CharacterService.CharacterRow(obj, clas, race);
+             });
+        }
+    });
+    tbody.innerHTML = inner;
+
+    if (isBuilding)
+        document.querySelectorAll('[test-click]').forEach(x => x.onclick = () => {
+            switch (status) {
+                case "Classes": return changeValue('class', x);
+                case "Races": return changeValue('race', x);
+                case "Spells": return addSpell(x);
             }
         });
-        tbody.innerHTML = inner;
-        if (showRadio)
-            document.querySelectorAll('[test-click]').forEach(x => x.onclick = () => {
-                switch (status) {
-                    case "Classes": return changeValue('class', x);
-                    case "Races": return changeValue('race', x);
-                    case "Spells": return addSpell(x);
-                }
-            });
-    }
 }
 
 function populateHTML(html, promenljiva) {
@@ -160,12 +214,17 @@ function populateHTML(html, promenljiva) {
 
 function changeValue(string, row) {
     Global.character[string] = row.cells[0].innerHTML;
-    var label = document.getElementById("Character"+string.charAt(0).toUpperCase() + string.slice(1));
+    var label = document.getElementById("Character" + string.charAt(0).toUpperCase() + string.slice(1));
     label.innerHTML = row.cells[1].innerHTML;
+    if(Global.character.name != "empty" && Global.character.class  && Global.character.race ){
+        document.getElementById("btnCommit").disabled = false;
+    }else{
+        document.getElementById("btnCommit").disabled = true;
+    }
 }
 
 function addSpell(row) {
-    if(!Global.character.spells.includes(row.cells[0].innerHTML)){
+    if (!Global.character.spells.includes(row.cells[0].innerHTML)) {
         Global.character.spells.push(row.cells[0].innerHTML);
         var label = document.getElementById("CharacterSpells");
         label.innerHTML += `<li class='li'>${row.cells[0].innerHTML} ${row.cells[1].innerHTML}</li>`;
@@ -173,14 +232,11 @@ function addSpell(row) {
     }
 }
 
-function deleteSpellsOnClick(){
+function deleteSpellsOnClick() {
     document.querySelectorAll('.li').forEach(x => x.onclick = () => {
         x.remove();
-        console.log(Global.character.spells);
-        Global.character.spells = Global.character.spells.filter((spell)=>{
-            return x.innerHTML.slice(0,1)!=spell;
+        Global.character.spells = Global.character.spells.filter((spell) => {
+            return x.innerHTML.slice(0, 1) != spell;
         });
-        console.log(Global.character.spells);
     });
 }
-

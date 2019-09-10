@@ -68,12 +68,12 @@ body, html {
   padding: 11%;
 }
 
-.characterDiv{
+.flexRow{
   display: flex;
   flex-direction: row;
 }
 
-.spells{
+.flexRowSpells{
   display: flex;
   flex-direction: row;
   margin-top: 5px;

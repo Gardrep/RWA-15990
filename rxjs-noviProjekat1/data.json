@@ -16224,6 +16224,78 @@
         }
       ],
       "id": 40
+    },
+    {
+      "name": "gsdghfd",
+      "class": "12",
+      "race": "8",
+      "spells": [
+        {
+          "id": "69",
+          "name": "Creation"
+        },
+        {
+          "id": "68",
+          "name": "Create or Destroy Water"
+        },
+        {
+          "id": "67",
+          "name": "Create Undead"
+        }
+      ],
+      "id": 41
+    },
+    {
+      "name": "gds",
+      "class": "2",
+      "race": "2",
+      "spells": [
+        {
+          "id": "3",
+          "name": "Aid"
+        },
+        {
+          "id": "5",
+          "name": "Alter Self"
+        }
+      ],
+      "id": 42
+    },
+    {
+      "name": "testtest",
+      "class": "5",
+      "race": "4",
+      "spells": [
+        {
+          "id": "2",
+          "name": "Acid Splash"
+        },
+        {
+          "id": "13",
+          "name": "Antipathy/Sympathy"
+        }
+      ],
+      "id": 43
+    },
+    {
+      "name": "Dargos Focis",
+      "class": "7",
+      "race": "9",
+      "spells": [
+        {
+          "id": "46",
+          "name": "Command"
+        },
+        {
+          "id": "70",
+          "name": "Cure Wounds"
+        },
+        {
+          "id": "158",
+          "name": "Heroism"
+        }
+      ],
+      "id": 44
     }
   ],
   "users": [

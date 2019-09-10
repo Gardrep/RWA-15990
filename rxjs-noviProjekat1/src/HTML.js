@@ -1,5 +1,12 @@
 export const HTML = {
-    
+    ClassesText() {
+        return `<div class="container-fluid">
+            <blockquote class="blockquote">
+                <p class="mb-0">Choose your class.</p>
+            </blockquote>
+        </div>`
+    },
+
     ClassesTamplate(obj) {
         return `<tr test-click>
         <td>${ obj.id}</td>
@@ -31,6 +38,14 @@ export const HTML = {
     </tr>`
     },
 
+    RacesText() {
+        return `<div class="container-fluid">
+            <blockquote class="blockquote">
+                <p class="mb-0">Choose your race.</p>
+            </blockquote>
+        </div>`
+    },
+
     RacesTamplate(obj) {
         return `<tr test-click>
         <td>${ obj.id}</td>
@@ -43,6 +58,14 @@ export const HTML = {
         <td>${ obj.traits}</td>
         <td>${ obj.subraces}</td>
     </tr>`
+    },
+
+    SpellsText() {
+        return `<div class="container-fluid">
+            <blockquote class="blockquote">
+                <p class="mb-0">Choose your spells.</p>
+            </blockquote>
+        </div>`
     },
 
     SpellsTamplate(obj) {
@@ -65,4 +88,23 @@ export const HTML = {
         </td>
     </tr>`
     },
+
+    CharactersText() {
+        return `<div class="container-fluid">
+            <blockquote class="blockquote">
+                <p class="mb-0">Here you can choose characteristics for your character.</p>
+                <p class="mb-0">First choose your name.</p>
+            </blockquote>
+        </div>`
+    },
+
+    CharactersTamplate(character, showrace, showclass) {
+        return `<tr test-click>
+        <td>${ character.id}</td>
+        <td>${ character.name}</td>
+        <td>${ showclass.name}</td>
+        <td>${ showrace.name}</td>
+        <td>${ character.spells}</td>
+    </tr>`
+    }
 }

@@ -4,23 +4,15 @@ import { mainDiv } from '../../index.js';
 
 import { Class } from "../../_models/Class.js";
 import { DBService } from "../../_services/DBService.js";
+import { HTML } from '../../HTML.js';
 
 export const ClassService = {
 
-    ShowClassesTable(showRadio) {
-        if (showRadio) {
-            mainDiv.innerHTML = `
-            <div class="container-fluid">
-                <blockquote class="blockquote">
-                    <p class="mb-0">Choose your class.</p>
-                </blockquote>
-            </div>
-            `;
+    ShowClassesTable(isBuilding) {
+        if (isBuilding) {
+            mainDiv.innerHTML = HTML.ClassesText();;
         }
-        DBService.GetHTML("Template").then((text) => {
-            mainDiv.innerHTML += text;
-
-            if (showRadio) Global.Crtaj(false);
+        Global.LoadTamplate(isBuilding, false).then(()=>{
 
             var search = document.getElementById("InputName");
             const input = fromEvent(search, 'input');
@@ -32,10 +24,10 @@ export const ClassService = {
                     list = list.filter(clas => {
                         return clas.name.toUpperCase().indexOf(filter) >= 0
                     });
-                    Global.FillTable("Classes", showRadio, list);
+                    Global.FillTable("Classes", isBuilding, list);
                 })
             });
-            Global.FillTable("Classes", showRadio);
+            Global.FillTable("Classes", isBuilding);
         });
     },
 }

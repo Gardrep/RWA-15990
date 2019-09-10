@@ -4,17 +4,15 @@ import { mainDiv } from '../../index.js';
 
 import { Race } from "../../_models/Race.js";
 import { DBService } from "../../_services/DBService.js";
+import { HTML } from '../../HTML.js';
 
 export const RaceService = {
 
-    ShowRacesTable(showRadio) {
-        DBService.GetHTML("Template").then((text) => {
-            mainDiv.innerHTML += text;
-
-            if (showRadio) {
-                Global.Crtaj(false);
-            }
-
+    ShowRacesTable(isBuilding) {
+        if (isBuilding) {
+            mainDiv.innerHTML = HTML.RacesText();;
+        }
+        Global.LoadTamplate(isBuilding, false).then(()=>{
             var search = document.getElementById("InputName");
 
             const input = fromEvent(search, 'input');
@@ -26,10 +24,10 @@ export const RaceService = {
                     list = list.filter(race => {
                         return race.name.toUpperCase().indexOf(filter) >= 0
                     });
-                    Global.FillTable("Races", showRadio, list);
+                    Global.FillTable("Races", isBuilding, list);
                 })
             });
-            Global.FillTable("Races", showRadio);
+            Global.FillTable("Races", isBuilding);
         });
     }
 }
