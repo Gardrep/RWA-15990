@@ -23,8 +23,8 @@
   color: #61dafb;
 }
 
-.span_user{
-  margin-left: 20px;
+.UserDisplay{
+  font-weight: bold;
 }
 
 @keyframes App-logo-spin {

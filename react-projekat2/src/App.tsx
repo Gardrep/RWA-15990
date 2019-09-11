@@ -41,6 +41,9 @@ class App extends Component<any, any>{
                 <LinkContainer to="/page">
                   <Nav.Link >All pokemons</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to="/comparePokemons">
+                  <Nav.Link >Compare</Nav.Link>
+                </LinkContainer>
               </Nav>
               <Nav className="ml-auto">
                 <LinkContainer to="/login">
@@ -53,6 +56,7 @@ class App extends Component<any, any>{
           <Route path="/home" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/page" component={Page} />
+          {/*<Route path="/comparePokemons" component={ComparePokemons} />*/}
 
         </div>
       </BrowserRouter>

@@ -85,9 +85,14 @@ export default function (state = initialState, action: { type: any; payload: any
       {
         let pokemoni = state.pokemons
           .filter((pokemon) => { return !action.payload.searchString || pokemon.name.english.includes(action.payload.searchString) })
-          .filter((pokemon) => { return isNaN(action.payload.searchHP) || parseInt(pokemon.base.HP) === parseInt(action.payload.searchHP) })
-          .filter((pokemon) => { return isNaN(action.payload.searchATK) || parseInt(pokemon.base.Attack) === parseInt(action.payload.searchATK) })
-          .filter((pokemon) => { return isNaN(action.payload.searchDEF) || parseInt(pokemon.base.Defense) === parseInt(action.payload.searchDEF) })
+
+          .filter((pokemon) => { return isNaN(action.payload.SearchHealthStart) || parseInt(pokemon.base.HP) >= parseInt(action.payload.SearchHealthStart) })
+          .filter((pokemon) => { return isNaN(action.payload.SearchAttackStart) || parseInt(pokemon.base.Attack) >= parseInt(action.payload.SearchAttackStart) })
+          .filter((pokemon) => { return isNaN(action.payload.SearchDeffenceStart) || parseInt(pokemon.base.Defense) >= parseInt(action.payload.SearchDeffenceStart) })
+
+          .filter((pokemon) => { return isNaN(action.payload.SearchHealthEnd) || parseInt(pokemon.base.HP) <= parseInt(action.payload.SearchHealthEnd) })
+          .filter((pokemon) => { return isNaN(action.payload.SearchAttackEnd) || parseInt(pokemon.base.Attack) <= parseInt(action.payload.SearchAttackEnd) })
+          .filter((pokemon) => { return isNaN(action.payload.SearchDeffenceEnd) || parseInt(pokemon.base.Defense) <= parseInt(action.payload.SearchDeffenceEnd) })
           .filter((pokemon) => { 
             return action.payload.searchTypes.length === 0 || action.payload.searchTypes.reduce((acc, x) => {
             return acc && pokemon.type.includes(x);

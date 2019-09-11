@@ -22,9 +22,7 @@ class Home extends Component<any,any> {
       else{this.props.getPokemonTeam(currentUser)}
       return(
         <div>
-          <span className="span_user">ID:{currentUser.id}</span>
-          <span className="span_user">Username:{currentUser.username}</span>
-          <span className="span_user">Password:{currentUser.password}</span>
+          <h3 className="UserDisplay">{currentUser.username}'s team of three are</h3>
         </div>
       )
     }
@@ -45,7 +43,7 @@ class Home extends Component<any,any> {
           <div>
             <Pokemon pokemon={pokemon} />
             <LinkContainer onClick={() => this.handleClick(pokemon.id)} to="/page">
-                <button className="pokemon__change btn"  >Change</button>
+                <button className="pokemon__change btn-sm btn-secondary">Change</button>
             </LinkContainer>
           </div>
           </li>
@@ -58,9 +56,7 @@ class Home extends Component<any,any> {
 render() {
     return (
       <div className="form-popup">
-        Welcome
         {this.loadUser()}
-        <div>My Team:</div>
         <ul className="pokemons">{this.loadUserPokemons()}</ul>
       </div>
     );

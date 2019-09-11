@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import Pokemon from './pokemon'
-import Search from './search'
-import SearchByHealth from './searchByHealth'
-import SearchByAttack from './searchByAttack';
-import SearchByDefence from './searchByDefence';
+import {classList } from './pokemon'
+
+import SearchByName from './searchByName'
+import SearchByBase from './searchByBase';
 import SearchByType from './searchByType';
 import { connect } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap';
@@ -12,16 +12,22 @@ import * as userActions from '../redux/actions/user'
 
 class Page extends Component<any, any> {
   searchString = "";
-  searchHP = NaN;
-  searchATK = NaN;
-  searchDEF = NaN;
+  SearchHealthStart = NaN;
+  SearchHealthEnd = NaN;
+  SearchAttackStart = NaN;
+  SearchAttackEnd = NaN;
+  SearchDeffenceStart = NaN;
+  SearchDeffenceEnd = NaN;
   searchType = [];
+  searchBase = NaN;
+  baseList = ["Health", "Attack", "Deffence"];
+  searchBaseList = ["SearchHealthStart", "SearchHealthEnd", "SearchAttackStart","SearchAttackEnd", "SearchDeffenceStart", "SearchDeffenceEnd"];
 
   showAllVar = false;
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      showAllVar:false
+    this.state = {
+      showAllVar: false
     }
   }
 
@@ -34,14 +40,17 @@ class Page extends Component<any, any> {
 
   reset() {
     this.searchString = "";
-    this.searchHP = NaN;
-    this.searchATK = NaN;
-    this.searchDEF = NaN;
-    this.searchType = [];
     (document.getElementById("searchName") as HTMLInputElement).value = "";
-    (document.getElementById("searchHP") as HTMLInputElement).value = null;
-    (document.getElementById("searchATK") as HTMLInputElement).value = null;
-    (document.getElementById("searchDEF") as HTMLInputElement).value = null;
+
+    this.searchBaseList.forEach((base)=>{
+      this[base] = NaN;
+      (document.getElementById(base) as HTMLInputElement).value = null;
+    })
+    
+    this.searchType = [];
+    document.querySelectorAll(`input[name="cbx"]:checked`).forEach((val) => {
+      (val as HTMLInputElement).checked = false;
+    })
     this.filter();
   }
 
@@ -58,8 +67,6 @@ class Page extends Component<any, any> {
         </li>
       )
     })
-
-    console.log(test);
     return test;
   }
 
@@ -67,16 +74,8 @@ class Page extends Component<any, any> {
     this.searchString = event.currentTarget.value;
     this.filter();
   }
-  handleSearchByHealth(event) {
-    this.searchHP = parseInt(event.currentTarget.value);
-    this.filter();
-  }
-  handleSearchByAttack(event) {
-    this.searchATK = parseInt(event.currentTarget.value);
-    this.filter();
-  }
-  handleSearchByDefence(event) {
-    this.searchDEF = parseInt(event.currentTarget.value);
+  handleSearchByBase(event) {
+    this[event.currentTarget.id] = parseInt(event.currentTarget.value);
     this.filter();
   }
   handleSearchByType() {
@@ -87,34 +86,42 @@ class Page extends Component<any, any> {
     this.filter();
   }
   filter() {
-    this.props.filterPokemonsAll(this.searchString, this.searchHP, this.searchATK, this.searchDEF, this.searchType);
+    this.props.filterPokemonsAll(this.searchString, this.SearchHealthStart,this.SearchHealthEnd, this.SearchAttackStart,  this.SearchAttackEnd, this.SearchDeffenceStart,this.SearchDeffenceEnd, this.searchType);
   }
+
 
   render() {
     let { error } = this.props;
+
+
+    /*let searchBaseHtml = "";
+    ["Health", "Attack", "Deffence"].forEach(base => {
+      searchBaseHtml += `
+      <div className="col-md-auto">
+      ${base}<SearchByBase onChange={this.handleSearchByBase.bind(this)} />
+    </div>
+      `
+    });*/
+
     return (
       <div className="page">
         {error && <div className="page__error">{error}</div>}
         <div className="page__search">
 
           <div className="row justify-content-md-center">
-            <div className="col col-lg-2">
-              <button className="btn btn-secondary btn-sm" onClick={this.reset.bind(this)}>Reset</button>
+            <div className="col-md-auto">
+              <button className="btn btn-secondary" onClick={this.reset.bind(this)}>Reset</button>
             </div>
             <div className="col-md-auto">
-              NAME<Search onChange={this.handleSearch.bind(this)} />
+              <SearchByName onChange={this.handleSearch.bind(this)} />
             </div>
-            <div className="col-md-auto">
-              HP<SearchByHealth onChange={this.handleSearchByHealth.bind(this)} />
-            </div>
-            <div className="col-md-auto">
-              ATK<SearchByAttack onChange={this.handleSearchByAttack.bind(this)} />
-            </div>
-            <div className="col-md-auto">
-              DEF<SearchByDefence onChange={this.handleSearchByDefence.bind(this)} />
-            </div>
-            <div className="col col-lg-2" >
-              TYPE<SearchByType onChange={this.handleSearchByType.bind(this)} />
+            {this.baseList.map((base, i) => {
+              return <div className='col-md-auto' key={i}>
+                <SearchByBase onChange={this.handleSearchByBase.bind(this)} baseName={base}/>
+              </div>
+            })}
+            <div className="col-md-auto" >
+              <SearchByType onChange={this.handleSearchByType.bind(this)} classList={classList()} />
             </div>
           </div>
         </div>
@@ -123,9 +130,9 @@ class Page extends Component<any, any> {
     )
   }
 
-  onClickHandler(){
+  onClickHandler() {
     this.setState({
-      showAllVar:true
+      showAllVar: true
     });
   }
 
@@ -134,8 +141,8 @@ class Page extends Component<any, any> {
     if (displayedPokemons) {
       if (displayedPokemons.length > 100) {
         let pokemons = displayedPokemons;
-        if(!this.state.showAllVar){
-          pokemons =pokemons.slice(0, 100);
+        if (!this.state.showAllVar) {
+          pokemons = pokemons.slice(0, 100);
         }
         let pokemonsToShow = pokemons.map(pokemon => {
           return (
@@ -149,7 +156,7 @@ class Page extends Component<any, any> {
         if (!this.state.showAllVar) {
           pokemonsToShow.push((
             <li className="pokemons__item" key={"ShowAll"}>
-              <button className="btn btn-secondary btn-sm" onClick={this.onClickHandler.bind(this) }>ShowAll</button>
+              <button className="btn btn-secondary btn-sm" onClick={this.onClickHandler.bind(this)}>ShowAll</button>
             </li>
           ));
         }
@@ -187,7 +194,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state)),
     getPokemons: () => dispatch(pageActions.getPokemons()),
-    filterPokemonsAll: (searchString, searchHP, searchATK, searchDEF, searchTypes) => dispatch(pageActions.filterPokemonsAll(searchString, searchHP, searchATK, searchDEF, searchTypes))
+    filterPokemonsAll: (searchString, SearchHealthStart, SearchHealthEnd, SearchAttackStart, SearchAttackEnd, SearchDeffenceStart, SearchDeffenceEnd, searchTypes) => dispatch(pageActions.filterPokemonsAll(searchString, SearchHealthStart, SearchHealthEnd, SearchAttackStart, SearchAttackEnd, SearchDeffenceStart, SearchDeffenceEnd, searchTypes))
   }
 }
 

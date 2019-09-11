@@ -52,14 +52,17 @@ export function filterPokemonsByDefence(searchString = '') {
   }
 }
 
-export function filterPokemonsAll(searchString = '', searchHP = 0, searchATK = 0, searchDEF = 0, searchTypes) {
+export function filterPokemonsAll(searchString = '', SearchHealthStart =0, SearchHealthEnd=0, SearchAttackStart=0, SearchAttackEnd=0, SearchDeffenceStart=0, SearchDeffenceEnd=0, searchTypes) {
   return {
     type: FILTER_POKEMONS_ALL,
     payload: {
       searchString: searchString,
-      searchHP: searchHP,
-      searchATK: searchATK,
-      searchDEF: searchDEF,
+      SearchHealthStart: SearchHealthStart,
+      SearchHealthEnd: SearchHealthEnd,
+      SearchAttackStart: SearchAttackStart,
+      SearchAttackEnd: SearchAttackEnd,
+      SearchDeffenceStart: SearchDeffenceStart,
+      SearchDeffenceEnd: SearchDeffenceEnd,
       searchTypes: searchTypes
     }
   }

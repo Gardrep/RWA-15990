@@ -21,6 +21,9 @@ const HtmlTooltip = withStyles((theme) => ({
   },
 }))(Tooltip);
 
+export function classList() { return ["Normal", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon", "Dark", "Fairy", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Steel"]; }
+
+
 class Pokemon extends Component<any, any> {
 
   printaj() {
@@ -48,32 +51,33 @@ class Pokemon extends Component<any, any> {
       }
     }
 
-
     return (
       <div className="pokemon">
         <HtmlTooltip
           title={
             <React.Fragment>
               <Typography color="inherit">{pokemon.name.english}</Typography>
-              {"HP"}:{' '} <u>{pokemon.base.HP}</u><br />
-              {"ATK"}:{' '} <u>{pokemon.base.Attack}</u><br />
-              {"DEF"}:{' '} <u>{pokemon.base.Defense}</u><br />
+              {"HP: "} <u>{pokemon.base.HP}</u><br />
+              {"ATK: "} <u>{pokemon.base.Attack}</u><br />
+              {"DEF: "} <u>{pokemon.base.Defense}</u><br />
 
-              {"Sp. Atk"}:{' '} <u>{pokemon.base.SpAttack}</u><br />
-              {"Sp. Def"}:{' '} <u>{pokemon.base.SpDefense}</u><br />
-              {"Speed"}:{' '} <u>{pokemon.base.Speed}</u><br />
-              {"Type"}:{' '} <u>{pokemon.type.map((type) => type + " ")}</u>
+              {"Sp. Atk: "} <u>{pokemon.base.SpAttack}</u><br />
+              {"Sp. Def: "} <u>{pokemon.base.SpDefense}</u><br />
+              {"Speed: "} <u>{pokemon.base.Speed}</u><br />
+              {"Type: "} <u>{pokemon.type.map((type) => type + " ")}</u>
             </React.Fragment>
           }
         >
-          <button
+          <a
             id={pokemon.id}
             onClick={(e) => this.printaj()}
             className="pokemon__sprite"
+            rel="noopener noreferrer"
+            href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name.english}`}
             style={{
               backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})`
             }}
-          />
+          > </a>
         </HtmlTooltip>
 
         <div className="p-1">

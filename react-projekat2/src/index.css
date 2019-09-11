@@ -58,7 +58,10 @@ body {
 
 .pokemon__change {
   position: relative;
-  background-color: rgba(0, 0, 0, 0.5);
+  /*background-color: rgba(0, 0, 0, 0.5);*/
+  width: 160px;
+  margin-top: 1px;
+  border: 1px solid #6C757D;
 }
 
 .pokemon__sprite {
@@ -78,7 +81,6 @@ body {
 .pokemon__sprite {
   width: 140px;
   height: 140px;
-
 }
 
 .pokemon__name {
@@ -88,7 +90,7 @@ body {
   left: 0;
   z-index: 2;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #6C757D;
   color: #fff;
   text-align: center;
   font-size: 14px;
@@ -149,4 +151,13 @@ body {
     width: 160px;
     height: 160px;
   }
+}
+
+.searchBase{
+  width: 60px;
+}
+
+.inputGroupText{
+color: #fff;
+background-color: #6C757D;
 }
