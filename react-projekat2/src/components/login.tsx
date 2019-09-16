@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from '@material-ui/core/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { LinkContainer } from 'react-router-bootstrap';
 import { connect } from 'react-redux'
 import * as userActions from '../redux/actions/user'
+import { AppState } from '../redux/reducers';
 
 class Login extends Component<any, any> {
 
@@ -20,6 +20,7 @@ class Login extends Component<any, any> {
   handleClickLogin() {
     this.props.clearCurrentUser();
     this.props.getCurrentUser(this.state);
+    console.log("nesto");
   }
 
   handleClickLogout() {
@@ -31,9 +32,6 @@ class Login extends Component<any, any> {
       <div className="form-popup">
         <MuiThemeProvider>
           <div>
-            <AppBar
-              title="Login"
-            />
             <TextField
               hintText="Enter your Username"
               floatingLabelText="Username"
@@ -61,8 +59,8 @@ class Login extends Component<any, any> {
   }
 }
 
-function mapStateToProps(state: any) {
-  const { currentUser } = state.page;
+function mapStateToProps(state: AppState) {
+  const { currentUser } = state.pokemonList;
   return {
     currentUser
   }

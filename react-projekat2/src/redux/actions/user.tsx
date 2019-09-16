@@ -8,7 +8,7 @@ import {
   SET_TEAM_REQUEST,
   SET_IDOLD_REQUEST,
   SET_IDOLD
-} from '../constants/page'
+} from '../constants/constants'
 
 export function getUsers() {
   return {
@@ -31,7 +31,7 @@ export function getCurrentUser(data) {
 }
 
 export function setCurrentUser(data) {
-  console.log("Stvarno se upisao u local storage");
+  console.log("Upisan token u local storage");
   localStorage.setItem('token', JSON.stringify(data));
   return {
     type: SET_CURRENT_USER,
@@ -40,7 +40,7 @@ export function setCurrentUser(data) {
 }
 
 export function clearCurrentUser() {
-  console.log("Obrisan iz local storeage");
+  console.log("Obrisan token iz local storage");
   localStorage.removeItem('token');
   return {
     type: CLEAR_CURRENT_USER,

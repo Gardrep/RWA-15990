@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import Pokemon from './pokemon'
 import { connect } from 'react-redux'
-import { LinkContainer} from 'react-router-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import * as userActions from '../redux/actions/user'
-import * as pageActions from '../redux/actions/page'
+import * as PokemonListActions from '../redux/actions/pokemonList'
+import { AppState } from '../redux/reducers';
 
-class Home extends Component<any,any> {
-  componentWillMount()
-  {
+class Home extends Component<any, any> {
+  componentWillMount() {
     this.props.clearPokemons();
     var data = JSON.parse(localStorage.getItem('token'));
-    if(data && !this.props.currentUser)
-    this.props.getCurrentUser(data);
+    if (data && !this.props.currentUser)
+      this.props.getCurrentUser(data);
   }
 
-  loadUser()
-  {
+  loadUser() {
     const { currentUser } = this.props;
-    if(currentUser){
-      if(this.props.pokemons){}
-      else{this.props.getPokemonTeam(currentUser)}
-      return(
+    console.log(currentUser);
+    if (currentUser) {
+      if (this.props.pokemons) { console.log("if"); }
+      else { this.props.getPokemonTeam(currentUser); console.log("else"); }
+      return (
         <div>
           <h3 className="UserDisplay">{currentUser.username}'s team of three are</h3>
         </div>
@@ -33,19 +33,18 @@ class Home extends Component<any,any> {
     this.props.setIdStariRequest(IdStari);
   }
 
-  loadUserPokemons()
-  {
-    const {pokemons } = this.props;
-    if(pokemons){
+  loadUserPokemons() {
+    const { pokemons } = this.props;
+    if (pokemons) {
       return pokemons.map(pokemon => {
-        return(
+        return (
           <li className="pokemons__item" id={pokemon.id} key={pokemon.id}>
-          <div>
-            <Pokemon pokemon={pokemon} />
-            <LinkContainer onClick={() => this.handleClick(pokemon.id)} to="/page">
+            <div>
+              <Pokemon pokemon={pokemon} />
+              <LinkContainer onClick={() => this.handleClick(pokemon.id)} to="/pokemonList">
                 <button className="pokemon__change btn-sm btn-secondary">Change</button>
-            </LinkContainer>
-          </div>
+              </LinkContainer>
+            </div>
           </li>
         )
       })
@@ -53,7 +52,8 @@ class Home extends Component<any,any> {
     return null;
   }
 
-render() {
+  render() {
+    console.log("fhisaohio");
     return (
       <div className="form-popup">
         {this.loadUser()}
@@ -64,8 +64,9 @@ render() {
 }
 
 
-function mapStateToProps(state: any) {
-  const { currentUser, pokemons, error } = state.page;
+function mapStateToProps(state: AppState) {
+  const { pokemons, error } = state.pokemonList;
+  const { currentUser } = state.user;
   return {
     currentUser,
     pokemons,
@@ -75,12 +76,12 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getPokemons:() => dispatch(pageActions.getPokemons()),
-    getCurrentUser:(state) => dispatch(userActions.getCurrentUser(state)),
-    getPokemonTeam:(data) => dispatch(userActions.getPokemonTeam(data)),
-    clearPokemons:() => dispatch(pageActions.clearPokemons()),
-    setIdStariRequest:(IdStari) => dispatch(userActions.setIdStariRequest(IdStari))
+    getPokemons: () => dispatch(PokemonListActions.getPokemons()),
+    getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state)),
+    getPokemonTeam: (data) => dispatch(userActions.getPokemonTeam(data)),
+    clearPokemons: () => dispatch(PokemonListActions.clearPokemons()),
+    setIdStariRequest: (IdStari) => dispatch(userActions.setIdStariRequest(IdStari))
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

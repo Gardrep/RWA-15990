@@ -4,6 +4,7 @@ import * as userActions from '../redux/actions/user'
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import { AppState } from '../redux/reducers';
 
 const HtmlTooltip = withStyles((theme) => ({
   tooltip: {
@@ -53,6 +54,11 @@ class Pokemon extends Component<any, any> {
 
     return (
       <div className="pokemon">
+        <button onClick={(e) => this.printaj()} className="pokemon__id btn-sm btn-secondary">C</button>
+        <p className="pokemon__hp">HP: {pokemon.base.HP}</p>
+        <p className="pokemon__atk">ATK: {pokemon.base.Attack}</p>
+        <p className="pokemon__def">DEF: {pokemon.base.Defense}</p>
+        <a rel="noopener noreferrer" href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name.english}`} className="pokemon__name">{pokemon.name.english}</a>
         <HtmlTooltip
           title={
             <React.Fragment>
@@ -68,33 +74,25 @@ class Pokemon extends Component<any, any> {
             </React.Fragment>
           }
         >
-          <a
+          <div
             id={pokemon.id}
-            onClick={(e) => this.printaj()}
+            //onClick={(e) => this.printaj()}
             className="pokemon__sprite"
-            rel="noopener noreferrer"
-            href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name.english}`}
+            //rel="noopener noreferrer"
+            //href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name.english}`}
             style={{
               backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})`
             }}
-          > </a>
+          > </div>
         </HtmlTooltip>
-
-        <div className="p-1">
-          <p className="pokemon__id">ID: {pokemon.id}</p>
-          <p className="pokemon__hp">HP: {pokemon.base.HP}</p>
-          <p className="pokemon__atk">ATK: {pokemon.base.Attack}</p>
-          <p className="pokemon__def">DEF: {pokemon.base.Defense}</p>
-          <p className="pokemon__name">{pokemon.name.english}</p>
-        </div>
       </div>
     )
   }
 }
 
 
-function mapStateToProps(state: any) {
-  const { currentUser, IdStari } = state.page;
+function mapStateToProps(state: AppState) {
+  const { currentUser, IdStari } = state.pokemonList;
   return {
     currentUser,
     IdStari

@@ -1,29 +1,54 @@
 import React, { Component } from 'react'
 import Pokemon from './pokemon'
-import {classList } from './pokemon'
+import { classList } from './pokemon'
 
 import SearchByName from './searchByName'
 import SearchByBase from './searchByBase';
 import SearchByType from './searchByType';
 import { connect } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap';
-import * as pageActions from '../redux/actions/page'
+import * as pokemonListActions from '../redux/actions/pokemonList'
 import * as userActions from '../redux/actions/user'
+import { AppState } from '../redux/reducers';
+import { UserModel } from '../models/userModel';
+import { PokemonModel } from '../models/pokemonModel';
 
-class Page extends Component<any, any> {
-  searchString = "";
-  SearchHealthStart = NaN;
-  SearchHealthEnd = NaN;
-  SearchAttackStart = NaN;
-  SearchAttackEnd = NaN;
-  SearchDeffenceStart = NaN;
-  SearchDeffenceEnd = NaN;
-  searchType = [];
-  searchBase = NaN;
-  baseList = ["Health", "Attack", "Deffence"];
-  searchBaseList = ["SearchHealthStart", "SearchHealthEnd", "SearchAttackStart","SearchAttackEnd", "SearchDeffenceStart", "SearchDeffenceEnd"];
+interface PokemonListState {
+  showAllVar: boolean;
+}
 
-  showAllVar = false;
+interface PokemonListProps {
+  getPokemons: () => {};
+  filterPokemonsAll: (searchString: string,
+    SearchHealthStart: number,
+    SearchHealthEnd: number,
+    SearchAttackStart: number,
+    SearchAttackEnd: number,
+    SearchDeffenceStart: number,
+    SearchDeffenceEnd: number,
+    searchTypes: string[]) => {};
+  getCurrentUser: (token: string) => {};
+  error: boolean;
+  pokemons: PokemonModel[];
+  displayedPokemons: PokemonModel[];
+  users: UserModel[];
+  currentUser: UserModel;
+  IdStari: number;
+}
+
+class PokemonList extends Component<PokemonListProps, PokemonListState> {
+  searchString: string = "";
+  SearchHealthStart: number = NaN;
+  SearchHealthEnd: number = NaN;
+  SearchAttackStart: number = NaN;
+  SearchAttackEnd: number = NaN;
+  SearchDeffenceStart: number = NaN;
+  SearchDeffenceEnd: number = NaN;
+  searchType: string[] = [];
+  searchBase: number = NaN;
+  baseList: string[] = ["Health", "Attack", "Deffence"];
+  searchBaseList: string[] = ["SearchHealthStart", "SearchHealthEnd", "SearchAttackStart", "SearchAttackEnd", "SearchDeffenceStart", "SearchDeffenceEnd"];
+
   constructor(props) {
     super(props);
     this.state = {
@@ -42,11 +67,11 @@ class Page extends Component<any, any> {
     this.searchString = "";
     (document.getElementById("searchName") as HTMLInputElement).value = "";
 
-    this.searchBaseList.forEach((base)=>{
+    this.searchBaseList.forEach((base) => {
       this[base] = NaN;
       (document.getElementById(base) as HTMLInputElement).value = null;
     })
-    
+
     this.searchType = [];
     document.querySelectorAll(`input[name="cbx"]:checked`).forEach((val) => {
       (val as HTMLInputElement).checked = false;
@@ -86,27 +111,17 @@ class Page extends Component<any, any> {
     this.filter();
   }
   filter() {
-    this.props.filterPokemonsAll(this.searchString, this.SearchHealthStart,this.SearchHealthEnd, this.SearchAttackStart,  this.SearchAttackEnd, this.SearchDeffenceStart,this.SearchDeffenceEnd, this.searchType);
+    this.props.filterPokemonsAll(this.searchString, this.SearchHealthStart, this.SearchHealthEnd, this.SearchAttackStart, this.SearchAttackEnd, this.SearchDeffenceStart, this.SearchDeffenceEnd, this.searchType);
   }
 
 
   render() {
     let { error } = this.props;
 
-
-    /*let searchBaseHtml = "";
-    ["Health", "Attack", "Deffence"].forEach(base => {
-      searchBaseHtml += `
-      <div className="col-md-auto">
-      ${base}<SearchByBase onChange={this.handleSearchByBase.bind(this)} />
-    </div>
-      `
-    });*/
-
     return (
-      <div className="page">
-        {error && <div className="page__error">{error}</div>}
-        <div className="page__search">
+      <div className="pokemonList">
+        {error && <div className="pokemonList__error">{error}</div>}
+        <div className="pokemonList__search">
 
           <div className="row justify-content-md-center">
             <div className="col-md-auto">
@@ -117,7 +132,7 @@ class Page extends Component<any, any> {
             </div>
             {this.baseList.map((base, i) => {
               return <div className='col-md-auto' key={i}>
-                <SearchByBase onChange={this.handleSearchByBase.bind(this)} baseName={base}/>
+                <SearchByBase onChange={this.handleSearchByBase.bind(this)} baseName={base} />
               </div>
             })}
             <div className="col-md-auto" >
@@ -179,8 +194,8 @@ class Page extends Component<any, any> {
 }
 
 
-function mapStateToProps(state: any) {
-  const { displayedPokemons, error, currentUser, IdStari } = state.page;
+function mapStateToProps(state: AppState) {
+  const { displayedPokemons, error, currentUser, IdStari } = state.pokemonList;
 
   return {
     displayedPokemons,
@@ -193,9 +208,24 @@ function mapStateToProps(state: any) {
 function mapDispatchToProps(dispatch) {
   return {
     getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state)),
-    getPokemons: () => dispatch(pageActions.getPokemons()),
-    filterPokemonsAll: (searchString, SearchHealthStart, SearchHealthEnd, SearchAttackStart, SearchAttackEnd, SearchDeffenceStart, SearchDeffenceEnd, searchTypes) => dispatch(pageActions.filterPokemonsAll(searchString, SearchHealthStart, SearchHealthEnd, SearchAttackStart, SearchAttackEnd, SearchDeffenceStart, SearchDeffenceEnd, searchTypes))
+    getPokemons: () => dispatch(pokemonListActions.getPokemons()),
+    filterPokemonsAll: (searchString: string,
+      SearchHealthStart: number,
+      SearchHealthEnd: number,
+      SearchAttackStart: number,
+      SearchAttackEnd: number,
+      SearchDeffenceStart: number,
+      SearchDeffenceEnd: number,
+      searchTypes: string[]) => dispatch(pokemonListActions.filterPokemonsAll(
+        searchString,
+        SearchHealthStart,
+        SearchHealthEnd,
+        SearchAttackStart,
+        SearchAttackEnd,
+        SearchDeffenceStart,
+        SearchDeffenceEnd,
+        searchTypes))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Page)
+export default connect(mapStateToProps, mapDispatchToProps)(PokemonList)

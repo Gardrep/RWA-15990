@@ -1,6 +1,8 @@
 import { put, takeEvery, all } from 'redux-saga/effects'
-import { setPokemons, filterPokemons } from '../actions/page'
-import { setUsers, setCurrentUser, setIdStari, redirectToHome } from '../actions/user'
+import { filterPokemons } from '../actions/pokemonList'
+
+import * as PokemonAction  from '../actions/pokemonList';
+import { setUsers, setCurrentUser, setIdStari, redirectToHome} from '../actions/user'
 import { getPokemons, getUsers, getUser, setTeam } from '../../services/DBService'
 import {
     GET_POKEMONS_REQUEST,
@@ -11,12 +13,12 @@ import {
     GET_TEAM_REQUEST,
     SET_TEAM_REQUEST,
     SET_IDOLD_REQUEST
-} from '../constants/page';
+} from '../constants/constants';
 
 
 export function* fetchPokemons(actions) {
     const data = yield getPokemons(actions.payload);
-    yield put(setPokemons(data))
+    yield put(PokemonAction.setPokemons(data));
     yield put(filterPokemons())
 }
 
@@ -30,7 +32,7 @@ export function* fetchTeam(actions) {
         let pokemon = fetchPokemon(id);
         return pokemon;
     }))
-    yield put(setPokemons(data))
+    yield put(PokemonAction.setPokemons(data));
 }
 
 export function* postTeam(actions) {
@@ -52,7 +54,6 @@ export function* fetchCurrentUser(actions) {
     const allUsers = yield getUsers();
     const user = allUsers.find((user) => user.username === actions.payload.username && user.password === actions.payload.password)
     if (!user) {
-        ////OBRISI TOKEN
         yield put({
             type: GET_CURRENT_USER_FAIL,
             error: "NISI LEPO UNEO Username I Password"

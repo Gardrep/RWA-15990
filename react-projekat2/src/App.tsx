@@ -7,8 +7,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Login from './components/login';
 import Home from './components/home';
-import Page from './components/page'
-import * as userActions from './redux/actions/user'
+import PokemonList from './components/pokemonList'
+//import { PokemonListState } from './redux/reducers/pokemonList';
+import { AppState } from './redux/reducers';
+//import * as userActions from './redux/actions/user'
 
 
 class App extends Component<any, any>{
@@ -38,7 +40,7 @@ class App extends Component<any, any>{
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="mr-auto">
-                <LinkContainer to="/page">
+                <LinkContainer to="/pokemonList">
                   <Nav.Link >All pokemons</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to="/comparePokemons">
@@ -55,7 +57,7 @@ class App extends Component<any, any>{
 
           <Route path="/home" component={Home} />
           <Route path="/login" component={Login} />
-          <Route path="/page" component={Page} />
+          <Route path="/pokemonList" component={PokemonList} />
           {/*<Route path="/comparePokemons" component={ComparePokemons} />*/}
 
         </div>
@@ -65,8 +67,9 @@ class App extends Component<any, any>{
 }
 
 
-function mapStateToProps(state: any) {
-  const { currentUser } = state.page;
+function mapStateToProps(state: AppState) {
+  //console.log(state);
+  const { currentUser } = state.pokemonList;
   return {
     currentUser
   }
@@ -74,7 +77,7 @@ function mapStateToProps(state: any) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state))
+    //getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state))
   }
 }
 
