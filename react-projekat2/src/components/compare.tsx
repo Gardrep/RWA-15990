@@ -2,114 +2,133 @@ import React, { Component } from 'react';
 import Pokemon from './pokemon';
 
 import { connect } from 'react-redux';
-import { LinkContainer } from 'react-router-bootstrap';
-import * as pokemonListActions from '../redux/actions/pokemonList';
-import * as userActions from '../redux/actions/user';
 import { AppState } from '../redux/reducers';
+import { PokemonModel } from '../models/pokemonModel';
 
 class ComparePokemons extends Component<any, any> {
     searchString = "";
     SearchHealthStart = NaN;
+    emptyPokemonScelet: PokemonModel = {
+        "id": 0,
+        "name": {
+            "english": "",
+            "japanese": "",
+            "chinese": ""
+        },
+        "type": [],
+        "base": {
+            "HP": 0,
+            "Attack": 0,
+            "Defense": 0,
+            "SpAttack": 0,
+            "SpDefense": 0,
+            "Speed": 0
+        }
+    };
+    pokemonLeft: PokemonModel = this.emptyPokemonScelet;
+    pokemonRight: PokemonModel = this.emptyPokemonScelet;
 
-
-    showAllVar = false;
     constructor(props) {
         super(props);
         this.state = {
-            showAllVar: false
+            pokemonLeft: this.emptyPokemonScelet,
+            pokemonRight: this.emptyPokemonScelet
         }
     }
 
-    componentDidMount = () => {
-        this.props.getPokemons();
-        var data = JSON.parse(localStorage.getItem('token'));
-        if (data && !this.props.currentUser)
-            this.props.getCurrentUser(data);
-    }
-
-    showAll() {
-        debugger
-        let { displayedPokemons, currentUser, IdStari } = this.props;
-        console.log(displayedPokemons);
-        let test = displayedPokemons.slice(100, 1000000).map(pokemon => {
-            return (
-                <li className="pokemons__item" key={pokemon.id}>
-                    <LinkContainer to="/home">
-                        <Pokemon pokemon={pokemon} currentUser={currentUser} IdStari={IdStari} />
-                    </LinkContainer>
-                </li>
-            )
-        })
-        return test;
-    }
-
-
     render() {
-        let { error } = this.props;
-
         return (
-            <div className="pokemonList">
-                {error && <div className="pokemonList__error">{error}</div>}
-                {<ul className="pokemons">{/*this.renderPokemons()*/}</ul>}
+            <div>
+                <div >
+                    <ul className="pokemons">{this.renderPokemons()}</ul>
+                </div>
+                <div className="pokemons-compare">
+                    <div id="divLeft">
+                        {this.comparePokemons(this.state.pokemonLeft, true)}
+                    </div>
+                    <div id="divRight">
+                        {this.comparePokemons(this.state.pokemonRight, false)}
+                    </div>
+                </div>
             </div>
         )
     }
 
-    onClickHandler() {
-        this.setState({
-            showAllVar: true
-        });
-    }
-
     renderPokemons() {
-        let { displayedPokemons, currentUser, IdStari } = this.props;
-        if (displayedPokemons)
-            if (displayedPokemons.length > 100) {
-                let pokemons = displayedPokemons;
-                let pokemonsToShow = pokemons.map(pokemon => {
-                    return (
-                        <li className="pokemons__item" key={pokemon.id}>
-                            <LinkContainer to="/home">
-                                <Pokemon pokemon={pokemon} currentUser={currentUser} IdStari={IdStari} />
-                            </LinkContainer>
-                        </li>
-                    )
-                });
+        let { compareList } = this.props;
+        console.log(compareList);
+        if (compareList)
+            return compareList.map(pokemon => {
+                return (
+                    <li className="pokemons__item" key={pokemon.id}>
+                        <div>
+                            <Pokemon pokemon={pokemon} isComparable={false} />
+                            <button onClick={() => this.setState({ pokemonLeft: pokemon })} className="compare-putButton btn-sm btn-secondary">{String.fromCharCode(60)}</button>
+                            <button onClick={() => this.setState({ pokemonRight: pokemon })} className="compare-putButton btn-sm btn-secondary" >{String.fromCharCode(62)}</button>
+                        </div>
+                    </li>
+                )
+            });
+    }
+    comparePokemons(pokemon: PokemonModel, isLeft: boolean) {
+        let pictureID = "";
+        if (pokemon.id < 10) {
+            pictureID = "00" + pokemon.id;
+        }
+        else {
+            if (pokemon.id < 100) {
+                pictureID = "0" + pokemon.id;
             }
+            else {
+                pictureID = "" + pokemon.id;
+            }
+        }
+        console.log(pictureID);
 
+        return (
+            <div>
+                {this.pokemonStats(pokemon, isLeft)}
+                <div
+                    className="pokemon-compare"
+                    style={{
+                        backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})`
+                    }}
+                ></div>
+                {this.pokemonStats(pokemon, !isLeft)}
+            </div>
+        )
+    }
+    pokemonStats(pokemon: PokemonModel, isCorrect: boolean) {
+        if (isCorrect)
+            return (
+                <div>
+                    <div>{"English: "} {pokemon.name.english}</div>
+                    <div>{"Japanese: "} {pokemon.name.japanese}</div>
+                    <div>{"Chinese: "} {pokemon.name.chinese}</div>
+                    <br />
+                    <div>{"HP: "} {pokemon.base.HP}</div>
+                    <div>{"ATK: "} {pokemon.base.Attack}</div>
+                    <div>{"DEF: "}{pokemon.base.Defense}</div>
+                    <br />
+                    <div>{"Sp. Atk: "} {pokemon.base.SpAttack}</div>
+                    <div>{"Sp. Def: "} {pokemon.base.SpDefense}</div>
+                    <div>{"Speed: "}{pokemon.base.Speed}</div>
+                    <br />
+                    <div>{"Type: "} {pokemon.type.map((type) => type + " ")}</div>
+                </div>
+            )
     }
 }
 
 function mapStateToProps(state: AppState) {
-    const { displayedPokemons, error, currentUser, IdStari } = state.pokemonList;
+    const { compareList } = state.compareList;
     return {
-        displayedPokemons,
-        error,
-        currentUser,
-        IdStari
+        compareList
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state)),
-        filterPokemonsAll: (searchString: string,
-            SearchHealthStart: number,
-            SearchHealthEnd: number,
-            SearchAttackStart: number,
-            SearchAttackEnd: number,
-            SearchDeffenceStart: number,
-            SearchDeffenceEnd: number,
-            searchTypes: string[]) => dispatch(pokemonListActions.filterPokemonsAll(
-              searchString,
-              SearchHealthStart,
-              SearchHealthEnd,
-              SearchAttackStart,
-              SearchAttackEnd,
-              SearchDeffenceStart,
-              SearchDeffenceEnd,
-              searchTypes))
-    }
+function mapDispatchToProps() {
+    return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComparePokemons)

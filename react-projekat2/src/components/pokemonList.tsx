@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Pokemon from './pokemon'
-import { classList } from './pokemon'
+import { classList } from '../models/pokemonModel'
 
 import SearchByName from './searchByName'
 import SearchByBase from './searchByBase';
@@ -80,14 +80,13 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
   }
 
   showAll() {
-    debugger
     let { displayedPokemons, currentUser, IdStari } = this.props;
     console.log(displayedPokemons);
     let test = displayedPokemons.slice(100, 1000000).map(pokemon => {
       return (
         <li className="pokemons__item" key={pokemon.id}>
           <LinkContainer to="/home">
-            <Pokemon pokemon={pokemon} currentUser={currentUser} IdStari={IdStari} />
+            <Pokemon pokemon={pokemon} currentUser={currentUser} IdStari={IdStari}  isComparable={true}/>
           </LinkContainer>
         </li>
       )
@@ -119,7 +118,7 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
     let { error } = this.props;
 
     return (
-      <div className="pokemonList">
+      <div>
         {error && <div className="pokemonList__error">{error}</div>}
         <div className="pokemonList__search">
 
@@ -136,7 +135,7 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
               </div>
             })}
             <div className="col-md-auto" >
-              <SearchByType onChange={this.handleSearchByType.bind(this)} classList={classList()} />
+              <SearchByType onChange={this.handleSearchByType.bind(this)} classList={classList} />
             </div>
           </div>
         </div>
@@ -162,9 +161,7 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
         let pokemonsToShow = pokemons.map(pokemon => {
           return (
             <li className="pokemons__item" key={pokemon.id}>
-              <LinkContainer to="/home">
-                <Pokemon pokemon={pokemon} currentUser={currentUser} IdStari={IdStari} />
-              </LinkContainer>
+                <Pokemon pokemon={pokemon} currentUser={currentUser} IdStari={IdStari} isComparable={true} />
             </li>
           )
         });
@@ -181,9 +178,7 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
         return displayedPokemons.map(pokemon => {
           return (
             <li className="pokemons__item" key={pokemon.id}>
-              <LinkContainer to="/home">
-                <Pokemon pokemon={pokemon} currentUser={currentUser} IdStari={IdStari} />
-              </LinkContainer>
+                <Pokemon pokemon={pokemon} currentUser={currentUser} IdStari={IdStari}  isComparable={true}/>
             </li>
           )
         })
@@ -195,7 +190,8 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
 
 
 function mapStateToProps(state: AppState) {
-  const { displayedPokemons, error, currentUser, IdStari } = state.pokemonList;
+  const { displayedPokemons, error} = state.pokemonList;
+  const {  currentUser, IdStari } = state.user;
 
   return {
     displayedPokemons,

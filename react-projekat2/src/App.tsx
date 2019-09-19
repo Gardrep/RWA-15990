@@ -8,9 +8,9 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Login from './components/login';
 import Home from './components/home';
 import PokemonList from './components/pokemonList'
-//import { PokemonListState } from './redux/reducers/pokemonList';
+import ComparePokemons from './components/compare'
 import { AppState } from './redux/reducers';
-//import * as userActions from './redux/actions/user'
+
 
 
 class App extends Component<any, any>{
@@ -58,7 +58,7 @@ class App extends Component<any, any>{
           <Route path="/home" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/pokemonList" component={PokemonList} />
-          {/*<Route path="/comparePokemons" component={ComparePokemons} />*/}
+          <Route path="/comparePokemons" component={ComparePokemons} />
 
         </div>
       </BrowserRouter>
@@ -68,8 +68,7 @@ class App extends Component<any, any>{
 
 
 function mapStateToProps(state: AppState) {
-  //console.log(state);
-  const { currentUser } = state.pokemonList;
+  const { currentUser } = state.user;
   return {
     currentUser
   }
@@ -77,7 +76,6 @@ function mapStateToProps(state: AppState) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    //getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state))
   }
 }
 

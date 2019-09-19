@@ -60,7 +60,7 @@ class Login extends Component<any, any> {
 }
 
 function mapStateToProps(state: AppState) {
-  const { currentUser } = state.pokemonList;
+  const { currentUser } = state.user;
   return {
     currentUser
   }
