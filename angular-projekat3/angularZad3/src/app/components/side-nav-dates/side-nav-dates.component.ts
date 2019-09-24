@@ -30,24 +30,12 @@ export class SideNavDatesComponent implements OnInit {
   constructor(private store: Store<State>) { }
 
   ngOnInit() {
-    /*let DBMngr : DataPointService;
-      let list: DataPoint[];
-      DBMngr.getDataPoints().subscribe((datalist)=>{
-        list = datalist.map((data) => {
-          return new DataPoint(data.ID, data.name, data.date, data.happy, data.dairy);
-        })
-        this.store.dispatch(dataPointActions.loadDataPointsSuccsess({ dataPoints: list }));
-      });
-      */
-      this.store.dispatch(dataPointActions.loadDataPoints());
-
+    this.store.dispatch(dataPointActions.loadDataPoints());
     this.dataPoints$ = this.store.select(allReducers.selectAllDataPoints);
     this.dataPointList = Array();
     this.dataPoints$.subscribe((dps) => {
       this.dataPointList = Array();
-      console.log(dps);
       dps.map((dp) => {
-        console.log(dp);
         this.dataPointList.push(dp);
       })
     })
@@ -73,16 +61,6 @@ export class SideNavDatesComponent implements OnInit {
   }
 
   AddSaveDP() {
-    /*let pomdp: DataPoint = new DataPoint(700, "Bas Lep Dan", new Date(), 5, "empty");
-    let pomexer = new Exercise();
-    pomexer.name = "kalistenika na keju";
-    pomexer.description = "neki opis";
-    pomexer.effectiveness = 50;
-    pomexer.ifInjury = false;
-    pomexer.startsOn = new Date();
-    pomexer.endsOn = new Date();
-    pomdp.exercises.push(pomexer);
-    this.store.dispatch(dataPointActions.addDataPoint({ dataPoint: pomdp }));*/
   }
 
   Edit() {

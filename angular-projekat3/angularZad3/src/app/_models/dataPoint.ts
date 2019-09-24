@@ -4,7 +4,6 @@ import { eExercises } from '../_models/eExercise';
 import { eActivities } from '../_models/eActivities';
 import { eConsumables } from '../_models/eConsumables';
 
-
 export class DataPoint implements IDataPoint {
     id?: number;
     name?: string;
@@ -16,7 +15,6 @@ export class DataPoint implements IDataPoint {
     exercises?: Exercise[];
     activities?: Activity[];
 
-    // constructor(data?:DataPoint);
     constructor(id: number, name: string, date: Date, happy: number, diary: string) {
         this.id = !id ? 0 : id;
         this.name = !name ? "unnamed" : name;

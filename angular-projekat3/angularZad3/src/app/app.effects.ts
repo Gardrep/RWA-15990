@@ -46,7 +46,6 @@ export class AppEffects {
   )
   );
 
-
   constructor(
     private actions$: Actions,
     private DBMngr: DataPointService

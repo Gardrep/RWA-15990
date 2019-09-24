@@ -20,8 +20,6 @@ export class EditActivityComponent implements OnInit {
 
     @Input()
     set dpActivity(ac: Activity[]) {
-        console.log("ActivityList");
-        console.log(ac);
         this.List = ac;
         this.selectedAc = this.List[0];
         this.adaptAc();

@@ -1,29 +1,13 @@
-   /*.example-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  
+.mysidenav{
+  width: auto;
+}
 
-  .example-events {
-    width: 300px;
-    height: 200px;
-    overflow: auto;
-    border: 1px solid #555;
-  }
-*/
-  .mysidenav{
-    width: auto;
-  }
+.myeventlist{
+  float:left;
+  height:900px;
+}
 
-  .myeventlist{
-    float:left;
-    height:900px;
-  }
-
-  .inner {
-    position: absolute;
-  }
+.inner {
+  position: absolute;
+}
  

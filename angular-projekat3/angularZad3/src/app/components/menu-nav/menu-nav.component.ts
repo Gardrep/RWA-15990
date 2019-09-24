@@ -12,11 +12,7 @@ export class MenuNavComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  TodaysDP(){
-    
-  }
-
+  
   OpenMonthlyRadar(){
     this.router.navigate(['/monthlyRadar'],5 as NavigationExtras);
     console.log("fjosapjpo");

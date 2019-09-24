@@ -1,11 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import * as dataPointActions from '../../_actions/datapoint.actions';
 import { DataPoint } from 'src/app/_models/dataPoint';
 import { State } from 'src/app/_reducers';
-import { Exercise } from 'src/app/_models';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ChartDataSets } from 'chart.js';
 import { DatePipe } from '@angular/common';
 
@@ -46,7 +44,7 @@ export class DataPointComponent implements OnInit {
       if (typeof (this.dpThis$.exercises) != "undefined") {
         this.MyDataSetL$ = [];
         this.MyDataSetS$ = [];
-        
+
         this.dpThis$.exercises.map((ex) => {
           this.DSpush(ex);
         })
@@ -56,7 +54,7 @@ export class DataPointComponent implements OnInit {
         })
 
         this.dpThis$.consumables.map((co) => {
-          this.DSpushC(co);
+          this.DSpushComponents(co);
         })
       }
   }
@@ -77,7 +75,7 @@ export class DataPointComponent implements OnInit {
     this.MyDataSetL$.push({ data: dataLine, label: obj.type });
   }
 
-  DSpushC(obj) {
+  DSpushComponents(obj) {
     let datePipe = new DatePipe("en-US");
     let star = parseInt(datePipe.transform(obj.timeConsumed, "H"), 10);
     if (star < 0) star = star + 24;

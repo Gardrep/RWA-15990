@@ -13,7 +13,7 @@
             <div>
                 <label>Happiness: </label>
                 <mat-form-field>
-                    <input matInput type="number"  formControlName="happiness">
+                    <input matInput type="number" formControlName="happiness">
                     <mat-error *ngIf="dpForm.get('happiness')?.invalid">You have more than 2 characters</mat-error>
                 </mat-form-field>
             </div>
@@ -28,12 +28,12 @@
         </form>
     </div>
     <div>
-        <edit-exercise [dpExercise]="dpThis$.exercises" [(List)] = "exerciseList" ></edit-exercise>
+        <edit-exercise [dpExercise]="dpThis$.exercises" [(List)]="exerciseList"></edit-exercise>
     </div>
     <div>
-        <edit-activity [dpActivity]="dpThis$.activities" [(List)] = "activityList"></edit-activity>
+        <edit-activity [dpActivity]="dpThis$.activities" [(List)]="activityList"></edit-activity>
     </div>
     <div>
-        <edit-consumable [dpConsumable]="dpThis$.consumables" [(List)] = "consumableList"></edit-consumable>
+        <edit-consumable [dpConsumable]="dpThis$.consumables" [(List)]="consumableList"></edit-consumable>
     </div>
 </div>

@@ -28,16 +28,5 @@ export class DataPointService {
 
   public setDataPoint(id, model) {
     return this.http.put<DataPoint>(`${config}dataPoints/${id}`, model, httpOptions);
-
-    /*let options = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(model)
-    }
-    return fetch(`${config}dataPoints/`+id, options)
-      .then((response) => response.json)
-  }*/
   }
 }

@@ -11,7 +11,6 @@ import * as allReducers from '../../_reducers';
 import { DatePipe } from '@angular/common';
 import { eActivities, eConsumables, eExercises, Activity, Exercise, Consumable } from 'src/app/_models';
 
-/** @title Form field theming */
 @Component({
     selector: 'monthly-radar',
     templateUrl: 'monthly-radar.component.html',
@@ -28,7 +27,6 @@ export class MonthlyRadarComponent implements OnInit {
     showLabelsBar: Label[] = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
     showListBar: ChartDataSets[] = [{ data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,], label: 'Empty series' }];
 
-    //startDate: Date = new Date(2019, 5, 23);
     monthlyDate: Date = new Date(2019, 5, 23);
     monthlyChoice: string = "Activities";
 
@@ -53,24 +51,7 @@ export class MonthlyRadarComponent implements OnInit {
             this.Change();
         })
     }
-    /*
-        showDate(){
-            let datePipe = new DatePipe("en-US");
-            return datePipe.transform(this.dpThis$.date, "dd.MM hh:mm")
-        }
-        saveDP(){
-         let pomdp: DataPoint = new DataPoint(700, "Bas Lep Dan", new Date(), 5, "empty");
-        let pomexer = new Exercise("kalistenika na keju",50,new Date(),new Date(),eExercises.Calisthenics,false,"","neki opis");
-        /*pomexer.name = "kalistenika na keju";
-        pomexer.description = "neki opis";
-        pomexer.effectiveness = 50;
-        pomexer.ifInjury = false;
-        pomexer.startsOn = new Date();
-        pomexer.endsOn = new Date();
-        pomdp.exercises.push(pomexer);
-        this.store.dispatch(dataPointActions.addDataPoint({ dataPoint: pomdp }));
-        }
-        */
+
     EndDateChange(event) {
         this.monthlyDate = new Date(event.value);
         this.Change();

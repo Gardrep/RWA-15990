@@ -7,7 +7,6 @@ import * as dataPointActions from '../../_actions/datapoint.actions';
 import { State } from 'src/app/_reducers';
 import { Store } from '@ngrx/store';
 
-/** @title Form field theming */
 @Component({
     selector: 'edit-data-point',
     templateUrl: 'edit-data-point.component.html',
@@ -60,10 +59,6 @@ export class EditDataPointComponent implements OnInit {
         pomdp.activities = this.activityList;
         pomdp.consumables = this.consumableList;
 
-
-        console.log(this.exerciseList);
-        console.log(this.activityList);
-        console.log(this.consumableList);
         this.store.dispatch(dataPointActions.updateDataPoint({ dataPoint: pomdp }));
     }
 }

@@ -8,7 +8,7 @@ import { Label } from 'ng2-charts';
   styleUrls: ['./scatter-chart.component.css']
 })
 export class ScatterChartComponent implements OnInit {
-  // scatter
+
   public scatterChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -29,7 +29,7 @@ export class ScatterChartComponent implements OnInit {
   public scatterChartType: ChartType = 'scatter';
 
   @Input()
-  set  MyDataSet(ds: ChartDataSets[]) {
+  set MyDataSet(ds: ChartDataSets[]) {
     this.scatterChartData = ds;
   }
 
@@ -38,7 +38,6 @@ export class ScatterChartComponent implements OnInit {
   ngOnInit() {
   }
 
-  // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
   }

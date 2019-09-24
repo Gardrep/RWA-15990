@@ -8,7 +8,7 @@ import { Label } from 'ng2-charts';
   styleUrls: ['./radar-chart.component.css']
 })
 export class RadarChartComponent implements OnInit {
-  // Radar
+
   public radarChartOptions: RadialChartOptions = {
     responsive: true,
   };
@@ -26,17 +26,15 @@ export class RadarChartComponent implements OnInit {
   }
 
   @Input()
-  set showLabels(labels :Label[]) {
+  set showLabels(labels: Label[]) {
     this.radarChartLabels = labels;
   }
-
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
   }

@@ -13,8 +13,8 @@
         </div>
         <div>
             <mat-select [(value)]="monthlyChoice" (valueChange)="Change()">
-                <mat-option  [value]="option" *ngFor="let option of dataPointTypes">
-                        {{option}}
+                <mat-option [value]="option" *ngFor="let option of dataPointTypes">
+                    {{option}}
                 </mat-option>
             </mat-select>
         </div>

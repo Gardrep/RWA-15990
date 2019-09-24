@@ -1,5 +1,3 @@
-<!--<div>Current Count: {{ count$ }}</div>
-<div *ngFor="let dp of dataPointss$">{{dp.myname()}}</div>-->
 <div class="data-point-container">
   <div>
     <mat-list dense *ngIf="IsEdit$==false">
@@ -10,7 +8,7 @@
     </mat-list>
     <app-line-chart [MyDataSet]="MyDataSetL$" *ngIf="IsEdit$==false"></app-line-chart>
 
-    <edit-data-point  [dpThis]="dpThis$" *ngIf="IsEdit$==true"></edit-data-point>
+    <edit-data-point [dpThis]="dpThis$" *ngIf="IsEdit$==true"></edit-data-point>
   </div>
   <div>
     <app-scatter-chart [MyDataSet]="MyDataSetS$" *ngIf="IsEdit$==false"></app-scatter-chart>

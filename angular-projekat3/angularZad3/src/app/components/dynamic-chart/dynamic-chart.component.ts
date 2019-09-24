@@ -10,7 +10,6 @@ import { Label } from 'ng2-charts';
 export class DynamicChartComponent implements OnInit {
     public barChartOptions: ChartOptions = {
         responsive: true,
-        // We use these empty structures as placeholders for dynamic theming.
         scales: { xAxes: [{}], yAxes: [{}] },
     };
     public barChartLabels: Label[] = [];
@@ -21,12 +20,12 @@ export class DynamicChartComponent implements OnInit {
 
     @Input()
     set showList(data: ChartDataSets[]) {
-      this.barChartData = data;
+        this.barChartData = data;
     }
-  
+
     @Input()
-    set showLabels(labels :Label[]) {
-      this.barChartLabels = labels;
+    set showLabels(labels: Label[]) {
+        this.barChartLabels = labels;
     }
 
     constructor() { }
@@ -34,7 +33,6 @@ export class DynamicChartComponent implements OnInit {
     ngOnInit() {
     }
 
-    // events
     public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
         console.log(event, active);
     }

@@ -3,9 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Consumable } from 'src/app/_models';
 import { DatePipe } from '@angular/common';
 import { eConsumables } from '../../_models/eConsumables';
-//import { start } from 'repl';
 
-/** @title Form field theming */
 @Component({
     selector: 'edit-consumable',
     templateUrl: 'edit-consumable.component.html',
@@ -22,8 +20,6 @@ export class EditConsumableComponent implements OnInit {
 
     @Input()
     set dpConsumable(co: Consumable[]) {
-        console.log("ConsumableList");
-        console.log(co);
         this.List = co;
         this.selectedCo = this.List[0];
         this.adaptCo();
@@ -61,7 +57,6 @@ export class EditConsumableComponent implements OnInit {
     }
     adaptCo() {
         if (!this.selectedCo) {
-            console.log("JUP GRESKA");
             this.dpForm.get('name').setValue("Empty day");
             this.timeCon = "00:00";
             this.dpForm.get('type').setValue(eConsumables.Other);

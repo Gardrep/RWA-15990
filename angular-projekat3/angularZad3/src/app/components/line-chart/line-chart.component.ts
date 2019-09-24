@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
-//import { DataPoint } from 'src/app/_models/dataPoint';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
@@ -20,7 +19,6 @@ export class LineChartComponent implements OnInit {
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
       xAxes: [{}],
       yAxes: [
         {
@@ -39,23 +37,7 @@ export class LineChartComponent implements OnInit {
         }
       ]
     },
-    annotation: {
-      /*annotations: [
-        {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: '12',
-          borderColor: 'orange',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'orange',
-            content: 'LineAnno'
-          }
-        },
-      ],*/
-    },
+    annotation: {},
   };
   public lineChartColors: Color[] = [
     { // grey
@@ -103,13 +85,10 @@ export class LineChartComponent implements OnInit {
   public lineChartType = 'line';
   public lineChartPlugins = [pluginAnnotations];
 
-
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-  //private _MyDataSet: ChartDataSets[];
-
   @Input()
-  set  MyDataSet(ds: ChartDataSets[]) {
+  set MyDataSet(ds: ChartDataSets[]) {
     this.lineChartData = ds;
     this.chart.update();
   }
@@ -119,20 +98,6 @@ export class LineChartComponent implements OnInit {
   ngOnInit() {
   }
 
-  public randomize(): void {
-    for (let i = 0; i < this.lineChartData.length; i++) {
-      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-        this.lineChartData[i].data[j] = this.generateNumber(i);
-      }
-    }
-    this.chart.update();
-  }
-
-  private generateNumber(i: number) {
-    return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
-  }
-
-  // events
   public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
     console.log(event, active);
   }
@@ -141,26 +106,4 @@ export class LineChartComponent implements OnInit {
     console.log(event, active);
   }
 
-  public hideOne() {
-    const isHidden = this.chart.isDatasetHidden(1);
-    this.chart.hideDataset(1, !isHidden);
-  }
-
-  public pushOne() {
-    this.lineChartData.forEach((x, i) => {
-      const num = this.generateNumber(i);
-      const data: number[] = x.data as number[];
-      data.push(num);
-    });
-    this.lineChartLabels.push(`Label ${this.lineChartLabels.length}`);
-  }
-
-  public changeColor() {
-    this.lineChartColors[3].borderColor = 'green';
-    this.lineChartColors[3].backgroundColor = `rgba(0, 255, 0, 0.3)`;
-  }
-
-  public changeLabel() {
-   this.chart.update();
-  }
 }
