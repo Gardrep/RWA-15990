@@ -5,6 +5,7 @@ import { ClassService } from "./_components/class/ClassService.js";
 import { RaceService } from "./_components/race/RaceService.js";
 import { SpellService } from "./_components/spell/SpellService.js";
 import { CharacterService } from "./_components/character/CharacterService.js";
+import { UserService } from "./_components/user/UserService.js";
 
 import { DBService } from "./_services/DBService.js";
 

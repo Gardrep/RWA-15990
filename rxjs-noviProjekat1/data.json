@@ -16296,6 +16296,26 @@
         }
       ],
       "id": 44
+    },
+    {
+      "name": "Pedja",
+      "class": "7",
+      "race": "7",
+      "spells": [
+        {
+          "id": "8",
+          "name": "Animal Shapes"
+        },
+        {
+          "id": "5",
+          "name": "Alter Self"
+        },
+        {
+          "id": "2",
+          "name": "Acid Splash"
+        }
+      ],
+      "id": 45
     }
   ],
   "users": [

@@ -12,7 +12,7 @@ export const RaceService = {
         if (isBuilding) {
             mainDiv.innerHTML = HTML.RacesText();;
         }
-        Global.LoadTamplate(isBuilding, false).then(()=>{
+        Global.LoadTamplate(isBuilding, false).then(() => {
             var search = document.getElementById("InputName");
 
             const input = fromEvent(search, 'input');

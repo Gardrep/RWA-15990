@@ -95,5 +95,15 @@ export const DBService = {
       });
   },
 
+  async GetUsersHTML(name) {
+    return await fetch(this.relativePath+ "user/" + name + '.html')
+      .then(function (response) {
+        return response.text();
+      })
+      .then(function (res) {
+        return res;
+      });
+  },
+
 
 }

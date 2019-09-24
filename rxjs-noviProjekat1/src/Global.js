@@ -47,7 +47,7 @@ export const Global = {
         var commitbtn = document.createElement("button");
         commitbtn.innerHTML = "Commit";
         commitbtn.id="btnCommit"
-        commitbtn.className = "btn btn-primary";
+        commitbtn.className = "btn btn-secondary";
         if(Global.character.name != "empty" && Global.character.class  && Global.character.race ){
             commitbtn.disabled = false;
         }else{
@@ -196,13 +196,6 @@ async function MakeRows(tbody, status, isBuilding, list) {
 function populateHTML(html, promenljiva) {
     let m;
     let reg = new RegExp('{{ ?(#[A-Za-z]+ )?[A-Za-z]+.[A-Za-z]* }}', 'g');
-    // do {
-    //     m = reg.exec(html);
-    //     if (m) {
-    //         let prop = m[0].slice(3, -3).trim();
-    //         html = html.replace(m[0], saferEval(prop, promenljiva));
-    //     }
-    // }while (m);
     html = html.replace(reg, (prop) => {
         if (prop) {
             prop = prop.replace(/{/g, '').replace(/}/g, '').trim();

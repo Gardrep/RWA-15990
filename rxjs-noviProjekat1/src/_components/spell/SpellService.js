@@ -44,7 +44,6 @@ export const SpellService = {
 
             //----------------------------------------------------------CLASSES
             crateFilterButton("class");
-            //let classbtn = document.getElementById("classButton");
             let classmenudiv = document.getElementById("classMenu");
 
             let classinput, classLabel, pomDiv;
@@ -76,7 +75,6 @@ export const SpellService = {
                 });
             });
 
-            //------------------------------------------------------------------TABELA
             Global.FillTable("Spells", isBuilding);
         });
     }

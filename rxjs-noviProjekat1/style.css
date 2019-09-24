@@ -83,18 +83,9 @@ body, html {
   margin-right: 30px;
 }
 
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
+
 
 .tab button {
-  /*background-color: inherit;
-    border: none;
-  outline: none;
-  padding: 14px 16px;
-  */
   float: left;
   cursor: pointer;
   transition: 0.3s;

@@ -1,6 +1,5 @@
 export class Class {
-constructor(clas) {
-    //this.atributeList = ["id","name","description","hit_die","proficiency_choices","proficiencies","saving_throws","starting_equipment","class_level","subclasses","spellcasting"];
+    constructor(clas) {
         if (!clas) {
             this.id = "empty";
             this.name = "empty";
@@ -40,6 +39,6 @@ constructor(clas) {
     }
 
     static atributeList() {
-        return ["ID","Class Name","Description","Hit Die","Proficiency Choices","Proficiencies","Saving Throws","Starting Equipment","Class Level","Subclasses","Spellcasting"];
-      }
+        return ["ID", "Class Name", "Description", "Hit Die", "Proficiency Choices", "Proficiencies", "Saving Throws", "Starting Equipment", "Class Level", "Subclasses", "Spellcasting"];
+    }
 }
