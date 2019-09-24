@@ -89,6 +89,7 @@ export function replacePokemonTeam(user, IdStari, IdNovi) {
     password: `${user.password}`,
     team: team
   }
+  setIdStariRequest(NaN);
 
   return {
     type: SET_TEAM_REQUEST,

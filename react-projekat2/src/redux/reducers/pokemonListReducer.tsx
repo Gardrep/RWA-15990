@@ -49,18 +49,20 @@ export function pokemonListReducer(state: PokemonListState = pokemonListInitialS
 
     case FILTER_POKEMONS_ALL:
       {
+        let filter = action.payload;
+        console.log(action.payload);
         let pokemoni = state.pokemons
-          .filter((pokemon) => { return !action.payload.searchString || pokemon.name.english.includes(action.payload.searchString) })
+          .filter((pokemon) => { return !filter.searchString || pokemon.name.english.includes(filter.searchString) })
 
-          .filter((pokemon) => { return isNaN(action.payload.SearchHealthStart) || pokemon.base.HP >= parseInt(action.payload.SearchHealthStart) })
-          .filter((pokemon) => { return isNaN(action.payload.SearchAttackStart) || pokemon.base.Attack >= parseInt(action.payload.SearchAttackStart) })
-          .filter((pokemon) => { return isNaN(action.payload.SearchDeffenceStart) || pokemon.base.Defense >= parseInt(action.payload.SearchDeffenceStart) })
+          .filter((pokemon) => { return isNaN(filter.SearchHealthStart) || pokemon.base.HP >= parseInt(filter.SearchHealthStart) })
+          .filter((pokemon) => { return isNaN(filter.SearchAttackStart) || pokemon.base.Attack >= parseInt(filter.SearchAttackStart) })
+          .filter((pokemon) => { return isNaN(filter.SearchDeffenceStart) || pokemon.base.Defense >= parseInt(filter.SearchDeffenceStart) })
 
-          .filter((pokemon) => { return isNaN(action.payload.SearchHealthEnd) || pokemon.base.HP <= parseInt(action.payload.SearchHealthEnd) })
-          .filter((pokemon) => { return isNaN(action.payload.SearchAttackEnd) || pokemon.base.Attack <= parseInt(action.payload.SearchAttackEnd) })
-          .filter((pokemon) => { return isNaN(action.payload.SearchDeffenceEnd) || pokemon.base.Defense <= parseInt(action.payload.SearchDeffenceEnd) })
+          .filter((pokemon) => { return isNaN(filter.SearchHealthEnd) || pokemon.base.HP <= parseInt(filter.SearchHealthEnd) })
+          .filter((pokemon) => { return isNaN(filter.SearchAttackEnd) || pokemon.base.Attack <= parseInt(filter.SearchAttackEnd) })
+          .filter((pokemon) => { return isNaN(filter.SearchDeffenceEnd) || pokemon.base.Defense <= parseInt(filter.SearchDeffenceEnd) })
           .filter((pokemon) => {
-            return action.payload.searchTypes.length === 0 || action.payload.searchTypes.reduce((acc, x) => {
+            return filter.searchTypes.length === 0 || filter.searchTypes.reduce((acc, x) => {
               return acc && pokemon.type.includes(x);
             }, true)
           });

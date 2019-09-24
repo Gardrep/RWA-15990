@@ -1,24 +1,25 @@
 export interface PokemonModel {
-    id:   number;
+    id: number;
     name: Name;
     type: string[];
     base: Base;
 }
 
 export interface Base {
-    HP:        number;
-    Attack:    number;
-    Defense:   number;
-    SpAttack:  number;
+    HP: number;
+    Attack: number;
+    Defense: number;
+    SpAttack: number;
     SpDefense: number;
-    Speed:     number;
+    Speed: number;
 }
 
 export interface Name {
-    english:  string;
+    english: string;
     japanese: string;
-    chinese:  string;
+    chinese: string;
 }
 
-export const classList:string[] = ["Normal", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon", "Dark", "Fairy", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Steel"];
+export const classList: string[] = ["Normal", "Fire", "Water", "Grass", "Electric", "Psychic", "Ice", "Dragon", "Dark", "Fairy", "Fighting", "Flying", "Poison", "Ground", "Rock", "Bug", "Ghost", "Steel"];
+export const baseList: string[] = ["HP", "Attack", "Defense", "SpAttack", "SpDefense", "Speed"];
 

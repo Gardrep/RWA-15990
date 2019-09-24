@@ -20,7 +20,6 @@ class Login extends Component<any, any> {
   handleClickLogin() {
     this.props.clearCurrentUser();
     this.props.getCurrentUser(this.state);
-    console.log("nesto");
   }
 
   handleClickLogout() {

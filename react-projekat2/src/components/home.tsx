@@ -16,10 +16,8 @@ class Home extends Component<any, any> {
 
   loadUser() {
     const { currentUser } = this.props;
-    console.log(currentUser);
     if (currentUser) {
-      if (this.props.pokemons) { console.log("if"); }
-      else { this.props.getPokemonTeam(currentUser); console.log("else"); }
+      if (!this.props.pokemons) this.props.getPokemonTeam(currentUser);
       return (
         <div>
           <h3 className="UserDisplay">{currentUser.username}'s team of three are</h3>
@@ -40,7 +38,7 @@ class Home extends Component<any, any> {
         return (
           <li className="pokemons__item" id={pokemon.id} key={pokemon.id}>
             <div>
-              <Pokemon pokemon={pokemon} />
+              <Pokemon pokemon={pokemon} isComparable={true} />
               <LinkContainer onClick={() => this.handleClick(pokemon.id)} to="/pokemonList">
                 <button className="pokemon__change btn-sm btn-secondary">Change</button>
               </LinkContainer>
@@ -53,7 +51,6 @@ class Home extends Component<any, any> {
   }
 
   render() {
-    console.log("fhisaohio");
     return (
       <div className="form-popup">
         {this.loadUser()}

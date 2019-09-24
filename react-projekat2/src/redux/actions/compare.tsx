@@ -22,7 +22,6 @@ export interface RemoveCompareList extends Action {
 }
 
 export function removeCompareList(pokemon: PokemonModel): AddCompareList {
-  console.log(pokemon);
   return {
     type: REMOVE_COMPARE_LIST,
     payload: pokemon

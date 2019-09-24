@@ -1,8 +1,8 @@
 import { put, takeEvery, all } from 'redux-saga/effects'
 import { filterPokemons } from '../actions/pokemonList'
 
-import * as PokemonAction  from '../actions/pokemonList';
-import { setUsers, setCurrentUser, setIdStari, redirectToHome} from '../actions/user'
+import * as PokemonAction from '../actions/pokemonList';
+import { setUsers, setCurrentUser, setIdStari, redirectToHome } from '../actions/user'
 import { getPokemons, getUsers, getUser, setTeam } from '../../services/DBService'
 import {
     GET_POKEMONS_REQUEST,

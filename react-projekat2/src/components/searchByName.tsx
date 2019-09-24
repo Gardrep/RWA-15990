@@ -6,7 +6,6 @@ const SearchByName = ({ onChange }) => (
     <span className="input-group-text inputGroupText">Name</span>
   </div>
   <input
-    className="mr-2"
     type="text"
     id="searchName"
     onChange={onChange}

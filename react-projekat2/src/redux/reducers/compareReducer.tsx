@@ -32,11 +32,10 @@ export function compareListReducer(state: CompareListState = pokemonListInitialS
 
         case REMOVE_COMPARE_LIST:
             {
-                console.log(action.payload);
                 return {
                     ...state,
                     compareList: [
-                        ...state.compareList.filter((val) => val !== action.payload )
+                        ...state.compareList.filter((val) => val !== action.payload)
                     ]
                 }
             }

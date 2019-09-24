@@ -42,22 +42,63 @@ body {
 }
 
 .pokemon-compare{
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  z-index: 1;
+  overflow: hidden;
+  background-color: #eee;
+  display: flex;
+  margin: 10px;
+  padding: 10px;
   border: none;
   background-position: center center;
   background-repeat: no-repeat;
-  background-size: 100px 100px;
+  border: solid 3px #6C757D;
+  border-radius: 10px;
 }
+
+.pokemon-compare-picture{
+  margin: 10px;
+  padding: 10px;
+  width: 200px;
+  height: 200px;
+  background-size: 180px 180px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border: solid 3px #6C757D;
+  border-radius: 10px;
+}
+
+@media (min-width: 992px) {
+  .pokemon-compare-picture {
+    width: 300px;
+    height: 300px;
+    background-size: 280px 280px;
+  }
+}
+
 .compare-putButton{
   position: relative;
-  width: 80px;
+  width: 70px;
   margin-top: 1px;
   border: 0px;
   cursor: pointer;
+}
+
+@media (min-width: 992px) {
+  .compare-putButton {
+    width: 80px;
+  }
+}
+
+.divCenter{
+  width: 90px;
+  margin: 10px;
+  background-color: #eee;
+  border: solid 3px #6C757D;
+  border-radius: 10px;
+}
+
+.divSides{
+  width: 160px;
 }
 
 .pokemons {
@@ -81,14 +122,6 @@ body {
   border-radius: 3px;
 }
 
-.pokemon__change {
-  position: relative;
-  width: 160px;
-  margin-top: 1px;
-  border: 0px;
-  cursor: pointer;
-}
-
 .pokemon__sprite {
   position: absolute;
   top: 0;
@@ -108,6 +141,14 @@ body {
   height: 140px;
 }
 
+@media (min-width: 992px) {
+  .pokemon,
+  .pokemon__sprite {
+    width: 160px;
+    height: 160px;
+  }
+}
+
 .pokemon__name {
   position: absolute;
   right: 0;
@@ -122,40 +163,90 @@ body {
   border-radius: 2px;
 }
 
-.pokemon__hp {
+.pokemon__change {
+  position: relative;
+  width: 140px;
+  margin-top: 1px;
+  border: 0px;
+  cursor: pointer;
+}
+
+.pokemon__name,
+.pokemon__change {
+  width: 140px;
+}
+
+@media (min-width: 992px) {
+  .pokemon__name,
+  .pokemon__change {
+    width: 160px;
+  }
+}
+.pokemon__stats{
   position: absolute;
+  z-index: 2;
+  margin: 0;/*
+  font-weight: bold;
+  font-size: 14px;*/
+  pointer-events: none;
+  font-size: 14px !important;
+}
+.stats__hp{
   bottom: 1;
   right: 5px;
-  z-index: 2;
-  margin: 0;
-  color: #009900;
+  
+}
+.hp{
+  color: #11af11;
   font-weight: bold;
-  font-size: 14px;
-  pointer-events: none;
+  font-size: 16px;
 }
 
-.pokemon__atk {
-  position: absolute;
+.stats__atk{
+  margin-bottom: 21px;
   bottom: 0;
   left: 5px;
-  z-index: 2;
-  margin-bottom: 21px;
+}
+.atk{
   color: #ae3618;
   font-weight: bold;
-  font-size: 14px;
-  pointer-events: none;
+  font-size: 16px;
 }
 
-.pokemon__def {
-  position: absolute;
-  right: 5px;
-  bottom: 0;
-  z-index: 2;
+.stats__def{
   margin-bottom: 21px;
+  bottom: 0;
+  right: 5px;
+  
+}
+.def{
   color: #2787ab;
   font-weight: bold;
-  font-size: 14px;
-  pointer-events: none;
+  font-size: 16px;
+}
+
+.spAtk{
+  color: #c22510;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.spDef{
+  color: #2e90e0;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.speed{
+  color: #a3ac24;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.compare{
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .pokemon__compare {
@@ -170,14 +261,6 @@ body {
   font-size: 14px;
   background-color: #6C757D;
   border: 0px;
-}
-
-@media (min-width: 992px) {
-  .pokemon,
-  .pokemon__sprite {
-    width: 160px;
-    height: 160px;
-  }
 }
 
 .searchBase{

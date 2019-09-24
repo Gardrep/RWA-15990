@@ -46,9 +46,9 @@ class Pokemon extends Component<any, any> {
     return (
       <div className="pokemon__plate">
         {this.showCompareBtn()}
-        <p className="pokemon__hp">HP: {pokemon.base.HP}</p>
-        <p className="pokemon__atk">ATK: {pokemon.base.Attack}</p>
-        <p className="pokemon__def">DEF: {pokemon.base.Defense}</p>
+        <p className="hp pokemon__stats stats__hp">HP: {pokemon.base.HP}</p>
+        <p className="atk pokemon__stats stats__atk">ATK: {pokemon.base.Attack}</p>
+        <p className="def pokemon__stats stats__def">DEF: {pokemon.base.Defense}</p>
         <a rel="noopener noreferrer" href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name.english}`} className="pokemon__name">{pokemon.name.english}</a>
         <div className="pokemon">
           <HtmlTooltip
@@ -68,18 +68,22 @@ class Pokemon extends Component<any, any> {
           >
             <div
               id={pokemon.id}
-              //onClick={(e) => this.printaj()}
+              onClick={(e) => this.replacePokemon(pokemon.id)}
               className="pokemon__sprite"
-              //rel="noopener noreferrer"
-              //href={`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name.english}`}
-              style={{
-                backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})`
-              }}
+              style={{ backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})` }}
             > </div>
           </HtmlTooltip>
         </div>
       </div>
     )
+  }
+
+  replacePokemon(IdNovi) {
+      const { currentUser, IdStari } = this.props;
+      console.log(IdStari);
+      if (IdStari !== null) {
+      this.props.replacePokemonTeam(currentUser, IdStari, IdNovi);
+    }
   }
 }
 
@@ -95,7 +99,7 @@ function mapDispatchToProps(dispatch) {
   return {
     replacePokemonTeam: (user, IdStari, IdNovi) => dispatch(userActions.replacePokemonTeam(user, IdStari, IdNovi)),
     addToCompare: (pokemon) => dispatch(compareListActions.addCompareList(pokemon)),
-    removeFromCompare:(pokemon)=> dispatch(compareListActions.removeCompareList(pokemon))
+    removeFromCompare: (pokemon) => dispatch(compareListActions.removeCompareList(pokemon))
   }
 }
 

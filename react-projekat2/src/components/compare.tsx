@@ -3,11 +3,9 @@ import Pokemon from './pokemon';
 
 import { connect } from 'react-redux';
 import { AppState } from '../redux/reducers';
-import { PokemonModel } from '../models/pokemonModel';
+import { PokemonModel, baseList } from '../models/pokemonModel';
 
 class ComparePokemons extends Component<any, any> {
-    searchString = "";
-    SearchHealthStart = NaN;
     emptyPokemonScelet: PokemonModel = {
         "id": 0,
         "name": {
@@ -25,10 +23,8 @@ class ComparePokemons extends Component<any, any> {
             "Speed": 0
         }
     };
-    pokemonLeft: PokemonModel = this.emptyPokemonScelet;
-    pokemonRight: PokemonModel = this.emptyPokemonScelet;
 
-    constructor(props) {
+    constructor(props) {     
         super(props);
         this.state = {
             pokemonLeft: this.emptyPokemonScelet,
@@ -46,6 +42,9 @@ class ComparePokemons extends Component<any, any> {
                     <div id="divLeft">
                         {this.comparePokemons(this.state.pokemonLeft, true)}
                     </div>
+                    <div className="divCenter">
+                        {this.showCenterStats()}
+                    </div>
                     <div id="divRight">
                         {this.comparePokemons(this.state.pokemonRight, false)}
                     </div>
@@ -56,11 +55,10 @@ class ComparePokemons extends Component<any, any> {
 
     renderPokemons() {
         let { compareList } = this.props;
-        console.log(compareList);
         if (compareList)
             return compareList.map(pokemon => {
                 return (
-                    <li className="pokemons__item" key={pokemon.id}>
+                    <li className="pokemons__item" id={pokemon.id} key={pokemon.id}>
                         <div>
                             <Pokemon pokemon={pokemon} isComparable={false} />
                             <button onClick={() => this.setState({ pokemonLeft: pokemon })} className="compare-putButton btn-sm btn-secondary">{String.fromCharCode(60)}</button>
@@ -70,6 +68,7 @@ class ComparePokemons extends Component<any, any> {
                 )
             });
     }
+
     comparePokemons(pokemon: PokemonModel, isLeft: boolean) {
         let pictureID = "";
         if (pokemon.id < 10) {
@@ -83,40 +82,82 @@ class ComparePokemons extends Component<any, any> {
                 pictureID = "" + pokemon.id;
             }
         }
-        console.log(pictureID);
 
         return (
-            <div>
-                {this.pokemonStats(pokemon, isLeft)}
+            <div className="pokemon-compare">
+                {this.showStats(pokemon, !isLeft)}
                 <div
-                    className="pokemon-compare"
-                    style={{
-                        backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})`
-                    }}
+                    id={pokemon.id + "Picture"}
+                    className="pokemon-compare-picture"
+                    style={{ backgroundImage: `url(${`/images/${pictureID}${pokemon.name.english}.png`})` }}
                 ></div>
-                {this.pokemonStats(pokemon, !isLeft)}
+                {this.showStats(pokemon, isLeft)}
             </div>
         )
     }
-    pokemonStats(pokemon: PokemonModel, isCorrect: boolean) {
-        if (isCorrect)
+
+    showStats(pokemon: PokemonModel, isCorrect: boolean) {
+        if (isCorrect) {
             return (
-                <div>
+                <div className="divSides">
                     <div>{"English: "} {pokemon.name.english}</div>
                     <div>{"Japanese: "} {pokemon.name.japanese}</div>
                     <div>{"Chinese: "} {pokemon.name.chinese}</div>
                     <br />
-                    <div>{"HP: "} {pokemon.base.HP}</div>
-                    <div>{"ATK: "} {pokemon.base.Attack}</div>
-                    <div>{"DEF: "}{pokemon.base.Defense}</div>
+                    <div className="hp" >{"HP: "} {pokemon.base.HP}</div>
+                    <div className="atk" >{"ATK: "} {pokemon.base.Attack}</div>
+                    <div className="def" >{"DEF: "}{pokemon.base.Defense}</div>
                     <br />
-                    <div>{"Sp. Atk: "} {pokemon.base.SpAttack}</div>
-                    <div>{"Sp. Def: "} {pokemon.base.SpDefense}</div>
-                    <div>{"Speed: "}{pokemon.base.Speed}</div>
+                    <div className="spAtk" >{"Sp.ATK: "}{pokemon.base.SpAttack}</div>
+                    <div className="spDef" >{"Sp.DEF: "}{pokemon.base.SpDefense}</div>
+                    <div className="speed" >{"SPEED: "}{pokemon.base.Speed}</div>
                     <br />
                     <div>{"Type: "} {pokemon.type.map((type) => type + " ")}</div>
                 </div>
             )
+        }
+    }
+
+    calc(base: string) {
+        let calulation = this.state.pokemonLeft.base[base] - this.state.pokemonRight.base[base];
+        if (calulation < 0) {
+            return "< " + (-calulation) + " <";
+        } else {
+            return "> " + calulation + " >";
+        }
+    }
+
+    showCenterStats() {
+        let centerPokemon = {
+            "base": {
+                "HP": 0,
+                "Attack": 0,
+                "Defense": 0,
+                "SpAttack": 0,
+                "SpDefense": 0,
+                "Speed": 0
+            }
+        };
+        baseList.map((base) => 
+            centerPokemon.base[base] = this.calc(base)
+        );
+        return (
+            <div>
+                <br />
+                <br />
+                {"Differeence"}
+                <br />
+                <br />
+                <br />
+                <div className="compare" >{centerPokemon.base.HP}</div>
+                <div className="compare" >{centerPokemon.base.Attack}</div>
+                <div className="compare" >{centerPokemon.base.Defense}</div>
+                <br />
+                <div className="compare" >{centerPokemon.base.SpAttack}</div>
+                <div className="compare" >{centerPokemon.base.SpDefense}</div>
+                <div className="compare" >{centerPokemon.base.Speed}</div>
+            </div>
+        )
     }
 }
 

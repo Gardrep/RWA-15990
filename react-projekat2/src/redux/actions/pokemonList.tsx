@@ -7,6 +7,7 @@ import {
 } from '../constants/constants'
 import { PokemonModel } from '../../models/pokemonModel';
 import { Action } from 'redux';
+import { FilterModel } from '../../models/filterModel';
 
 export interface SetPokemons extends Action {
   payload: PokemonModel[];
@@ -42,46 +43,17 @@ export function filterPokemons(searchString = ''): FilterPokemons {
 }
 
 export interface FilterPokemonsAll extends Action {
-  payload: {
-    searchString: string,
-    SearchHealthStart: number
-    SearchHealthEnd: number,
-    SearchAttackStart: number,
-    SearchAttackEnd: number,
-    SearchDeffenceStart: number,
-    SearchDeffenceEnd: number,
-    searchTypes: string[]
-  }
+  payload: FilterModel;
 }
 
-export function filterPokemonsAll(
-  searchString = '',
-  SearchHealthStart = 0,
-  SearchHealthEnd = 0,
-  SearchAttackStart = 0,
-  SearchAttackEnd = 0,
-  SearchDeffenceStart = 0,
-  SearchDeffenceEnd = 0,
-  searchTypes): FilterPokemonsAll {
+export function filterPokemonsAll(filter:FilterModel): FilterPokemonsAll {
   return {
     type: FILTER_POKEMONS_ALL,
-    payload: {
-      searchString: searchString,
-      SearchHealthStart: SearchHealthStart,
-      SearchHealthEnd: SearchHealthEnd,
-      SearchAttackStart: SearchAttackStart,
-      SearchAttackEnd: SearchAttackEnd,
-      SearchDeffenceStart: SearchDeffenceStart,
-      SearchDeffenceEnd: SearchDeffenceEnd,
-      searchTypes: searchTypes
-    }
+    payload: filter
   }
 }
 
-export interface ClearPokemons extends Action {
-}
-
-export function clearPokemons(): ClearPokemons {
+export function clearPokemons() {
   return {
     type: CLEAR_POKEMONS
   }

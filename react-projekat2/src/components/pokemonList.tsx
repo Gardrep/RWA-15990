@@ -12,6 +12,7 @@ import * as userActions from '../redux/actions/user'
 import { AppState } from '../redux/reducers';
 import { UserModel } from '../models/userModel';
 import { PokemonModel } from '../models/pokemonModel';
+import { FilterModel, searchBaseList } from '../models/filterModel';
 
 interface PokemonListState {
   showAllVar: boolean;
@@ -19,14 +20,7 @@ interface PokemonListState {
 
 interface PokemonListProps {
   getPokemons: () => {};
-  filterPokemonsAll: (searchString: string,
-    SearchHealthStart: number,
-    SearchHealthEnd: number,
-    SearchAttackStart: number,
-    SearchAttackEnd: number,
-    SearchDeffenceStart: number,
-    SearchDeffenceEnd: number,
-    searchTypes: string[]) => {};
+  filterPokemonsAll: (filter: FilterModel) => {};
   getCurrentUser: (token: string) => {};
   error: boolean;
   pokemons: PokemonModel[];
@@ -45,9 +39,7 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
   SearchDeffenceStart: number = NaN;
   SearchDeffenceEnd: number = NaN;
   searchType: string[] = [];
-  searchBase: number = NaN;
   baseList: string[] = ["Health", "Attack", "Deffence"];
-  searchBaseList: string[] = ["SearchHealthStart", "SearchHealthEnd", "SearchAttackStart", "SearchAttackEnd", "SearchDeffenceStart", "SearchDeffenceEnd"];
 
   constructor(props) {
     super(props);
@@ -67,7 +59,7 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
     this.searchString = "";
     (document.getElementById("searchName") as HTMLInputElement).value = "";
 
-    this.searchBaseList.forEach((base) => {
+    searchBaseList.forEach((base) => {
       this[base] = NaN;
       (document.getElementById(base) as HTMLInputElement).value = null;
     })
@@ -109,8 +101,20 @@ class PokemonList extends Component<PokemonListProps, PokemonListState> {
     })
     this.filter();
   }
+
   filter() {
-    this.props.filterPokemonsAll(this.searchString, this.SearchHealthStart, this.SearchHealthEnd, this.SearchAttackStart, this.SearchAttackEnd, this.SearchDeffenceStart, this.SearchDeffenceEnd, this.searchType);
+    let filter:FilterModel ={
+      searchString: this.searchString,
+      SearchHealthStart: this.SearchHealthStart,
+      SearchHealthEnd:  this.SearchHealthEnd,
+      SearchAttackStart: this.SearchAttackStart,
+      SearchAttackEnd: this.SearchAttackEnd,
+      SearchDeffenceStart: this.SearchDeffenceStart,
+      SearchDeffenceEnd: this.SearchDeffenceEnd,
+      searchTypes: this.searchType
+
+    }
+    this.props.filterPokemonsAll(filter);
   }
 
 
@@ -205,14 +209,13 @@ function mapDispatchToProps(dispatch) {
   return {
     getCurrentUser: (state) => dispatch(userActions.getCurrentUser(state)),
     getPokemons: () => dispatch(pokemonListActions.getPokemons()),
-    filterPokemonsAll: (searchString: string,
-      SearchHealthStart: number,
-      SearchHealthEnd: number,
-      SearchAttackStart: number,
-      SearchAttackEnd: number,
-      SearchDeffenceStart: number,
-      SearchDeffenceEnd: number,
-      searchTypes: string[]) => dispatch(pokemonListActions.filterPokemonsAll(
+    filterPokemonsAll: (filter: FilterModel) => dispatch(pokemonListActions.filterPokemonsAll(filter))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PokemonList)
+
+/*
         searchString,
         SearchHealthStart,
         SearchHealthEnd,
@@ -220,8 +223,16 @@ function mapDispatchToProps(dispatch) {
         SearchAttackEnd,
         SearchDeffenceStart,
         SearchDeffenceEnd,
-        searchTypes))
-  }
-}
+        searchTypes
+        */
 
-export default connect(mapStateToProps, mapDispatchToProps)(PokemonList)
+        /*
+        searchString: string,
+      SearchHealthStart: number,
+      SearchHealthEnd: number,
+      SearchAttackStart: number,
+      SearchAttackEnd: number,
+      SearchDeffenceStart: number,
+      SearchDeffenceEnd: number,
+      searchTypes: string[]
+      */
