@@ -15986,22 +15986,6 @@
       "id": 3
     },
     {
-      "name": "Tvoja mama",
-      "class": "5",
-      "race": "4",
-      "spells": [
-        {
-          "id": "30",
-          "name": "Blight"
-        },
-        {
-          "id": "29",
-          "name": "Bless"
-        }
-      ],
-      "id": 4
-    },
-    {
       "name": "Stefan",
       "class": "12",
       "race": "3",
@@ -16066,54 +16050,6 @@
       "id": 7
     },
     {
-      "name": "gdshsgdh",
-      "class": "9",
-      "race": "5",
-      "spells": [
-        {
-          "id": "4",
-          "name": "Alarm"
-        },
-        {
-          "id": "7",
-          "name": "Animal Messenger"
-        }
-      ],
-      "id": 8
-    },
-    {
-      "name": "hey",
-      "class": "5",
-      "race": "5",
-      "spells": [
-        {
-          "id": "2",
-          "name": "Acid Splash"
-        },
-        {
-          "id": "3",
-          "name": "Aid"
-        }
-      ],
-      "id": 32
-    },
-    {
-      "name": "hdsfds",
-      "class": "5",
-      "race": "5",
-      "spells": [
-        {
-          "id": "3",
-          "name": "Aid"
-        },
-        {
-          "id": "4",
-          "name": "Alarm"
-        }
-      ],
-      "id": 33
-    },
-    {
       "name": "marko",
       "class": "5",
       "race": "5",
@@ -16170,62 +16106,6 @@
       "id": 37
     },
     {
-      "name": "nestotesko",
-      "class": "3",
-      "race": "3",
-      "spells": [
-        {
-          "id": "3",
-          "name": "Aid"
-        },
-        {
-          "id": "4",
-          "name": "Alarm"
-        }
-      ],
-      "id": 38
-    },
-    {
-      "name": "fjiaposjpofas",
-      "class": "4",
-      "race": "3",
-      "spells": [
-        {
-          "id": "1",
-          "name": "Acid Arrow"
-        },
-        {
-          "id": "2",
-          "name": "Acid Splash"
-        },
-        {
-          "id": "3",
-          "name": "Aid"
-        },
-        {
-          "id": "4",
-          "name": "Alarm"
-        }
-      ],
-      "id": 39
-    },
-    {
-      "name": "tvoja mama",
-      "class": "3",
-      "race": "1",
-      "spells": [
-        {
-          "id": "4",
-          "name": "Alarm"
-        },
-        {
-          "id": "5",
-          "name": "Alter Self"
-        }
-      ],
-      "id": 40
-    },
-    {
       "name": "gsdghfd",
       "class": "12",
       "race": "8",
@@ -16244,22 +16124,6 @@
         }
       ],
       "id": 41
-    },
-    {
-      "name": "gds",
-      "class": "2",
-      "race": "2",
-      "spells": [
-        {
-          "id": "3",
-          "name": "Aid"
-        },
-        {
-          "id": "5",
-          "name": "Alter Self"
-        }
-      ],
-      "id": 42
     },
     {
       "name": "testtest",
@@ -16316,6 +16180,69 @@
         }
       ],
       "id": 45
+    },
+    {
+      "name": "NewCharacter",
+      "class": "1",
+      "race": "1",
+      "spells": [
+        {
+          "id": "3",
+          "name": "Aid"
+        }
+      ],
+      "id": 49
+    },
+    {
+      "name": "druginoviiiio",
+      "class": "1",
+      "race": "2",
+      "spells": [
+        {
+          "id": "4",
+          "name": "Alarm"
+        },
+        {
+          "id": "3",
+          "name": "Aid"
+        }
+      ],
+      "id": 53
+    },
+    {
+      "name": "Broom",
+      "class": "4",
+      "race": "3",
+      "spells": [
+        {
+          "id": "82",
+          "name": "Dimension Door"
+        },
+        {
+          "id": "95",
+          "name": "Earthquake"
+        }
+      ],
+      "id": 54
+    },
+    {
+      "name": "MMMMMMMMMMMMMMM",
+      "class": "3",
+      "race": "2",
+      "spells": [],
+      "id": 55
+    },
+    {
+      "name": "BBBBBBBBBBBBBBBBB",
+      "class": "2",
+      "race": "2",
+      "spells": [
+        {
+          "id": "3",
+          "name": "Aid"
+        }
+      ],
+      "id": 56
     }
   ],
   "users": [

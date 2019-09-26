@@ -1,5 +1,6 @@
 import { fromEvent, zip } from 'rxjs';
-import { Global } from "../../Global.js";
+import {  map,filter, toArray } from 'rxjs/operators';
+import { CoreBuilder } from "../../CoreBuilder.js";
 import { mainDiv } from '../../index.js';
 
 import { Race } from '../../_models/Race.js';
@@ -7,21 +8,22 @@ import { Class } from "../../_models/Class.js";
 import { Character } from "../../_models/Character.js";
 
 import { DBService } from "../../_services/DBService.js";
-import { HTML } from '../../HTML.js';
 
 export const CharacterService = {
 
     AllCharacters: DBService.GetAll("characters"),
 
-    ShowAddCharacter() {
-        mainDiv.innerHTML = HTML.CharactersText();
+    async ShowAddCharacter() {
+        await DBService.GetCharactersHTML("CharacterText").then((html) => {
+            mainDiv.innerHTML = html;
+        });
         DBService.GetHTML("Template").then((text) => {
             mainDiv.innerHTML += text;
-            Global.ShowBuildCharacter(false);
+            CoreBuilder.ShowBuildCharacter(false);
 
             let name = document.getElementById('InputName');
             fromEvent(name, 'change').subscribe(function () {
-                Global.character.name = name.value;
+                CoreBuilder.character.name = name.value;
                 var CharacterName = document.getElementById("CharacterName");
                 CharacterName.innerHTML = name.value;
             });
@@ -29,35 +31,38 @@ export const CharacterService = {
     },
 
     ShowCharactersTable() {
-        Global.LoadTamplate(false, false).then(() => {
+        CoreBuilder.LoadTamplate(false, false).then(() => {
             var search = document.getElementById("InputName");
 
             const input = fromEvent(search, 'input');
             input.subscribe((typed) => {
-                var filter;
-                filter = typed.target.value.toUpperCase();
-                this.AllCharacters.subscribe((list) => {
-                    list = list.map(character => { return new Character(character) });
-                    list = list.filter(character => {
-                        return character.name.toUpperCase().indexOf(filter) >= 0
-                    });
-                    Global.FillTable("Characters", false, list);
-                })
+                var filterName;
+                filterName = typed.target.value.toUpperCase();
+                this.AllCharacters.pipe(
+                    map(character => new Character(character)),
+                    filter(character => filterName == "" || character.name.toUpperCase().includes(filterName)),
+                    toArray()
+                ).subscribe(list => CoreBuilder.fillTable("Characters", false, list))
             });
-            Global.FillTable("Characters", false);
+            CoreBuilder.fillTable("Characters", false);
         });
     },
 
     FillClassRow(character) {
-        return zip(
-            DBService.Get("classes", character.class),
-            DBService.Get("races", character.race)
-        );
-    },
-
-    CharacterRow(character, clas, race) {
-        let showrace = new Race(race);
-        let showclass = new Class(clas);
-        return HTML.CharactersTamplate(character, showrace, showclass);
+        return new Promise((res, rej) => {
+            zip(
+                DBService.GetById("classes", character.class),
+                DBService.GetById("races", character.race)
+            ).subscribe(([clas, race]) => {
+                let showrace = new Race(race);
+                let showclass = new Class(clas);
+                let row;
+                DBService.GetCharactersHTML("CharactersRow").then((text) => {
+                    row = text;
+                    let scope = { id: character.id, name: character.name, class: showclass.name, race: showrace.name, spells: character.spells };
+                    res(row.populate(scope));
+                });
+            });
+        });
     }
 }

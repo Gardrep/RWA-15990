@@ -1,5 +1,6 @@
 import { fromEvent } from 'rxjs';
-import { Global } from "../../Global.js";
+import { map, filter } from 'rxjs/operators';
+import { CoreBuilder } from "../../CoreBuilder.js";
 import { mainDiv } from '../../index.js';
 
 import { User } from "../../_models/User.js";
@@ -10,6 +11,7 @@ export const UserService = {
 
   async ShowLogin() {
     await DBService.GetUsersHTML("LogInForm").then((html) => mainDiv.innerHTML = html);
+
     var signin = document.getElementById("signin");
     fromEvent(signin, 'click').subscribe(() => {
       this.LogIn();
@@ -17,9 +19,9 @@ export const UserService = {
 
     var signout = document.getElementById("signout");
     fromEvent(signout, 'click').subscribe(() => {
-      Global.userID = "";
-      document.getElementById("LoginLink").innerHTML = "Login";
       alert("Logged out successfully");
+      CoreBuilder.userID = "";
+      document.getElementById("LoginLink").innerHTML = "Login";
       localStorage.removeItem('token');
     });
   },
@@ -28,12 +30,13 @@ export const UserService = {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
-    DBService.GetAll("users").subscribe((users) => {
-      users = users.map(user => { return new User(user); });
-      let user = users.filter((user) => { return user.username == username })[0];
+    DBService.GetAll("users").pipe(
+      map(user => new User(user)),
+      filter(user => user.username == username)
+    ).subscribe((user) => {
       if (user && password == user.password) {
-        alert("Logged in successfully");
-        Global.userID = user.id;
+        alert(user.username + " logged in successfully");
+        CoreBuilder.userID = user.id;
         document.getElementById("LoginLink").innerHTML = "Logged in as " + user.username;
         if (document.getElementById("rememberMe").checked == true)
           localStorage.setItem('token', user.id);

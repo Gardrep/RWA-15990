@@ -24,7 +24,7 @@ export class Spell {
   }
 
   static rangeList(){
-    return ["Range", "10 feet", "30 feet", "60 feet", "90 feet", "120 feet", "Touch", "Self"];
+    return ["Range", "10 feet", "30 feet", "60 feet", "90 feet", "120 feet","500 feet", "Touch", "Self"];
   }
 
   static ritualList(){

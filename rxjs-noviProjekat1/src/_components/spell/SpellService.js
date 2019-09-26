@@ -1,23 +1,24 @@
 import { fromEvent, range, from } from 'rxjs';
-import { filter, toArray } from 'rxjs/operators';
-import { Global } from "../../Global.js";
+import { filter, toArray, map, skip, take } from 'rxjs/operators';
+import { CoreBuilder } from "../../CoreBuilder.js";
 import { mainDiv } from '../../index.js';
 
 import { Spell } from "../../_models/Spell.js";
 import { DBService } from "../../_services/DBService.js";
-import { HTML } from '../../HTML.js';
 
 export const SpellService = {
-    ShowSpellsTable(isBuilding) {
+    async ShowSpellsTable(isBuilding) {
         if (isBuilding) {
-            mainDiv.innerHTML = HTML.SpellsText();
+            await DBService.GetSpellsHTML("SpellText").then((html) => {
+                mainDiv.innerHTML = html;
+            }); 
         }
-        Global.LoadTamplate(isBuilding, false).then(() => {
+        CoreBuilder.LoadTamplate(isBuilding, false).then(async () => {
 
             //----------------------------------------------------------NAME
             const input = fromEvent(document.getElementById("InputName"), 'input');
             input.subscribe(() => {
-                Filter(isBuilding);
+                filterSpells(isBuilding);
             });
 
             //----------------------------------------------------------LEVEL
@@ -71,51 +72,107 @@ export const SpellService = {
 
                 const class$ = fromEvent(classinput, 'click');
                 class$.subscribe(() => {
-                    Filter(isBuilding);
+                    filterSpells(isBuilding);
                 });
             });
 
-            Global.FillTable("Spells", isBuilding);
+            //---------------------------------Pagination buttons
+            var inputdiv = document.getElementById("Input");
+
+            var div = document.createElement("div");
+            div.className = "my-1";
+            inputdiv.appendChild(div);
+            var btn = document.createElement("button");
+            btn.innerHTML = "<";
+            btn.className = "btn btn-secondary btn-sm";
+            btn.id = "previousPage";
+            btn.type = "button";
+            div.appendChild(btn);
+            const previousPage$ = fromEvent(btn, 'click');
+            previousPage$.subscribe(() => {
+                if (page - 1 > 0) {
+                    page--;
+                    document.getElementById("currentPage").innerHTML = page;
+                    filterSpells(isBuilding);
+                }
+            });
+
+            var div = document.createElement("div");
+            div.className = "my-1";
+            div.innerHTML = page;
+            div.className = "btn-secondary btn-sm";
+            div.id = "currentPage";
+            inputdiv.appendChild(div);
+            const currentPage$ = fromEvent(div, 'click');
+            currentPage$.subscribe(() => {
+                page = 1;
+                document.getElementById("currentPage").innerHTML = page;
+                filterSpells(isBuilding);
+            });
+
+            var div = document.createElement("div");
+            div.className = "my-1";
+            inputdiv.appendChild(div);
+            var btn = document.createElement("button");
+            btn.innerHTML = ">";
+            btn.className = "btn btn-secondary btn-sm";
+            btn.id = "nextPage";
+            btn.type = "button";
+            div.appendChild(btn);
+            const nextPage$ = fromEvent(btn, 'click');
+            nextPage$.subscribe(() => {
+                if (page + 1 < (number / pageSize) + 1) {
+                    page++;
+                    document.getElementById("currentPage").innerHTML = page;
+                    filterSpells(isBuilding);
+                }
+            });
+
+            from(CoreBuilder.fillTable("Spells", isBuilding)).subscribe((n) => {
+                number = n;
+                filterSpells(isBuilding);
+            });
         });
     }
 }
 
-function Filter(isBuilding) {
-    DBService.GetAll("spells").subscribe((list) => {
-        list = list.map(spell => { return new Spell(spell); });
-        let source = from(list);
+let page = 1;
+let number = 0;
+let pageSize = 10;
 
-        let filterName = document.getElementById("InputName").value.toUpperCase();
-        let filterLevel = document.getElementById("levelButton").innerHTML;
-        let filterRange = document.getElementById("rangeButton").innerHTML;
-        let filterRitual = document.getElementById("ritualButton").innerHTML;
-        let filterClasses = [];
-        for (let pom of document.querySelectorAll(`input[name="cbx"]:checked`)) {
-            filterClasses.push(pom.value);
-        }
+function filterSpells(isBuilding) {
+    let filterName = document.getElementById("InputName").value.toUpperCase();
+    let filterLevel = document.getElementById("levelButton").innerHTML;
+    let filterRange = document.getElementById("rangeButton").innerHTML;
+    let filterRitual = document.getElementById("ritualButton").innerHTML;
+    let filterClasses = [];
+    for (let pom of document.querySelectorAll(`input[name="cbx"]:checked`)) {
+        filterClasses.push(pom.value);
+    }
 
-
-        source.pipe(
-            filter(spell => {
-                return filterName == "" || spell.name.toUpperCase().includes(filterName)
-            }),
-            filter(spell => {
-                return isNaN(filterLevel) || spell.level == filterLevel;
-            }),
-            filter(spell => {
-                return filterRange == "Range" || !spell.range.localeCompare(filterRange);
-            }),
-            filter(spell => {
-                return filterRitual == "Ritual" || !spell.ritual.localeCompare(filterRitual);
-            }),
-            filter(spell => {
-                return filterClasses.length == 0 || filterClasses.reduce((acc, x) => {
-                    return acc || spell.classes.includes(x);
-                }, false)
-            }),
-            toArray()
-        ).subscribe(val => Global.FillTable("Spells", isBuilding, val));
-    });
+    DBService.GetAll("spells").pipe(
+        map(spell => new Spell(spell)),
+        filter(spell => {
+            return filterName == "" || spell.name.toUpperCase().includes(filterName);
+        }),
+        filter(spell => {
+            return isNaN(filterLevel) || spell.level == filterLevel;
+        }),
+        filter(spell => {
+            return filterRange == "Range" || !spell.range.localeCompare(filterRange);
+        }),
+        filter(spell => {
+            return filterRitual == "Ritual" || !spell.ritual.localeCompare(filterRitual);
+        }),
+        filter(spell => {
+            return filterClasses.length == 0 || filterClasses.reduce((acc, x) => {
+                return acc || spell.classes.includes(x);
+            }, false)
+        }),
+        skip((page - 1) * pageSize),
+        take(pageSize),
+        toArray()
+    ).subscribe(val => CoreBuilder.fillTable("Spells", isBuilding, val));
 }
 
 function crateFilterButton(type) {
@@ -156,8 +213,8 @@ function addLink(isBuilding, type, x) {
     menudiv.appendChild(link);
 
     const observer = fromEvent(link, 'click');
-    observer.subscribe((clickedLink) => {
-        btn.innerHTML = clickedLink.path[0].innerHTML;
-        Filter(isBuilding);
+    observer.subscribe(() => {
+        btn.innerHTML = link.innerHTML;
+        filterSpells(isBuilding);
     });
 }
